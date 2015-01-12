@@ -1,0 +1,19 @@
+{
+   "content_scripts": [ {
+      "js": [ "sd2.js", "hl.js", "gfmr.js" ],
+      "matches": [ "http://*/*.md*", "http://*/*.markdown*", "http://*/*.text", "ftp://*/*.md*", "ftp://*/*.markdown*", "ftp://*/*.text", "file://*/*.md*", "file://*/*.markdown*", "file://*/*.text" ]
+   } ],
+   "web_accessible_resources": [ "gfmr.css", "*.css" ],
+   "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'",
+   "description": "Converts and previews markdown files (.md, .markdown) as HTML right inside Chrome.",
+   "icons": {
+      "128": "icon.png",
+      "48": "icon.png",
+      "16": "icon.png"
+   },
+   "name": "Github Flavored Markdown Renderer",
+   "permissions": [ "tabs", "\u003Call_urls\u003E" ],
+   "update_url": "http://chrome.syncap.ru/gfmr/",
+   "manifest_version": 2,
+   "version": "0.1.6"
+}
