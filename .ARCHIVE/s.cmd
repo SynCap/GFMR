@@ -1,1 +1,0 @@
-"c:\program files\winrar\winrar.exe" a -r -ag+YYYYMMDD-NN -n@save.lst -x@ignore.lst _ ..
