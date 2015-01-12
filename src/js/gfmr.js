@@ -3,7 +3,7 @@
 	function addScript (fName) {
 		scr = d.createElement('script');
 		// scr.src = fName+'.js' ;
-		scr.src = chrome.exntension.getURL( fName+'.js' ) ;
+		scr.src = chrome.exntension.getURL('js/' + fName + '.js' ) ;
 		d.head.appendChild( scr );
 		console.log('Script injected: '+fName);
 	}
@@ -12,7 +12,7 @@
 		var ss = d.createElement('link');
 		ss.rel = 'stylesheet';
 		// ss.href = fName+'.css';
-		ss.href = chrome.extension.getURL(fName+'.css');
+		ss.href = chrome.extension.getURL('css/' + fName + '.css');
 		d.head.appendChild(ss);
 		console.log('Style injected: '+fName);
 	}
