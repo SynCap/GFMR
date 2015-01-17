@@ -133,11 +133,11 @@ divider.
 ___Test 1___
 
 | Header 1 | Header 2 ![][logo]
-| -------- | --------
+|----------|----------------------
 | Cell 1   | *Cell 2*
 | `Cell 3` | Cell 4
 
-_AfterTable 1_
+_Text After Table 1_
 
 ***Test 2***
 
@@ -148,7 +148,7 @@ Cell c       | Cell d
 **Cell g**   | Cell h ![][logo]
 ___Cell i___ | Cell j
 
-_AfterTable 2_
+_Text After Table 2_
 
 ```
 
@@ -156,23 +156,23 @@ _AfterTable 2_
 
 ___Test 1___
 
-  | Header 1 | Header 2 ![][logo]
-  | -------- | --------
-  | Cell 1   | *Cell 2*
-  | `Cell 3` | Cell 4
+| Header 1 | Header 2 ![][logo]
+|----------|----------------------
+| Cell 1   | *Cell 2*
+| `Cell 3` | Cell 4
 
-_AfterTable 1_
+_Text After Table 1_
 
 ***Test 2***
 
-  Header `A`   | Header *B*
-  :-----------:|-------------------:
-  Cell c       | Cell d
-  *Cell e*     | **Cell f**
-  **Cell g**   | Cell h ![][logo]
-  ___Cell i___ | Cell j
+Header `A`   | Header *B*
+:-----------:| -------------------:
+Cell c       | Cell d
+*Cell e*     | **Cell f**
+**Cell g**   | Cell h ![][logo]
+___Cell i___ | Cell j
 
-_AfterTable 2_
+_Text After Table 2_
 
 
 ## [License](LICENSE.TXT)
