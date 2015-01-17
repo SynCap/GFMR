@@ -61,6 +61,7 @@ optgroup {
 pre,code {
 	font-family: Consolas, Monaco, "Courier New", "DejaVu Sans Mono", "Bitstream Vera Sans Mono", monospace;
 	font-size: .9em;
+	line-height: 1em;
 }
 code {
 	border: none;
@@ -138,26 +139,21 @@ h3 {
 hr {
 	border: 1px solid @clrMain;
 }
-ul {
-	margin: 1em 0 1em 2em;
+ul, ol {
+	margin: 0.3em 0 0.3em 1em;
+
 	li {
-		list-style: square;
-		margin-left: 2em;
+		margin-left: 1em;
+		p {
+			margin: .2em 0;
+		}
 	}
 }
-ol {
-	margin: 1em 0 1em 2em;
-}
-ul li,ol li {
-	margin-top: .5em;
-	margin-bottom: .5em;
-}
-ul li p,ol li p {
-	margin: .2em 0;
-}
-ul ul,ul ol,ol ol,ol ul {
-	margin-top: 0;
-	margin-bottom: 0;
+
+ul {
+	li {
+		list-style: square;
+	}
 }
 blockquote {
 	margin: 1em 0;

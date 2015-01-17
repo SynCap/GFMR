@@ -77,14 +77,16 @@ wich contains pipes `|` with next line contains dividing lines.
 
 ### Named codeblocks
 #### markdown
-```markdown
+~~~markdown
   ```javascript
     (function (d) {
     	console.log('Hello, world!');
     }(document));
   ```
+~~~
 
-  ~~~~~~~~~~~~~~~ PHP
+```markdown
+  ~~~~~~~~~~~~~~~PHP
     $a = 'Hello, world!';
     echo $a."\n";
   ~~~~~~~~~~~~~~~
@@ -109,7 +111,7 @@ wich contains pipes `|` with next line contains dividing lines.
   }(document));
 ```
 
-~~~~~~~~~~~~~~~ PHP
+~~~~~~~~~~~~~~~PHP
   $a = 'Hello, world!';
   echo $a."\n";
 ~~~~~~~~~~~~~~~
