@@ -22,8 +22,8 @@ check `Allow access to file URLs` in [extension tab](chrome://extensions) for th
 
 ## Weaks
 
-Becouse of nature of rendering (Javascript regexps) not recommended to view large `.md` files and/or files with complex rules
-
+- Becouse of nature of rendering (Javascript regexps) not recommended to view large `.md` files and/or files with complex rules
+- Some differenses in manner of rendering some blocks, such as tables
 
 
 ## Distinctions of initial specifications
@@ -33,6 +33,10 @@ Becouse of nature of rendering (Javascript regexps) not recommended to view larg
 - Renders Github style code blocks
 - Renders tables
 - Auto convert the hyper links in plain text, ie: www.example.com, http://example.com
+
+> **NOTE** Tables in sd2 and GitHub are rendered in some different manner: GitHub
+needs newlines to determine tables exactly, but sd2 start tables from first line,
+wich contains pipes `|` with next line contains dividing lines.
 
 
 ###Lists
@@ -151,19 +155,23 @@ _AfterTable 2_
 #### Actual view
 
 ___Test 1___
+
   | Header 1 | Header 2 ![][logo]
   | -------- | --------
   | Cell 1   | *Cell 2*
   | `Cell 3` | Cell 4
+
 _AfterTable 1_
 
 ***Test 2***
+
   Header `A`   | Header *B*
   :-----------:|-------------------:
   Cell c       | Cell d
   *Cell e*     | **Cell f**
   **Cell g**   | Cell h ![][logo]
   ___Cell i___ | Cell j
+
 _AfterTable 2_
 
 
