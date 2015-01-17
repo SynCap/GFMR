@@ -28,10 +28,12 @@ Becouse of nature of rendering (Javascript regexps) not recommended to view larg
 
 ## Distinctions of initial specifications
 
+
 - Supports paragraphs in list items
 - Renders Github style code blocks
 - Renders tables
 - Auto convert the hyper links in plain text, ie: www.example.com, http://example.com
+
 
 ###Lists
 
@@ -69,8 +71,8 @@ Becouse of nature of rendering (Javascript regexps) not recommended to view larg
 
 
 
-###Named codeblocks
-####markdown
+### Named codeblocks
+#### markdown
 ```markdown
   ```javascript
     (function (d) {
@@ -84,7 +86,8 @@ Becouse of nature of rendering (Javascript regexps) not recommended to view larg
   ~~~~~~~~~~~~~~~
 ```
 
-####HTML
+#### HTML
+
 ```HTML
   <pre><code class="javascript">     (function (d) {
     	console.log('Hello, world!');
@@ -94,7 +97,8 @@ Becouse of nature of rendering (Javascript regexps) not recommended to view larg
   echo $a."\n";</code></pre>
 ```
 
-####Actual view
+#### Actual view
+
 ```javascript
   (function (d) {
   	console.log('Hello, world!');
@@ -106,12 +110,12 @@ Becouse of nature of rendering (Javascript regexps) not recommended to view larg
   echo $a."\n";
 ~~~~~~~~~~~~~~~
 
-###Tables
+### Tables
 
 Simple table can be rendered using pipe sign "|" and special meaning dividing line, that separate
 the column heads. Dividing line can consist of minus `-` sign, pipe `|` and colon `:`.
 
-> **Note**, that just first line recognized as headers, the second one must contatain dividing line.
+> **Note**, that just first line recognized as headers, the second one must contain dividing line.
 
 
 You can cpecify cell align by using the colons. To set left aligned cells in column set `:`
@@ -119,55 +123,54 @@ at begining of cell in dividing line. To set right aligned column - set `:` just
 last symbol in dividing line. To center cells in column use `:` on both sides of corresponding
 divider.
 
-####markdown
+#### markdown
+
 ```markdown
 ___Test 1___
-&#124; Header 1 &#124; Header 2 ![][logo]
-&#124; -------- &#124; --------
-&#124; Cell 1   &#124; *Cell 2*
-&#124; `Cell 3` &#124; Cell 4
+
+| Header 1 | Header 2 ![][logo]
+| -------- | --------
+| Cell 1   | *Cell 2*
+| `Cell 3` | Cell 4
+
 _AfterTable 1_
 
 ***Test 2***
-Header `A` &#124; Header *B*
-:---------:&#124;-------------------:
-Cell c     &#124; Cell d
-*Cell e*     &#124; **Cell f**
-**Cell g**     &#124; Cell h ![][logo]
-___Cell i___     &#124; Cell j
-_AfterTable 2_
-```
 
-####HTML
-```HTML
+Header `A`   | Header *B*
+:-----------:| -------------------:
+Cell c       | Cell d
+*Cell e*     | **Cell f**
+**Cell g**   | Cell h ![][logo]
+___Cell i___ | Cell j
+
+_AfterTable 2_
+
 ```
 
 #### Actual view
-___Test 1___
 
+___Test 1___
   | Header 1 | Header 2 ![][logo]
   | -------- | --------
   | Cell 1   | *Cell 2*
   | `Cell 3` | Cell 4
-
 _AfterTable 1_
 
 ***Test 2***
-
-  Header `A`| Header *B*
-  :-------:|--------:
-  Cell c   | Cell d
-  *Cell e*   | **Cell f**
+  Header `A`   | Header *B*
+  :-----------:|-------------------:
+  Cell c       | Cell d
+  *Cell e*     | **Cell f**
   **Cell g**   | Cell h ![][logo]
-  ___Cell i___   | Cell j
-
+  ___Cell i___ | Cell j
 _AfterTable 2_
 
 
-##[License](LICENSE.TXT)
+## [License](LICENSE.TXT)
 
 
-##Original Attributions
+## Original Attributions
 
 Showdown Copyright (c) 2007 John Fraser. http://www.attacklab.net/
 
