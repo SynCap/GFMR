@@ -1,57 +1,61 @@
-//
-// sd2.js  -- A javascript port of Markdown
-// (c) 2013, Constantin Loskutov, www.syncap.ru
-//
-// Based on showdown.js, Copyright (c) 2007 John Fraser.
-//
-// Original Markdown Copyright (c) 2004-2005 John Gruber
-//   <http://daringfireball.net/projects/markdown/>
-//
-// Most differencies:
-// 	  1. GitHub style code blocks i.e.:
-//
-// 	  		``` LanguageName
-// 	  		   ...  Preformatted code ....
-// 	  		```
-//
-// 	  2. Tables in GFM styele:
-//
-// 	  		___Test 1___
-// 	  		| Header 1 | Header 2
-// 	  		| -------- | --------
-// 	  		| Cell 1   | *Cell 2*
-// 	  		| `Cell 3` | Cell 4
-// 	  		_AfterTable 1_
-//
-// 	  		***Test 2***
-// 	  		Header A | Header B
-// 	  		---------|--------:
-// 	  	 	Cell c   | Cell d
-// 	  	  Cell e   | Cell f
-// 	  	  Cell g   | Cell h
-// 	  	  Cell i   | Cell j
-// 	  	  _AfterTable 2_
-//
-//
-// 	  		Header dividing line may consist of "-", "|" or ":".
-// 	  		Use ":" before "|" to set right align for cell, after for left align.
-// 	  		To set center align for cell use ":" on both side of cell next to "|"
-//
-//
-//
-//
-// Usage:
-//
-//   var text = "Markdown *rocks*.";
-//
-//   var converter = new sd2.converter();
-//   var html = converter.makeHtml(text);
-//
-//   alert(html);
-//
-// Note: move the sample code to the bottom of this
-// file before uncommenting it.
-//
+/*
+
+sd2.js  -- A javascript port of Markdown
+Copyright © 2013, 2015, Constantin Loskutov
+www.syncap.ru
+
+
+
+Based on showdown.js, Copyright (c) 2007 John Fraser.
+
+Original Markdown Copyright (c) 2004-2005 John Gruber
+  <http://daringfireball.net/projects/markdown/>
+
+Most differencies:
+	1. GitHub style code blocks i.e.:
+
+			``` LanguageName
+			   ...  Preformatted code ....
+			```
+
+	2. Tables in GFM styele:
+
+		___Test 1___
+		| Header 1 | Header 2
+		| -------- | --------
+		| Cell 1   | *Cell 2*
+		| `Cell 3` | Cell 4
+		_AfterTable 1_
+
+		***Test 2***
+		Header A | Header B
+		---------|--------:
+		Cell c   | Cell d
+		Cell e   | Cell f
+		Cell g   | Cell h
+		Cell i   | Cell j
+		_AfterTable 2_
+
+
+			Header dividing line may consist of "-", "|" or ":".
+			Use ":" before "|" to set right align for cell, after for left align.
+			To set center align for cell use ":" on both side of cell next to "|"
+
+
+
+
+Usage:
+
+  var text = "Markdown *rocks*.";
+
+  var converter = new sd2.converter();
+  var html = converter.makeHtml(text);
+
+  alert(html);
+
+Note: move the sample code to the bottom of this
+file before uncommenting it.
+*/
 
 var sd2 = sd2 || {};
 
@@ -100,6 +104,11 @@ this.makeHtml = function(text) {
 
 	// Make sure text begins and ends with a couple of newlines:
 	text = "\n\n" + text + "\n\n";
+
+	// SynCap:
+	// Catch the hyper links in plain text, convert it to HTML
+	// then it will be converted as embedded HTML links
+	text = text.replace( /((?:(?:(?:https?|ftp)\:\/\/)|(www\.))[\w\.\/#\?&\=\-:\$\%]+)/g, '<a href="$1" title="$1"></a>')
 
 	// SynCap:
 	// Ensure multiline GitHub style codeblocks are HTML blocks before

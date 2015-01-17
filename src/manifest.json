@@ -13,7 +13,6 @@
    },
    "name": "Github Flavored Markdown Renderer",
    "permissions": [ "tabs", "\u003Call_urls\u003E" ],
-   "update_url": "http://chrome.syncap.ru/gfmr/",
    "manifest_version": 2,
    "version": "0.1.7"
 }

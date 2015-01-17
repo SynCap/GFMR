@@ -6,7 +6,7 @@
 Automatically parses [markdown](http://daringfireball.net/projects/markdown/) files (_.md_, _.markdown_, _.text_) into HTML.
 Supports some GFM ([Github Flavored Markdown](http://github.github.com/github-flavored-markdown/) ) features.
 
-Based on Showdown, a port of Pyton Markdown renderer and
+Based on very-very old version of [Showdown](https://github.com/showdownjs/showdown), a port of Pyton Markdown renderer and
 [highlighter.js](http://softwaremaniacs.org/soft/highlight/) by Ivan Sagalayev.
 
 > **NOTE**
@@ -15,11 +15,23 @@ check `Allow access to file URLs` in [extension tab](chrome://extensions) for th
 
 > This lets you view local files.
 
+## Advantages
+
+- Autosubstitute on some combinations, i.e. ( c ) => &copy; etc
+- Really render the [tables](https://help.github.com/articles/github-flavored-markdown/#tables)
+
+## Weaks
+
+Becouse of nature of rendering (Javascript regexps) not recommended to view large `.md` files and/or files with complex rules
+
+
+
 ## Distinctions of initial specifications
 
 - Supports paragraphs in list items
 - Renders Github style code blocks
 - Renders tables
+- Auto convert the hyper links in plain text, ie: www.example.com, http://example.com
 
 ###Lists
 
@@ -132,24 +144,36 @@ _AfterTable 2_
 
 #### Actual view
 ___Test 1___
+
   | Header 1 | Header 2 ![][logo]
   | -------- | --------
   | Cell 1   | *Cell 2*
   | `Cell 3` | Cell 4
+
 _AfterTable 1_
 
 ***Test 2***
+
   Header `A`| Header *B*
   :-------:|--------:
   Cell c   | Cell d
   *Cell e*   | **Cell f**
   **Cell g**   | Cell h ![][logo]
   ___Cell i___   | Cell j
+
 _AfterTable 2_
 
-##License
 
-**GPL**
+##[License](LICENSE.TXT)
+
+
+##Original Attributions
+
+Showdown Copyright (c) 2007 John Fraser. http://www.attacklab.net/
+
+Original Markdown Copyright (c) 2004-2005 John Gruber http://daringfireball.net/projects/markdown/
+
+Redistributable under a BSD-style open source license. See license.txt for more information.
 
 [icon]:img/icon.png
 [logo]:img/logo.png
