@@ -90,7 +90,7 @@ wich contains pipes `|` with next line contains dividing lines.
     $a = 'Hello, world!';
     echo $a."\n";
   ~~~~~~~~~~~~~~~
-```
+``` ```
 
 #### HTML
 
