@@ -1,3 +1,4 @@
+@clrText: #222;
 @clrMain: #ddd;
 @clrBaseBG: #F8F8F8;
 @clrBorderDark: #bbb;
@@ -110,6 +111,10 @@ h2,h3 {
 }
 h1,h2,h3,h4,h5,h6 {
 	border: 0;
+	font-family: 'Calibri Light',sans-serif;
+	text-indent: -2em;
+	padding-left: 2em;
+	font-weight: bold;
 }
 h1,h2,h3 {
 	border-bottom: 1px solid @clrBorderDark;
@@ -178,4 +183,28 @@ dd {
 	border: 1px solid @clrBorderDark;
 	box-shadow: 0 0 15px @clrBorderDark;
 }
+.jumbo {
+	margin:1em 0 1.5em;
+	color: lighten(@clrText, 30%);
+	border-bottom: 1px solid @clrBorderDark;
 
+	p {
+		margin:0;
+	}
+	.title {
+		font-size: 1.2em;
+		font-family: Helvetica, Arial, sans-serif;
+		font-weight: bold;
+		border-bottom: 1px solid @clrBorderLite;
+	}
+	.subtitle {
+		font-weight: bold;
+	}
+	.line1 {
+		font-size: 2.2em;
+		color: @clrText;
+	}
+	.line2 {
+		font-size: 1.2em;
+	}
+}
