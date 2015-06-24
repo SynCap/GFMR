@@ -3,8 +3,6 @@
 * Copyright © 2013, 2015, Constantin Loskutov
 * www.syncap.ru
 *
-*
-*
 * Based on showdown.js, Copyright (c) 2007 John Fraser.
 *
 * Original Markdown Copyright (c) 2004-2005 John Gruber
@@ -14,7 +12,8 @@
 * 	1. GitHub style code blocks i.e.:
 *
 * 			``` LanguageName
-* 		   	...  Preformatted code ....
+* 		   		Preformatted code
+* 		   		....
 * 			```
 *
 * 	2. Tables in GFM styele:
@@ -171,9 +170,9 @@ var _namedCodeBlocks = function(text) {
 	);
 };
 
- /**
-	* Render HTML tables.
-	*/
+/**
+* Render HTML tables.
+*/
 var _Tables = function ( text ) {
 
 	function _doTable( str, head, underline, content) {
@@ -475,6 +474,12 @@ var _RunSpanGamut = function(text) {
 	text = _doCodeSpans(text);
 	text = _escapeSpecialCharsWithinTagAttributes(text);
 	text = _encodeBackslashEscapes(text);
+
+	// Orphaned links - plain text links in text, that is not styled
+	// with []() or <>
+	// We convert them to [Title](link_url) style
+	// Must be placed before _doAnchors
+	text = _convertOrphanedLinks(text);
 
 	// Process anchor and image tags. Images must come first,
 	// because ![foo][f] looks like an anchor.
@@ -1241,10 +1246,51 @@ var _encodeBackslashEscapes = function(text) {
 	return text;
 }
 
+var _convertOrphanedLinks = function (text) {
+
+	// SynCap:
+	// Collect all non-marked links (plain text)
+	// and convert them to MD style links.
+	// When converting the title of link calculated from some part of real link
+	// if no file name or legal last part of path in the URI, the whole domain
+	// is used. The request part is ommited.
+
+	// (                                   : check, if link is styled or native HTML link
+	// 	   \[[^\]]+?\]                     : have predicted with [some text]
+	// 	      (?:\(                        : wether starts with `(` - ordinal link
+	// 	         |                         : OR
+	// 	        :)\s*|                     : starts with `:`  -  footnote style link
+	// 	      <                            : or this is a marked plain link
+	// 	        |
+	// 	     href=\"                       : or this link is in the href attr of anchor tag
+	// )? 	                               : this block can not be present, so we will see, that link is orphaned
+	// (
+	// 	  (
+	// 	      (?:
+	// 	        https?                     : link URL must start with protocol
+	// 	        |
+	// 	        s?ftps?
+	// 	      ):\/\/
+	// 	      |
+	// 	      www\.                        : or `www.`
+	// 	  )                                : we don't need to capture this part
+	//    ([^>"\)\s]+)                     : link may consists of any symbols except spaces or link style terminators
+	// )/ig
+
+	function replaceOrphaned (w, m1, m2, m3, m4) {
+		if (m1)
+			return w;
+		var parts = m4.split('?').slice(0,1).join().split('/');
+		var linkText = decodeURI(parts[parts.length-1] || parts[parts.length-2] || m2);
+		return '[' + linkText + '](' + ((/^www\.$/i).test(m3)?'http://':'') + m2 + ')';
+	}
+
+	return text.replace( /(\[[^\]]+?\](?:\(|:)\s*|<|href=\")?(((?:https?|s?ftps?):\/\/|www\.)([^>"\)\s]+))/ig, replaceOrphaned);
+}
 
 var _doAutoLinks = function(text) {
 
-	text = text.replace(/<((https?|ftp|dict):[^'">\s]+)>/gi,"<a href=\"$1\">$1</a>");
+	text = text.replace(/<(((https?|ftps?|dict):|www.)[^'">\s]+)>/gi,"<a href=\"$1\">$1</a>");
 
 	// Email addresses: <address@domain.foo>
 
