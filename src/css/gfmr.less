@@ -32,22 +32,23 @@ table {
 	border-radius: 3px;
 }
 thead {
-	background-color: @clrMain;
+	background-color: @clrBorderLite;
+	border-bottom: 1px solid @clrBorderDark;
 }
 tbody {
 	background-color: @clrBaseBG;
 }
 th {
-	border-bottom: 1px solid @clrBorderDark;
+	// border-bottom: 1px solid @clrBorderLite;
 	padding: .2em 1em;
 }
 td {
 	border-bottom: 1px solid @clrMain;
 	padding: .2em 1em;
 }
-tr:nth-child(even) {
+tr:nth-child(odd) {
 	td {
-		background-color: @clrBorderLite;
+		background-color: lighten(@clrBaseBG, 10%);// @clrBorderLite;
 	}
 }
 input[type=text],input[type=password],input[type=image],textarea {
