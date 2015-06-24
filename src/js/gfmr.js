@@ -17,6 +17,10 @@
 		console.log("Inject <%s>: %s", type, fName);
 	}
 
+	// Inject a references to the stylesheets.
+	injectCSS("gfmr");
+	injectCSS("hl-github");
+
 	// addScript("markdown");
 	d.body.innerHTML = "<div id=\"page\">" + (new sd2.converter()).makeHtml(d.body.innerText) + "</div>";
 	console.log("SD2 fired.");
@@ -25,10 +29,5 @@
 	// addScript("hl");
 	hljs.initHighlighting();
 	console.log("HL initialized.");
-
-	// Inject a references to the stylesheets.
-
-	injectCSS("gfmr");
-	injectCSS("hl-github");
 
 }(document));
