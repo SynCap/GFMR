@@ -119,6 +119,11 @@ this.makeHtml = function(text) {
 	// when it's in a replacement string
 	text = text.replace(/\$/g,"~D");
 
+	// SynCap:
+	// TAB tables
+	// must be before of _deTab
+	text = _tabTables(text);
+
 	// Convert all tabs to spaces.
 	text = _deTab(text);
 
@@ -169,6 +174,33 @@ var _namedCodeBlocks = function(text) {
 		}
 	);
 };
+
+/**
+ * TAB tables
+ */
+var _tabTables = function (text) {
+
+	var rw = /(^(\t[^\t\n]+)+\n)+/gm; // catch whole table
+	var rr = /^(\t[^\t\n]+)+\n/gm; 	// catch row in whole table
+	var rc = /[^\t\n]+/g;		// catch cell in row
+
+	function catchCell (cellText) {
+		var resCell =  '<td>\n' + cellText + '\n</td>\n';
+		return resCell;
+	}
+
+	function catchRow (tableRow) {
+		var resRow =  '<tr>\n' + tableRow.replace(rc, catchCell) + '\n</tr>\n';
+		return resRow;
+	}
+
+	function catchTable (wholeTable) {
+		var resTable = '<table>\n' + wholeTable.replace(rr, catchRow) + '\n</table>\n';
+		return resTable;
+	}
+
+	return text.replace(rw, catchTable);
+}
 
 /**
 * Render HTML tables.
