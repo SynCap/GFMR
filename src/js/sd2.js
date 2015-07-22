@@ -185,7 +185,7 @@ var _tabTables = function (text) {
 	var rc = /[^\t\n]+/g;		// catch cell in row
 
 	function catchCell (cellText) {
-		var resCell =  '<td>\n' + cellText + '\n</td>\n';
+		var resCell =  '<td>\n' + _RunSpanGamut(cellText.trim()) + '\n</td>\n';
 		return resCell;
 	}
 
