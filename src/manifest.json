@@ -1,7 +1,11 @@
 {
    "content_scripts": [ {
       "js": [ "js/sd2.js", "js/hl.js", "js/gfmr.js" ],
-      "matches": [ "http://*/*.md*", "http://*/*.markdown*", "http://*/*.text", "ftp://*/*.md*", "ftp://*/*.markdown*", "ftp://*/*.text", "file://*/*.md*", "file://*/*.markdown*", "file://*/*.text" ]
+      "matches": [ 
+         "http://*/*.MD", "http://*/*.md*", "*://*/*.markdown*", "http://*/*.text", 
+         // "https://*/*.MD", "https://*/*.md*", "*://*/*.markdown*", "https://*/*.text", 
+         "file://*/*.MD", "file://*/*.md*", "*://*/*.markdown*", "file://*/*.text"
+      ]
    } ],
    "web_accessible_resources": [ "css/gfmr.css", "css/*.css" ],
    "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'",
