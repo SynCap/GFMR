@@ -1,6 +1,10 @@
 {
    "content_scripts": [ {
-      "js": [ "js/sd2.js", "js/hl.js", "js/gfmr.js" ],
+      "js": [ 
+         "js/marked.js",
+         "js/hl.js",
+         "js/gfmr.js" 
+      ],
       "matches": [ 
          "http://*/*.MD", "http://*/*.md*", "*://*/*.markdown*", "http://*/*.text", 
          // "https://*/*.MD", "https://*/*.md*", "*://*/*.markdown*", "https://*/*.text", 

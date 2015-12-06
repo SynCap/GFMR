@@ -26,20 +26,20 @@
 ```markdown
 ___Test 1___
 
-	&#124; Header 1 &#124; +Header 2
-	&#124; -------- &#124; --------
-	&#124; Cell 1   &#124; Cell 2
-	&#124; Cell 3   &#124; Cell 4
+	| Header 1 | +Header 2
+	| -------- | --------
+	| Cell 1   | Cell 2
+	| Cell 3   | Cell 4
 	_AfterTable 1_
 
 ***Test 2***
 
-	Header A &#124; Header B
-	&#45;:------"&#124;---------:
-	Cell c   &#124; Cell d
-	Cell e   &#124; Cell f
-	Cell g   &#124; Cell h
-	Cell i   &#124; Cell j
+	Header A | Header B
+	-:------:|---------:
+	Cell c   | Cell d
+	Cell e   | Cell f
+	Cell g   | Cell h
+	Cell i   | Cell j
 	_AfterTable 2_
 ```
 
@@ -56,7 +56,7 @@ _AfterTable 1_
 ***Test 2***
 
 Header `A` | Header B ![][logo]
--:-------|---------:
+-:-------:|---------:
 Cell c   | Cell d ![][logo]
 Cell e   | *Cell* f
 Cell g   | **Cell** h
