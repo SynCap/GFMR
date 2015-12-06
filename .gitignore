@@ -60,3 +60,5 @@ gfmr.bk.crx
 .ARCHIVE
 bower_components
 node_modules
+lib
+*.cmd

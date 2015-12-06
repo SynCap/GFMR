@@ -1,4 +1,6 @@
+/* global chrome */
 /* global marked */
+/* global hljs */
 /**
  * Copyright (c) 2013, 2015 Constantin Loskutov,
  * www.syncap.ru, <syncap.ru@gmail.com>
