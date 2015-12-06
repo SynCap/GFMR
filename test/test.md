@@ -1,4 +1,5 @@
-####HTML ![][logo]
+### HTML ![][logo]
+
 ```HTML
   <pre><code class="javascript">     (function (d) {
     	console.log('Hello, world!');
@@ -8,7 +9,8 @@
   echo $a."\n";</code></pre>
 ```
 
-####Actual view
+#### Actual view
+
 ```javascript
   (function (d) {
   	console.log('Hello, world!');
@@ -20,8 +22,9 @@
   echo $a."\n";
 ```
 
-###Tables
-####markdown
+### Tables
+
+#### markdown
 
 ```HTML
 ___Test 1___
@@ -43,7 +46,7 @@ ___Test 1___
 	_AfterTable 2_
 ```
 
-####Actual view ![][logo]
+#### Actual view ![][logo]
 
 ___Test 1___
 
