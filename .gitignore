@@ -46,6 +46,9 @@ Temporary Items
 # Project specific files and folders
 # =====================================
 
+# JetBrains files
+.idea
+
 # sublime files
 *.sublime-project
 *.sublime-workspace
