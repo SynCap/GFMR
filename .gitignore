@@ -61,6 +61,7 @@ gfmr.bk.crx
 
 # prevent duplication of archives and libraries 
 .ARCHIVE
+GR
 bower_components
 node_modules
 lib
