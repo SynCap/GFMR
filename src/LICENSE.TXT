@@ -1,4 +1,4 @@
- Copyright ©2013, 2015, Constantin Loskutov
+ Copyright (c)2013, 2015, 2016 Constantin Loskutov
 
  Permission is hereby granted, free of charge, to any person obtaining
  a copy of this software and associated documentation files (the

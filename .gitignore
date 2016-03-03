@@ -41,10 +41,27 @@ $RECYCLE.BIN/
 Network Trash Folder
 Temporary Items
 .apdisk
+
+# =====================================
+# Project specific files and folders
+# =====================================
+
+# JetBrains files
+.idea
+
+# sublime files
 *.sublime-project
 *.sublime-workspace
+
+# unneeded files
 src/gfmr.beautified.css
 src/gfmr.bk.css
 gfmr.bk.crx
 *.pem
+
+# prevent duplication of archives and libraries 
 .ARCHIVE
+bower_components
+node_modules
+lib
+*.cmd

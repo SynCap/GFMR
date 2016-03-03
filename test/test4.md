@@ -7,7 +7,7 @@ http://orphaned.example.com/some_pipets/
 
 http://orphaned.example.com/some_pipets/this-is-file.zip
 
-<www.syncap.ru>
+Try it now: <www.syncap.ru>
 
 www.orphaned-site.com
 
@@ -37,3 +37,7 @@ just text	simple text
 
 	some text	another column
 	just text	simple text
+
+
+Definition list
+    :~ this is not originally MD syntax

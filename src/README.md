@@ -1,12 +1,13 @@
-#![][icon] GFM style markdown rendering Extension for Chrome
-©2013, Constantin Loskutov, [www.syncap.ru ![][logo]](http://www.syncap.ru/)
+# ![][icon] **GF** **_Markdown_** **R**endering ![][chrome] extension
 
-##Description
+©2013,2015,2016 Constantin Loskutov, [www.syncap.ru ![][logo]](http://www.syncap.ru/)
 
-Automatically parses [markdown](http://daringfireball.net/projects/markdown/) files (_.md_, _.markdown_, _.text_) into HTML.
+## Description
+
+Automatically parse [markdown](http://daringfireball.net/projects/markdown/) files (_.md_, _.markdown_, _.text_) into HTML.
 Supports some GFM ([Github Flavored Markdown](http://github.github.com/github-flavored-markdown/) ) features.
 
-Based on very-very old version of [Showdown](https://github.com/showdownjs/showdown), a port of Pyton Markdown renderer and
+Based on [markdown-it](https://markdown-it.github.io/) and
 [highlighter.js](http://softwaremaniacs.org/soft/highlight/) by Ivan Sagalayev.
 
 > **NOTE**
@@ -18,7 +19,7 @@ check `Allow access to file URLs` in [extension tab](chrome://extensions) for th
 ## Advantages
 
 - Autosubstitute on some combinations, i.e. ( c ) => &copy; etc
-- Really render the [tables](https://help.github.com/articles/github-flavored-markdown/#tables)
+- Really render the [tables](https://help.github.com/articles/organizing-information-with-tables/)
 
 ## Weaks
 
@@ -34,49 +35,58 @@ check `Allow access to file URLs` in [extension tab](chrome://extensions) for th
 - Renders tables
 - Auto convert the hyper links in plain text, ie: www.example.com, http://example.com
 
-> **NOTE** Tables in sd2 and GitHub are rendered in some different manner: GitHub
-needs newlines to determine tables exactly, but sd2 start tables from first line,
-wich contains pipes `|` with next line contains dividing lines.
+### Lists
 
-
-###Lists
-
-**SD2** engine lets use multistring list items in following manner:
+Engine lets use multistring list items in following manner:
 
 #### markdown
+
 ```markdown
 - ul
   - li ***p1***
 
-		li p2
+    li p2
 
-  - li `code`  ![][logo]
+  - li `code` ![][logo]
+
+    li p4 ![][chrome]
 ```
 
 #### HTML
+
 ```html
 <ul>
-<li><p>ul</p>
-
-<ul><li><p>li <strong><em>p1</em></strong></p>
-
-<p>li p2</p></li>
-<li><p>li <code>code</code> <img src="data:image/png;base64, … … … ==" alt="" title=""></p></li></ul></li>
+  <li>ul
+    <ul>
+      <li>
+        <p>li <strong><em>p1</em></strong></p>
+        <p>li p2</p>
+      </li>
+      <li>
+        <p>li <code>code</code> <img src="img/logo.png" alt=""></p>
+        <p>li p4 <img src="img/chrome-logo.png" alt=""></p>
+      </li>
+    </ul>
+  </li>
 </ul>
 ```
 
-####Actual view
+#### Actual view
+
 - ul
   - li ***p1***
 
-		li p2
+    li p2
 
   - li `code` ![][logo]
+
+    li p4 ![][chrome]
 
 
 
 ### Named codeblocks
 #### markdown
+
 ~~~markdown
   ```javascript
     (function (d) {
@@ -182,11 +192,15 @@ _Text After Table 2_
 
 ## Original Attributions
 
-Showdown Copyright (c) 2007 John Fraser. http://www.attacklab.net/
+**Markdown-It** Copyright (c)2014 by:
+
+- Alex Kocharin [github/rlidwka](https://github.com/rlidwka)
+- Vitaly Puzrin [github/puzrin](https://github.com/puzrin)
 
 Original Markdown Copyright (c) 2004-2005 John Gruber http://daringfireball.net/projects/markdown/
 
-Redistributable under a BSD-style open source license. See license.txt for more information.
+Redistributable under a BSD-style open source license. See [license.txt](LICENSE.TXT) for more information.
 
 [icon]:img/icon.png
 [logo]:img/logo.png
+[chrome]:img/chrome-logo.png
