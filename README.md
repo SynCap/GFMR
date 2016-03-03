@@ -10,11 +10,9 @@ Supports some GFM ([Github Flavored Markdown](http://github.github.com/github-fl
 Based on [markdown-it](https://markdown-it.github.io/) and
 [highlighter.js](http://softwaremaniacs.org/soft/highlight/) by Ivan Sagalayev.
 
-> **NOTE**
-To use Chrome as default viewer of markdown files
-check `Allow access to file URLs` in [extension tab](chrome://extensions) for this extension!
+> By default, extension permissions lets you view `.md` and `.markdown` files with any URL, including `file://` (ie - local files), but not GitHub!
 
-> This lets you view local files.
+The look of full README [rendered with this extension][screenshot-8].
 
 ## Advantages
 
@@ -52,9 +50,7 @@ Original Markdown Copyright (c) 2004-2005 John Gruber http://daringfireball.net/
 
 Redistributable under a BSD-style open source license. See [license.txt](LICENSE.TXT) for more information.
 
-[icon]:img/icon.png
-[logo]:img/logo.png
-[chrome]:img/chrome-logo.png
-
 [icon]:src/img/icon.png
 [logo]:src/img/logo.png
+[chrome]:src/img/chrome-logo.png
+[screenshot-8]:src/img/screenshot-8.png
