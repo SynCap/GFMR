@@ -35,11 +35,6 @@ check `Allow access to file URLs` in [extension tab](chrome://extensions) for th
 - Renders tables
 - Auto convert the hyper links in plain text, ie: www.example.com, http://example.com
 
-> **NOTE** Tables in sd2 and GitHub are rendered in some different manner: GitHub
-needs newlines to determine tables exactly, but sd2 start tables from first line,
-wich contains pipes `|` with next line contains dividing lines.
-
-
 ### Lists
 
 Engine lets use multistring list items in following manner:
