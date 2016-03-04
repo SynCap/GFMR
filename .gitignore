@@ -49,6 +49,9 @@ Temporary Items
 # JetBrains files
 .idea
 
+# VS Code
+.vscode
+
 # sublime files
 *.sublime-project
 *.sublime-workspace
