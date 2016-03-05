@@ -49,6 +49,9 @@ Temporary Items
 # JetBrains files
 .idea
 
+# VS Code
+.vscode
+
 # sublime files
 *.sublime-project
 *.sublime-workspace
@@ -61,6 +64,7 @@ gfmr.bk.crx
 
 # prevent duplication of archives and libraries 
 .ARCHIVE
+GR
 bower_components
 node_modules
 lib
