@@ -13,7 +13,7 @@ function lsw ( key, val) {
 
 	var argc = arguments.length;
 
-	if (argc == 0) {
+	if (argc === 0) {
 		// без параметров - array с ключами
 		var len = localStorage.length;
 		var res = [];

@@ -8,6 +8,12 @@
 @clrLink: #4183c4;
 
 
+.codeLink {
+	color: @clrCode;
+	text-decoration: underline;
+	text-decoration-line: dashed;
+}
+
 * {
 	margin: 0;
 	padding: 0;
@@ -75,6 +81,9 @@ pre,code {
 	font-family: 'Source Code Pro', Consolas, Monaco, "Courier New", "DejaVu Sans Mono", "Bitstream Vera Sans Mono", monospace;
 	font-size: .9em;
 	// line-height: 1.5em;
+	a {
+		.codeLink;
+	}
 }
 code {
 	border: none;
@@ -118,18 +127,24 @@ abbr {
 a {
 	color: @clrLink;
 	text-decoration: none;
-	
+
 	&:hover {
 		text-decoration: underline;
 	}
+	
 	& code,
 	&:link code,
-	&:visited code {
-		color: @clrLink;
+	&:visited code,
+	& pre,
+	&:link pre,
+	&:visited pre 
+	{
+		// color: @clrLink;
+		.codeLink;
 	}
 	&[href^="http:"]:after,
 	&[href^="https:"]:after
-	 {
+	{
 		// content: '\1F310'; //globe
 		content: '\29c9';
 		transform: rotate(-90deg);
@@ -140,7 +155,9 @@ a {
 		vertical-align: super;
 		text-decoration: none;
 	}
+
 }
+
 h1,h2,h3,h4,h5,h6 {
 	border: 0;
 	margin: 1.5em 0 .5em;

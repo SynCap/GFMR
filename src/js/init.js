@@ -26,13 +26,13 @@
 		var e = document.createElement(tag);
 		parent = parent || document.head;
 		
-		if (params != 'undefined' && params != null) {
+		if (params !== 'undefined' && params != null) {
 			for (var prop in params) {
 				e[prop] = params[prop];
 			}			
 		}
 
-		if (content != 'undefined' && content != null) {
+		if (content !== 'undefined' && content != null) {
 			e.innerHTML = content;
 		}
 
@@ -40,6 +40,12 @@
 		return e;
 	}
 
+	
+	/**
+	 * link the CSS file as `link` tag
+	 *
+	 * @param      {string}  fName   path to css
+	 */
 	function injectCSS (fName) {
 		mkElement('link',{href:chUrl( 'css/' + fName + '.css' ),rel:"stylesheet"})
 		console.log("CSS injected: %s", fName);
