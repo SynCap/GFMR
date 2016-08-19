@@ -1,10 +1,25 @@
-var gulp = require('gulp');
-var path = require('path');
-var concat = require('gulp-concat');
-var less = require('gulp-less');
-var csso = require('gulp-csso');
-var gccr = require('gulp-closure-compiler');
-var debug = require('gulp-debug');
+/**
+ * GFMR builds
+ * tasks:
+ * 		hl 	: build Highlight.js
+ * 		js	: minify JS files with Google closure compiler
+ * 		css	: compile LESS
+ * 		build: js+css
+ * 		watch: watch for CSS folders, and rebuild css (`css` task) when needed
+ * 		
+ * 		default task - `build`
+ */
+
+const gulp = require('gulp');
+const path = require('path');
+const concat = require('gulp-concat');
+const less = require('gulp-less');
+const csso = require('gulp-csso');
+const gccr = require('gulp-closure-compiler');
+const debug = require('gulp-debug');
+const watch = require('gulp-watch');
+const chalk = require('chalk');
+
 
 var paths = {
 	styles : './src/css/gfmr.less',
@@ -22,6 +37,11 @@ var paths = {
 var out = {
 	js : path.join( __dirname,'src','js' ),
 	css : path.join( __dirname, 'src', 'css' )
+}
+
+function timeStamp() {
+	// return Date().replace(/^.*?(\d+:\d+:\d+).*$/, '$1');
+	return chalk.gray((new Date()).toLocaleString().slice(11));
 }
 
 gulp.task('hl', function () {
@@ -55,4 +75,11 @@ gulp.task('css', function () {
 		.pipe(gulp.dest(out.css));
 });
 
-gulp.task('default', ['css', 'js']);
+gulp. task('watch', function () {
+	return watch('css/*.less', function () {
+			gulp.src('css/*.less')
+				.pipe(gulp.dest('css'));
+		});
+});	
+
+gulp.task('default', ['build']);
