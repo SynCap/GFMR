@@ -5,6 +5,7 @@
          "js/markdown-it-deflist.min.js",
          "js/markdown-it-emoji-light.min.js",
          "js/hl.js" ,
+         "js/hl-ln.js" ,
          "js/init.js" 
       ],
       "matches": [ 
