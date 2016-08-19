@@ -21,20 +21,24 @@ const watch = require('gulp-watch');
 const chalk = require('chalk');
 
 
-var paths = {
-	styles : './src/css/gfmr.less',
+var libPath = {
+	styles : './less/gfmr.less',
 	hl : [
-		'hl.js',
+		'highlight.js',
+		'highlightjs-line-numbers.js',
 		'lang/*.js'
 	],
+	mdi : [
+		'markdown-it.js',
+		'markdown-it-deflist.js',
+		'markdown-it-emoji-light.js'
+	],
 	scripts : [
-		'marked.js',
-		// 'hl.js',
 		'init.js'
 	]
 }
 
-var out = {
+var destPath = {
 	js : path.join( __dirname,'src','js' ),
 	css : path.join( __dirname, 'src', 'css' )
 }
@@ -44,16 +48,40 @@ function timeStamp() {
 	return chalk.gray((new Date()).toLocaleString().slice(11));
 }
 
+function doLog(text) {
+	console.log('[%s] %s', timeStamp(), text);
+}
+
 gulp.task('hl', function () {
-	console.log('HL concat');
-	return gulp.src(paths.hl, {cwd: './lib/hl-dev/src/'})
-		//.pipe(debug({minimal:false}))
+	doLog('HL concat');
+	return gulp.src(libPath.hl, {cwd: './lib/hl-dev/'})
+		.pipe(debug({minimal:false}))
 		.pipe(concat('hl.js'))
-		.pipe(gulp.dest(out.js));
+		.pipe(
+			gccr ({
+				compilerPath: 'd:\\TLS\\gccr\\gccr.jar',
+				fileName: 'hl.min.js'
+			})
+		)
+		.pipe(gulp.dest(destPath.js));
+});
+
+gulp.task('mdi', function () {
+	doLog('MDI concat');
+	return gulp.src(libPath.hl, {cwd: './lib/mdi-dev/'})
+		.pipe(concat('mdi.js'))
+		//.pipe(debug({minimal:false}))
+		.pipe(
+			gccr ({
+				compilerPath: 'd:\\TLS\\gccr\\gccr.jar',
+				fileName: 'mdi.min.js'
+			})
+		)
+		.pipe(gulp.dest(destPath.js));
 });
 
 gulp.task('js', function () {
-	console.log('JS task');
+	doLog('compact init');
 	return gulp.src( 'init.js', { cwd: './src/js' })
 		.pipe(debug({minimal: false}))
 		.pipe(
@@ -67,19 +95,12 @@ gulp.task('js', function () {
 });
 
 gulp.task('css', function () {
-	console.log('CSS task');
-	return gulp.src( paths.styles )
+	doLog('CSS task');
+	return gulp.src( libPath.styles )
 		.pipe(debug({minimal:false}))
 		.pipe(less())
 		.pipe(csso())
-		.pipe(gulp.dest(out.css));
+		.pipe(gulp.dest(destPath.css));
 });
 
-gulp. task('watch', function () {
-	return watch('css/*.less', function () {
-			gulp.src('css/*.less')
-				.pipe(gulp.dest('css'));
-		});
-});	
-
-gulp.task('default', ['build']);
+gulp.task('default', ['hl','mdi','js','css']);
