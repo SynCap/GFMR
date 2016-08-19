@@ -69,3 +69,5 @@ bower_components
 node_modules
 lib
 *.cmd
+*.sublime-workspace
+
