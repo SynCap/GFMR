@@ -141,18 +141,18 @@ a {
 		// color: @clrLink;
 		.codeLink;
 	}
-	&[href^="http:"]:after,
-	&[href^="https:"]:after
-	{
-		// content: '\1F310'; //globe
+	a[href^="http:"]:after, 
+	a[href^="https:"]:after {
 		content: '\29c9';
 		transform: rotate(-90deg);
-		display: inline-block;
+		display: inline;
 		font-family: sans-serif;
-		margin-left: .5em;
-		font-size: .5em;
+		margin-left: 0.2em;
+		font-size: .3em;
 		vertical-align: super;
 		text-decoration: none;
+		font-family: 'Open Sans', sans-serif;
+		color: #7799cc;
 	}
 
 }
@@ -270,4 +270,5 @@ dd {
 	}
 }
 
-@import (inline) "hl-night-tropicbird.css";
+@import (inline) "f12.css";
+@import (inline) "line-numbers.css";

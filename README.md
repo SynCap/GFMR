@@ -36,7 +36,7 @@ The look of full README [rendered with this extension][screenshot-8].
 [More info](src/README.md)
 
 
-## [License](LICENSE.TXT)
+## [License](src/LICENSE.TXT)
 
 
 ## Original Attributions

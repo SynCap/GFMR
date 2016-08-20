@@ -60,32 +60,26 @@ var destPath = {
 }*/
 
 gulp.task('hl', function (cb) {
-	pump([
-		gulp.src(libPath.hl.files, {cwd: libPath.hl.dir}),
-		// debug({minimal:false}),
-		concat('hl.js'),
-		uglify(uglifyOptions),
-		gulp.dest(destPath.js)
-	]);
+	return gulp.src(libPath.hl.files, {cwd: libPath.hl.dir})
+		// .pipe(debug({minimal:false}))
+		.pipe(concat('hl.js'))
+		.pipe(uglify(uglifyOptions))
+		.pipe(gulp.dest(destPath.js));
 });
 
 gulp.task('mdi', function (cb) {
-	pump([
-		gulp.src(libPath.mdi.files, {cwd: libPath.mdi.dir}),
-		// debug({minimal:false}),
-		concat('mdi.js'),
-		uglify(uglifyOptions),
-		gulp.dest(destPath.js)
-	]);
+	return gulp.src(libPath.mdi.files, {cwd: libPath.mdi.dir})
+		// .pipe(debug({minimal:false}))
+		.pipe(concat('mdi.js'))
+		.pipe(uglify(uglifyOptions))
+		.pipe(gulp.dest(destPath.js));
 });
 
 gulp.task('init', function (cb) {
-	pump([
-		gulp.src( 'init.js', { cwd: './dev/js' }),
-		// debug({minimal: false}),
-		// uglify(uglifyOptions),
-		gulp.dest(destPath.js)
-	]);
+	return gulp.src( 'init.js', { cwd: './dev/js' })
+		// .pipe(debug({minimal: false}))
+		// .pipe(uglify(uglifyOptions))
+		.pipe(gulp.dest(destPath.js));
 });
 
 gulp.task('css', function (cb) {
@@ -96,13 +90,13 @@ gulp.task('css', function (cb) {
 	var LessCleanCSS = require('less-plugin-clean-css');
 	var cleanCss = new LessCleanCSS({advanced: true});
 
-	pump([
-		gulp.src( libPath.styles ),
-		// debug({minimal:false}),
-		less({plugins: [autoprefix, cleanCss]}),
-		// csso(),
-		gulp.dest(destPath.css)
-	]);
+	return gulp.src( libPath.styles )
+		// .pipe(debug({minimal:false}))
+		.pipe(less({
+			plugins: [autoprefix, cleanCss]
+		}))
+		// .pipe(csso())
+		.pipe(gulp.dest(destPath.css));
 });
 
 gulp.task('js', ['hl','mdi','init']);
