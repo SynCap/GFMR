@@ -21,7 +21,7 @@ The look of full README [rendered with this extension][screenshot-8].
 
 ## Weaks
 
-- Becouse of nature of rendering (Javascript regexps) not recommended to view large `.md` files and/or files with complex rules
+- Because of nature of rendering (Javascript regexps) not recommended to view large `.md` files and/or files with complex rules
 - Some differenses in manner of rendering some blocks, such as tables
 
 
