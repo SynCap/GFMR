@@ -2,84 +2,102 @@
  * GFMR builds
  * tasks:
  * 		hl 	: build Highlight.js
- * 		js	: minify JS files with Google closure compiler
+ * 		mid	: join & minify Markdown-It and his plugins
+ * 		init	: minify base JS
  * 		css	: compile LESS
- * 		build: js+css
+ * 		
  * 		watch: watch for CSS folders, and rebuild css (`css` task) when needed
  * 		
  * 		default task - `build`
  */
 
-const gulp = require('gulp');
-const path = require('path');
-const concat = require('gulp-concat');
-const less = require('gulp-less');
-const csso = require('gulp-csso');
-const gccr = require('gulp-closure-compiler');
-const debug = require('gulp-debug');
-const watch = require('gulp-watch');
-const chalk = require('chalk');
+// const chalk  = require('chalk');
+const gulp   = require('gulp');
+const concat = require('gulp-concat-util');
+const csso   = require('gulp-csso');
+// const debug  = require('gulp-debug');
+const less   = require('gulp-less');
+// const rename = require('gulp-rename');
+const path   = require('path');
+const pump   = require('pump');
+const uglify = require('gulp-uglify');
+// const gccr   = require('gulp-closure-compiler');
+// const watch = require('gulp-watch');
 
 
-var paths = {
-	styles : './src/css/gfmr.less',
-	hl : [
-		'hl.js',
-		'lang/*.js'
-	],
-	scripts : [
-		'marked.js',
-		// 'hl.js',
+var libPath = {
+	styles : './dev/less/gfmr.less',
+	hl : {
+		dir : './dev/js/hl/build',
+		files : [
+			'highlight.pack.js',
+			'highlightjs-line-numbers.js'
+			]
+		},
+	mdi : {
+		dir : './dev/js/mdi',
+		files : [
+			'markdown-it.js',
+			'markdown-it-deflist.js',
+			'markdown-it-emoji-light.js'
+			]
+		},
+	init : [
 		'init.js'
 	]
 }
 
-var out = {
+const uglifyOptions = {preserveComments: 'license'};
+
+var destPath = {
 	js : path.join( __dirname,'src','js' ),
 	css : path.join( __dirname, 'src', 'css' )
 }
 
-function timeStamp() {
+/*function timeStamp() {
 	// return Date().replace(/^.*?(\d+:\d+:\d+).*$/, '$1');
 	return chalk.gray((new Date()).toLocaleString().slice(11));
-}
+}*/
 
-gulp.task('hl', function () {
-	console.log('HL concat');
-	return gulp.src(paths.hl, {cwd: './lib/hl-dev/src/'})
-		//.pipe(debug({minimal:false}))
+gulp.task('hl', function (cb) {
+	return gulp.src(libPath.hl.files, {cwd: libPath.hl.dir})
+		// .pipe(debug({minimal:false}))
 		.pipe(concat('hl.js'))
-		.pipe(gulp.dest(out.js));
+		.pipe(uglify(uglifyOptions))
+		.pipe(gulp.dest(destPath.js));
 });
 
-gulp.task('js', function () {
-	console.log('JS task');
-	return gulp.src( 'init.js', { cwd: './src/js' })
-		.pipe(debug({minimal: false}))
-		.pipe(
-			gccr ({
-				compilerPath: 'd:\\TLS\\gccr\\gccr.jar',
-				fileName: 'init.min.js'
-			})
-		)
-		//.pipe(debug({minimal:false}))
-		.pipe(gulp.dest('./'));
+gulp.task('mdi', function (cb) {
+	return gulp.src(libPath.mdi.files, {cwd: libPath.mdi.dir})
+		// .pipe(debug({minimal:false}))
+		.pipe(concat('mdi.js'))
+		.pipe(uglify(uglifyOptions))
+		.pipe(gulp.dest(destPath.js));
 });
 
-gulp.task('css', function () {
-	console.log('CSS task');
-	return gulp.src( paths.styles )
-		.pipe(debug({minimal:false}))
-		.pipe(less())
-		.pipe(csso())
-		.pipe(gulp.dest(out.css));
+gulp.task('init', function (cb) {
+	return gulp.src( 'init.js', { cwd: './dev/js' })
+		// .pipe(debug({minimal: false}))
+		// .pipe(uglify(uglifyOptions))
+		.pipe(gulp.dest(destPath.js));
 });
 
-gulp. task('watch', function () {
-	return watch('css/*.less', function () {
-			gulp.src('css/*.less')
-				.pipe(gulp.dest('css'));
-		});
-});	
+gulp.task('css', function (cb) {
 
-gulp.task('default', ['build']);
+	var LessAutoprefix = require('less-plugin-autoprefix');
+	var autoprefix = new LessAutoprefix({ browsers: ['last 2 versions'] });
+
+	var LessCleanCSS = require('less-plugin-clean-css');
+	var cleanCss = new LessCleanCSS({advanced: true});
+
+	return gulp.src( libPath.styles )
+		// .pipe(debug({minimal:false}))
+		.pipe(less({
+			plugins: [autoprefix, cleanCss]
+		}))
+		// .pipe(csso())
+		.pipe(gulp.dest(destPath.css));
+});
+
+gulp.task('js', ['hl','mdi','init']);
+gulp.task('default', ['js','css']);
