@@ -1,9 +1,7 @@
 {
    "content_scripts": [ {
       "js": [ 
-         "js/markdown-it.min.js" ,
-         "js/markdown-it-deflist.min.js",
-         "js/markdown-it-emoji-light.min.js",
+         "js/mdi.js" ,
          "js/hl.js" ,
          "js/init.js" 
       ],
