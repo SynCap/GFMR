@@ -87,14 +87,19 @@
 	// Run syntax hfighlighter for code. Wether we took this not for `*.md` files from `Github`?
 	hljs.initHighlighting();
 	console.log("HL initialized.");
+	// hljs.initLineNumbersOnLoad();
+	[].forEach.call(document.querySelectorAll('code.hljs'), hljs.lineNumbersBlock );
 
-	// 
-	var t = document.querySelector('#page h1');
+	// set document title (tab label) using first main heading or (if absent) first subheading
+	var t = document.querySelector('#page h1') || document.querySelector('#page h1');
 	if (t) {
 		mkElement('title', null, null, t.innerText.trim() );
 	}
 
+	// make `external` links be really external - they should to be opened in new tab
 	[].forEach.call(document.querySelectorAll('a[href^="http:"],a[href^="https:"]'), function(a){a.target = '_blank'; });
+	// define `id` for heading elements, using its own text content. 
+	// This make possible to specify internal links in text
 	[].forEach.call(document.querySelectorAll('h1,h2,h3,h4,h5,h6'),function(h){h.id=h.innerText.trim().toLowerCase().replace(/[\s\:&]+/g,'_')});
 	
 }(window));
