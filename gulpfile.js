@@ -10,33 +10,36 @@
  * 		default task - `build`
  */
 
-const gulp = require('gulp');
-const path = require('path');
-const concat = require('gulp-concat');
-const less = require('gulp-less');
-const csso = require('gulp-csso');
-const gccr = require('gulp-closure-compiler');
-const debug = require('gulp-debug');
-const watch = require('gulp-watch');
-const chalk = require('chalk');
+const chalk  = require('chalk');
+const gulp   = require('gulp');
+const concat = require('gulp-concat-util');
+const csso   = require('gulp-csso');
+const debug  = require('gulp-debug');
+const less   = require('gulp-less');
+const path   = require('path');
+const pump   = require('pump');
+const uglify = require('gulp-uglify');
+const gccr   = require('gulp-closure-compiler');
+// const watch = require('gulp-watch');
 
 
 var libPath = {
-	styles : './less/gfmr.less',
-	hl : [
-		'highlight.js',
-		'highlightjs-line-numbers.js',
-		'lang/*.js'
-	],
-	mdi : [
-		'markdown-it.js',
-		'markdown-it-deflist.js',
-		'markdown-it-emoji-light.js'
-	],
+	styles : './dev/less/gfmr.less',
+	hl : './dev/js/hl/build/highlight.pack.js',
+	mdi : {
+		dir : './dev/js/mdi',
+		files : [
+			'markdown-it.js',
+			'markdown-it-deflist.js',
+			'markdown-it-emoji-light.js'
+			]
+		},
 	scripts : [
 		'init.js'
 	]
 }
+
+const uglifyOptions = {preserveComments: 'license', output: {ie_proof: false}};
 
 var destPath = {
 	js : path.join( __dirname,'src','js' ),
@@ -54,53 +57,53 @@ function doLog(text) {
 
 gulp.task('hl', function () {
 	doLog('HL concat');
-	return gulp.src(libPath.hl, {cwd: './lib/hl-dev/'})
-		.pipe(debug({minimal:false}))
-		.pipe(concat('hl.js'))
-		.pipe(
-			gccr ({
-				compilerPath: 'd:\\TLS\\gccr\\gccr.jar',
-				fileName: 'hl.min.js'
-			})
-		)
-		.pipe(gulp.dest(destPath.js));
+	pump([
+		gulp.src(libPath.hl),
+		debug({minimal:false}),
+		uglify(uglifyOptions),
+		/*gccr ({
+			compilerPath: 'd:/TLS/GCCR/gccr.jar',
+			fileName: 'hl.min.js'
+		}),*/		
+		gulp.dest(destPath.js)
+	], cb);
 });
 
-gulp.task('mdi', function () {
+gulp.task('mdi', function (cb) {
 	doLog('MDI concat');
-	return gulp.src(libPath.hl, {cwd: './lib/mdi-dev/'})
-		.pipe(concat('mdi.js'))
-		//.pipe(debug({minimal:false}))
-		.pipe(
-			gccr ({
-				compilerPath: 'd:\\TLS\\gccr\\gccr.jar',
-				fileName: 'mdi.min.js'
-			})
-		)
-		.pipe(gulp.dest(destPath.js));
+	pump([ 
+		gulp.src(libPath.mdi.files, {cwd: libPath.mdi.dir}),
+		concat.scripts('mdi.min.js'),
+		// debug({minimal:false}),
+		uglify(uglifyOptions),
+		gulp.dest(destPath.js)
+	], cb);
 });
 
-gulp.task('js', function () {
+gulp.task('js', function (cb) {
 	doLog('compact init');
-	return gulp.src( 'init.js', { cwd: './src/js' })
-		.pipe(debug({minimal: false}))
-		.pipe(
-			gccr ({
+	pump([
+		gulp.src( 'init.js', { cwd: './src/js' }),
+		debug({minimal: false}),
+		uglify(uglifyOptions),
+			/*gccr ({
 				compilerPath: 'd:\\TLS\\gccr\\gccr.jar',
 				fileName: 'init.min.js'
-			})
-		)
-		//.pipe(debug({minimal:false}))
-		.pipe(gulp.dest('./'));
+			}),*/
+		//debug({minimal:false}),
+		gulp.dest(destPath.js)
+	],cb);
 });
 
-gulp.task('css', function () {
+gulp.task('css', function (cb) {
 	doLog('CSS task');
-	return gulp.src( libPath.styles )
-		.pipe(debug({minimal:false}))
-		.pipe(less())
-		.pipe(csso())
-		.pipe(gulp.dest(destPath.css));
+	pump([
+		gulp.src( libPath.styles ),
+		debug({minimal:false}),
+		less(),
+		csso(),
+		gulp.dest(destPath.css)
+	], cb);
 });
 
 gulp.task('default', ['hl','mdi','js','css']);
