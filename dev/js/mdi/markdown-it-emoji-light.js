@@ -115,17 +115,20 @@ module.exports={
   "black_large_square": "⬛"
 }
 },{}],2:[function(require,module,exports){
-// Emoticons -> Emoji mapping.
-//
-// (!) Some patterns skipped, to avoid collisions
-// without increase matcher complicity. Than can change in future.
-//
-// Places to look for more emoticons info:
-//
-// - http://en.wikipedia.org/wiki/List_of_emoticons#Western
-// - https://github.com/wooorm/emoticon/blob/master/Support.md
-// - http://factoryjoe.com/projects/emoticons/
-//
+/*
+ Emoticons -> Emoji mapping.
+
+(!) Some patterns skipped, to avoid collisions
+without increase matcher complicity. Than can change in future.
+
+Places to look for more emoticons info:
+
+- http://en.wikipedia.org/wiki/List_of_emoticons#Western
+- https://github.com/wooorm/emoticon/blob/master/Support.md
+- http://factoryjoe.com/projects/emoticons/
+
+*/
+
 'use strict';
 
 module.exports = {

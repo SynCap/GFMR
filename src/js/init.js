@@ -79,7 +79,9 @@
 	// Run syntax hfighlighter for code. Wether we took this not for `*.md` files from `Github`?
 	hljs.initHighlighting();
 	console.log("HL initialized.");
-	[].forEach.call(document.querySelectorAll('code.hl-js'), hljs.lineNumbersBlock );
+	[].forEach.call(document.querySelectorAll('code.hljs'), function (block) {
+		hljs.lineNumbersBlock(block);
+	});
 	console.log("HL line numbers initialized.");
 	// 
 	var t = document.querySelector('#page h1');

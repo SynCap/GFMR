@@ -17,7 +17,7 @@ const concat = require('gulp-concat-util');
 const csso   = require('gulp-csso');
 // const debug  = require('gulp-debug');
 const less   = require('gulp-less');
-const rename = require('gulp-rename');
+// const rename = require('gulp-rename');
 const path   = require('path');
 const pump   = require('pump');
 const uglify = require('gulp-uglify');
@@ -27,7 +27,13 @@ const uglify = require('gulp-uglify');
 
 var libPath = {
 	styles : './dev/less/gfmr.less',
-	hl : './dev/js/hl/build/highlight.pack.js',
+	hl : {
+		dir : './dev/js/hl/build',
+		files : [
+			'highlight.pack.js',
+			'highlightjs-line-numbers.js'
+			]
+		},
 	mdi : {
 		dir : './dev/js/mdi',
 		files : [
@@ -54,17 +60,17 @@ var destPath = {
 }*/
 
 gulp.task('hl', function (cb) {
-	return gulp.src(libPath.hl)
+	return gulp.src(libPath.hl.files, {cwd: libPath.hl.dir})
 		// .pipe(debug({minimal:false}))
+		.pipe(concat('hl.js'))
 		.pipe(uglify(uglifyOptions))
-		.pipe(rename({basename: 'hl'}))
 		.pipe(gulp.dest(destPath.js));
 });
 
 gulp.task('mdi', function (cb) {
 	return gulp.src(libPath.mdi.files, {cwd: libPath.mdi.dir})
 		// .pipe(debug({minimal:false}))
-		.pipe(concat.scripts('mdi.js'))
+		.pipe(concat('mdi.js'))
 		.pipe(uglify(uglifyOptions))
 		.pipe(gulp.dest(destPath.js));
 });
@@ -72,16 +78,26 @@ gulp.task('mdi', function (cb) {
 gulp.task('init', function (cb) {
 	return gulp.src( 'init.js', { cwd: './dev/js' })
 		// .pipe(debug({minimal: false}))
-		.pipe(uglify(uglifyOptions))
+		// .pipe(uglify(uglifyOptions))
 		.pipe(gulp.dest(destPath.js));
 });
 
 gulp.task('css', function (cb) {
+
+	var LessAutoprefix = require('less-plugin-autoprefix');
+	var autoprefix = new LessAutoprefix({ browsers: ['last 2 versions'] });
+
+	var LessCleanCSS = require('less-plugin-clean-css');
+	var cleanCss = new LessCleanCSS({advanced: true});
+
 	return gulp.src( libPath.styles )
 		// .pipe(debug({minimal:false}))
-		.pipe(less())
-		.pipe(csso())
+		.pipe(less({
+			plugins: [autoprefix, cleanCss]
+		}))
+		// .pipe(csso())
 		.pipe(gulp.dest(destPath.css));
 });
 
-gulp.task('default', ['hl','mdi','init','css']);
+gulp.task('js', ['hl','mdi','init']);
+gulp.task('default', ['js','css']);
