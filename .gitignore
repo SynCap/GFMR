@@ -57,9 +57,9 @@ Temporary Items
 *.sublime-workspace
 
 # unneeded files
-src/gfmr.beautified.css
-src/gfmr.bk.css
-gfmr.bk.crx
+src/*.beautified.css
+src/*.bk.css
+*.bk.crx
 *.pem
 
 # prevent duplication of archives and libraries 
@@ -70,4 +70,5 @@ node_modules
 lib
 *.cmd
 *.sublime-workspace
-
+src/css/*.map
+src/js/*.map

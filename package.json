@@ -30,6 +30,8 @@
     "less-plugin-autoprefix": "^1.5.1",
     "less-plugin-clean-css": "^1.5.1",
     "less-plugin-lesshat": "0.0.2",
+    "micromatch": "^2.3.11",
+    "minimist": "^1.2.0",
     "pump": "^1.0.1",
     "run-sequence": "^1.1.5",
     "vinyl-paths": "^2.1.0"
