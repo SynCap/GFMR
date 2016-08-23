@@ -10,3 +10,8 @@
   -ms-user-select: none;
   user-select: none;
 }
+
+.hljs {
+	background: linear-gradient( rgba(255,255,255, .1) 50%, rgba(0,0,0,.1) 50%);
+	background-size:100% 2em;
+}
