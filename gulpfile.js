@@ -96,11 +96,15 @@ gulp.task('css', function (cb) {
 	var LessCleanCSS = require('less-plugin-clean-css');
 	var cleanCss = new LessCleanCSS({advanced: true});
 
+	var LessLesshat = require('less-plugin-less'),
+    lesshat = new LessLesshat();
+
 	pump([
 		gulp.src( libPath.styles ),
 		// debug({minimal:false}),
-		less({plugins: [autoprefix, cleanCss]}),
-		// csso(),
+		// less({plugins: [autoprefix, cleanCss, lesshat]}),
+		less(),
+		csso(),
 		gulp.dest(destPath.css)
 	], cb);
 });

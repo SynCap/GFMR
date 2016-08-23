@@ -76,7 +76,8 @@
 	d.body.innerHTML = "<div id=\"page\">" + md.render(d.body.innerText) + "</div>";
 	console.log("Renderer `markdownit.js` fired.");
 
-	// Run syntax hfighlighter for code. Wether we took this not for `*.md` files from `Github`?
+	// Run syntax hfighlighter for code. 
+	// Wether we took this not for `*.md` files from `Github`?
 	hljs.initHighlighting();
 	console.log("HL initialized.");
 	[].forEach.call(document.querySelectorAll('code.hljs'), function (block) {
@@ -92,13 +93,13 @@
 	// target for external links
 	[].forEach.call(
 		document.querySelectorAll('a[href^="http:"],a[href^="https:"]'), 
-		function(a){a.target = '_blank'; }
+		function(a){a.target = '_blank';a.classList.add('external')}
 	);
 	// id values for headings, to be anchors for internal links, 
 	// for example: [go to](#element_s_content) 
 	[].forEach.call(
 		document.querySelectorAll('h1,h2,h3,h4,h5,h6'),
-		function(h){h.id=h.innerText.trim().toLowerCase().replace(/[\s\:&]+/g,'_')}
+		function(h){h.id=h.innerText.trim().toLowerCase().replace(/\W+/g,'-');h.classList.add('anchored')}
 	);
 	
 }(window));

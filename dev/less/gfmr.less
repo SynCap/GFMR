@@ -141,18 +141,26 @@ a {
 		// color: @clrLink;
 		.codeLink;
 	}
-	a[href^="http:"]:after, 
-	a[href^="https:"]:after {
-		content: '\29c9';
-		transform: rotate(-90deg);
-		display: inline;
-		font-family: sans-serif;
-		margin-left: 0.2em;
-		font-size: .3em;
-		vertical-align: super;
-		text-decoration: none;
-		font-family: 'Open Sans', sans-serif;
-		color: #7799cc;
+	/* 
+	&[href^="http:"], 
+	&[href^="https:"]  
+	*/
+	&.external {
+		&:after {
+			content: '\29c9';
+			transform: rotate(-90deg);
+			display: inline;
+			font-family: sans-serif;
+			margin-left: 0.2em;
+			font-size: .3em;
+			vertical-align: super;
+			text-decoration: none;
+			font-family: 'Open Sans', sans-serif;
+			color: #7799cc;
+		}
+		&:hover:after {
+			text-decoration: none;
+		}
 	}
 
 }
@@ -188,6 +196,13 @@ h1 {
 		/* padding-top: .25em; */
 		border-top: none;
 		border-radius: 5px 5px 0 0;
+	}
+
+	a {
+		color: yellow;
+		&:after:hover {
+
+		}
 	}
 }
 h2 {

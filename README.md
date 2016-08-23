@@ -1,6 +1,6 @@
 # ![][icon] **GF** **_Markdown_** **R**endering ![][chrome] extension
 
-©2013,2015,2016 Constantin Loskutov, [www.syncap.ru ![][logo]](http://www.syncap.ru/)
+Copyright ©2013,2015,2016 Constantin Loskutov, [www.syncap.ru ![][logo]](http://www.syncap.ru/)
 
 ## Description
 
@@ -37,6 +37,8 @@ The look of full README [rendered with this extension][screenshot-8].
 
 
 ## [License](src/LICENSE.TXT)
+
+[MIT](src/LICENSE.TXT)
 
 
 ## Original Attributions

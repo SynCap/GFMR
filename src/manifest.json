@@ -7,6 +7,7 @@
       ],
       "matches": [ 
          "http://*/*.MD", "http://*/*.md*", "*://*/*.markdown*", "http://*/*.text", 
+         // i've forgot - wtf with https, need to look at ggl develop
          // "https://*/*.MD", "https://*/*.md*", "*://*/*.markdown*", "https://*/*.text", 
          "file://*/*.MD", "file://*/*.md*", "*://*/*.markdown*", "file://*/*.text"
       ]
