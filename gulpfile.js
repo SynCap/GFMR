@@ -12,7 +12,10 @@
  */
  'strict mode';
 
+ const devMode = process.env.NODE_ENV === 'development';
+
 const path    = require('path');
+const chalk   = require('chalk');
 const pump    = require('pump');
 const del     = require('del');
 const gulp    = require('gulp');
@@ -29,7 +32,6 @@ const gulpif  = require('gulp-if');
 // const vinylPaths   = require('vinyl-paths');
 // const watch        = require('gulp-watch');
 // const autoprefixer = require('gulp-autoprefixer');
-// const chalk        = require('chalk');
 // const cleancss     = require('gulp-clean-css');
 
 
@@ -43,38 +45,39 @@ const srcPath = {
 		]
 	},
 	hl : {
-		dir : './dev/js/hl/build',
+		dir : './dev/js',
 		files : [
-			'highlight.pack.js',
-			'highlightjs-line-numbers.js'
-			]
-		},
+			'hljs/build/highlight.pack.js',
+			'hlln/src/highlightjs-line-numbers.js'
+		]
+	},
 	mdi : {
-		dir : './dev/js/mdi',
+		dir : './dev/js',
 		files : [
-			'markdown-it.js',
-			'markdown-it-deflist.js',
-			'markdown-it-emoji-light.js'
-			]
-		},
+			'mdi.core/dist/markdown-it.js',
+			'mdi.defl/dist/markdown-it-deflist.js',
+			'mdi.emji/dist/markdown-it-emoji-light.js'
+		]
+	},
 	init : [
 		'init.js'
 	]
-}
+};
 
 const uglifyOptions = {preserveComments: 'license'};
 
 var destPath = {
 	js : path.join( /*__dirname,*/'src','js' ),
 	css : path.join( /*__dirname,*/ 'src', 'css' )
-}
+};
 
-/*function timeStamp() {
+function timeStamp() {
 	// return Date().replace(/^.*?(\d+:\d+:\d+).*$/, '$1');
 	return chalk.gray((new Date()).toLocaleString().slice(11));
-}*/
+}
 
 function toClean(dir, fileMask) {
+	console.log('[%s] toClean %s %s', timeStamp(), chalk.cyan(dir), chalk.yellow(fileMask) );
 	return del(path.join(dir, fileMask));
 }
 
@@ -120,7 +123,7 @@ gulp.task('js:init', function (cb) {
 	);
 });
 
-gulp.task('css:clean', function(cb){
+gulp.task('css:clean', function(){
 	return del(['src/css/**/*']);
 });
 
@@ -135,19 +138,26 @@ gulp.task('css', /*gulp.series('css:clean'),*/ function (cb) {
 	/*var LessLesshat = require('less-plugin-lesshat'),
     lesshat = new LessLesshat();*/
 
-	// return gulp.src( srcPath.styles )
-	pump([ gulp.src( srcPath.styles.files, {cwd : srcPath.styles.dir} )
-		, debug({title: 'Style source files'})
-		, srcmaps.init()
-		, gulpif( '*.less' ,less({plugins: [autoprefix/*, cleanCss*/]}))
-		// , less()
-		// , autoprefixer()
-		, concat('gfmr.css')
-		, csso()
-		, srcmaps.write('./')
-		, gulp.dest(destPath.css)
-	], cb);
-	;
+	toClean(destPath.css, '*').then(
+		// return gulp.src( srcPath.styles )
+		pump([ gulp.src( srcPath.styles.files, {cwd : srcPath.styles.dir} )
+			, debug({title: 'Style source files'})
+			, srcmaps.init()
+			, gulpif( '*.less' ,less({plugins: [autoprefix/*, cleanCss*/]}))
+			, debug({title: 'After LESS:'})
+			// , less()
+			// , autoprefixer()
+			, gulp.dest(destPath.css)
+			, debug({title: 'After dest1:'})
+			, concat('gfmr.min.css')
+			, debug({title: 'After concat'})
+			, gulpif(!devMode, csso())
+			, debug({title: 'After csso'})
+			, srcmaps.write('./')
+			, debug({title: 'After srcMap.write:'})
+			, gulp.dest(destPath.css)
+		], cb)
+    );
 });
 
 gulp.task('js:all', gulp.parallel('js:hl','js:mdi','js:init'));
