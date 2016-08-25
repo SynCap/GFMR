@@ -12,7 +12,6 @@
  */
  'strict mode';
 
- const devMode = process.env.NODE_ENV === 'development';
 
 const path    = require('path');
 const chalk   = require('chalk');
@@ -34,6 +33,8 @@ const gulpif  = require('gulp-if');
 // const autoprefixer = require('gulp-autoprefixer');
 // const cleancss     = require('gulp-clean-css');
 
+const argv = require('minimist')(process.argv.slice(2));
+const devMode = process.env.NODE_ENV === 'development' || argv.dev;
 
 const srcPath = {
 	styles : {
@@ -47,7 +48,7 @@ const srcPath = {
 	hl : {
 		dir : './dev/js',
 		files : [
-			'hljs/build/highlight.pack.js',
+			'hl/build/highlight.pack.js',
 			'hlln/src/highlightjs-line-numbers.js'
 		]
 	},
@@ -81,52 +82,73 @@ function toClean(dir, fileMask) {
 	return del(path.join(dir, fileMask));
 }
 
+/**	
+ * Highlight.Js files, concat & uglify
+ * Highlight.JS and it's lang packs is already prebuilt
+ * and united in one pack. Other filse - are HlJs plugins */
 gulp.task('js:hl', function (cb) {
 	toClean(destPath.js, 'hl.js*')
 		.then(
 			pump([
-				gulp.src(srcPath.hl.files, {cwd: srcPath.hl.dir}),
-				// debug({minimal:false}),
-				srcmaps.init(),
-				uglify(uglifyOptions),
-				concat('hl.js'),
-				srcmaps.write('./'),
-				gulp.dest(destPath.js)
+				gulp.src(srcPath.hl.files, {cwd: srcPath.hl.dir})
+				//, debug({minimal:false})
+				, srcmaps.init()
+				// , gulpif(devMode, gulp.dest(destPath.js))
+				, gulpif(!devMode, uglify(uglifyOptions))
+				, concat('hl.js')
+				, srcmaps.write('./')
+				, gulp.dest(destPath.js)
 			], cb)
 		);
 });
 
+/**
+ * The `Markdown-It`'s files, concat & uglify
+ */
 gulp.task('js:mdi', function (cb) {
-	toClean(destPath.js, 'mdi.js*').then(
-		pump([
-			gulp.src(srcPath.mdi.files, {cwd: srcPath.mdi.dir}),
-			// debug({minimal:false}),
-			srcmaps.init(),
-			uglify(uglifyOptions),
-			concat('mdi.js'),
-			srcmaps.write('./'),
-			gulp.dest(destPath.js)
-		], cb)
-	);
+	toClean(destPath.js, 'mdi.js*')
+		.then(
+			pump([
+				gulp.src(srcPath.mdi.files, {cwd: srcPath.mdi.dir})
+				//, debug({minimal:false})
+				, srcmaps.init()
+				// , gulpif(devMode, gulp.dest(destPath.js))
+				, gulpif(!devMode, uglify(uglifyOptions))
+				, concat('mdi.js')
+				, srcmaps.write('./')
+				, gulp.dest(destPath.js)
+			], cb)
+		);
 });
 
+/**
+ * Extension main logic scipts
+ */
 gulp.task('js:init', function (cb) {
-	toClean(destPath.js, 'init.js*').then(
-		pump([
-			gulp.src( 'init.js', { cwd: './dev/js' }),
-			// debug({minimal: false}),
-			srcmaps.init(),
-			uglify(uglifyOptions),
-			srcmaps.write('./'),
-			gulp.dest(destPath.js)
-		], cb)
-	);
+	toClean(destPath.js, 'init.js*')
+		.then(
+			pump([
+				gulp.src( 'init.js', { cwd: './dev/js' })
+				//, debug({minimal: false})
+				, srcmaps.init()
+				, gulpif(!devMode, uglify(uglifyOptions))
+				, srcmaps.write('./')
+				, gulp.dest(destPath.js)
+			], cb)
+		);
 });
 
+/**
+ * Separate task to clean css folder
+ */
 gulp.task('css:clean', function(){
 	return del(['src/css/**/*']);
 });
 
+/** 
+ * build CSS, DO NOT use subtask to clean target folder,
+ * use special function, that use `del` modul directly
+ */
 gulp.task('css', /*gulp.series('css:clean'),*/ function (cb) {
 
 	var LessAutoprefix = require('less-plugin-autoprefix');
@@ -138,26 +160,27 @@ gulp.task('css', /*gulp.series('css:clean'),*/ function (cb) {
 	/*var LessLesshat = require('less-plugin-lesshat'),
     lesshat = new LessLesshat();*/
 
-	toClean(destPath.css, '*').then(
-		// return gulp.src( srcPath.styles )
-		pump([ gulp.src( srcPath.styles.files, {cwd : srcPath.styles.dir} )
-			, debug({title: 'Style source files'})
-			, srcmaps.init()
-			, gulpif( '*.less' ,less({plugins: [autoprefix/*, cleanCss*/]}))
-			, debug({title: 'After LESS:'})
-			// , less()
-			// , autoprefixer()
-			, gulp.dest(destPath.css)
-			, debug({title: 'After dest1:'})
-			, concat('gfmr.min.css')
-			, debug({title: 'After concat'})
-			, gulpif(!devMode, csso())
-			, debug({title: 'After csso'})
-			, srcmaps.write('./')
-			, debug({title: 'After srcMap.write:'})
-			, gulp.dest(destPath.css)
-		], cb)
-    );
+	toClean(destPath.css, '*')
+		.then(
+			// return gulp.src( srcPath.styles )
+			pump([ gulp.src( srcPath.styles.files, {cwd : srcPath.styles.dir} )
+				, debug({title: 'Style source files'})
+				, srcmaps.init()
+				, gulpif( '*.less' ,less({plugins: [autoprefix/*, cleanCss*/]}))
+				, debug({title: 'After LESS:'})
+				// , less()
+				// , autoprefixer()
+				, gulp.dest(destPath.css)
+				, debug({title: 'After dest1:'})
+				, concat('gfmr.min.css')
+				, debug({title: 'After concat'})
+				, gulpif(!devMode, csso())
+				, debug({title: 'After csso'})
+				, srcmaps.write('./')
+				, debug({title: 'After srcMap.write:'})
+				, gulp.dest(destPath.css)
+			], cb)
+		);
 });
 
 gulp.task('js:all', gulp.parallel('js:hl','js:mdi','js:init'));
