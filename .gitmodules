@@ -10,6 +10,6 @@
 [submodule "hlln"]
 	path = dev/js/hlln
 	url = https://github.com/wcoder/highlightjs-line-numbers.js.git
-[submodule "hljs"]
-	path = dev/js/hljs
+[submodule "dev/js/hl"]
+	path = dev/js/hl
 	url = https://github.com/isagalaev/highlight.js.git
