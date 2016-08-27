@@ -4,18 +4,19 @@
 	"version": "0.1.0",
 	"command": "gulp",
 	"isShellCommand": true,
-	"suppressTaskName": true,
+	"suppressTaskName": false,
     "showOutput": "always",
     "echoCommand": true,
 	"args": [
 		// "--no-color"
 	],
 	"tasks": [
-		{ "taskName": "css" }, 
+		{ "taskName": "build"     }, 
+		{ "taskName": "css"       }, 
 		{ "taskName": "css:clean" }, 
-		{ "taskName": "js:all" }, 
-		{ "taskName": "js:init" }, 
-		{ "taskName": "js:hl" }, 
-		{ "taskName": "js:mdi" }
+		{ "taskName": "js:all"    }, 
+		{ "taskName": "js:init"   }, 
+		{ "taskName": "js:hl"  	  }, 
+		{ "taskName": "js:mdi"    }
 	]
 }
