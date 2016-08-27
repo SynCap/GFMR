@@ -21,12 +21,12 @@ const gulp    = require('gulp');
 const concat  = require('gulp-concat-util');
 const less    = require('gulp-less');
 const csso    = require('gulp-csso');
+const rename  = require('gulp-rename');
 const uglify  = require('gulp-uglify');
 const debug   = require('gulp-debug');
 const srcmaps = require('gulp-sourcemaps');
 const gulpif  = require('gulp-if');
 // const gccr         = require('gulp-closure-compiler');
-// const rename       = require('gulp-rename');
 // const stripDebug   = require('gulp-strip-debug');
 // const vinylPaths   = require('vinyl-paths');
 // const watch        = require('gulp-watch');
@@ -77,8 +77,13 @@ function timeStamp() {
 	return chalk.gray((new Date()).toLocaleString().slice(11));
 }
 
+function showMsg(msg) {
+	console.log('[%s] %s', timeStamp(), msg);
+	return false;
+}
+
 function toClean(dir, fileMask) {
-	console.log('[%s] toClean %s %s', timeStamp(), chalk.cyan(dir), chalk.yellow(fileMask) );
+	console.log('[%s] Clean this "%s\\%s"', timeStamp(), chalk.cyan(dir), chalk.yellow(fileMask) );
 	return del(path.join(dir, fileMask));
 }
 
@@ -162,19 +167,21 @@ gulp.task('css', /*gulp.series('css:clean'),*/ function (cb) {
 
 	toClean(destPath.css, '*')
 		.then(
+			
 			// return gulp.src( srcPath.styles )
 			pump([ gulp.src( srcPath.styles.files, {cwd : srcPath.styles.dir} )
-				, debug({title: 'Style source files'})
+				// , debug({title: 'Style source files'})
 				, srcmaps.init()
 				, gulpif( '*.less' ,less({plugins: [autoprefix/*, cleanCss*/]}))
 				, debug({title: 'After LESS:'})
 				// , less()
 				// , autoprefixer()
-				, gulp.dest(destPath.css)
-				, debug({title: 'After dest1:'})
-				, concat('gfmr.min.css')
+				// , gulp.dest(destPath.css)
+				// , debug({title: 'After dest1:'})
+				, concat('gfmr.css')
 				, debug({title: 'After concat'})
 				, gulpif(!devMode, csso())
+				, gulpif (!devMode, rename())
 				, debug({title: 'After csso'})
 				, srcmaps.write('./')
 				, debug({title: 'After srcMap.write:'})
