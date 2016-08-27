@@ -5,6 +5,8 @@
 	"command": "gulp",
 	"isShellCommand": true,
 	"suppressTaskName": true,
+    "showOutput": "always",
+    "echoCommand": true,
 	"args": [
 		"--no-color"
 	],

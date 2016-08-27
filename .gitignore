@@ -70,5 +70,5 @@ node_modules
 lib
 *.cmd
 *.sublime-workspace
-src/css/*.map
-src/js/*.map
+src/css/
+src/js/

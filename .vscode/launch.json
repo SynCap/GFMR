@@ -7,7 +7,7 @@
 		"program": "${workspaceRoot}/node_modules/gulp/bin/gulp.js",
 		"stopOnEntry": false,
 		"args": [
-			"js:hl",
+			"css",
 			"--dev-mode" 
 		],
 		"cwd": "${workspaceRoot}",
