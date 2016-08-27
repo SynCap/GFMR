@@ -10,7 +10,8 @@
  * 		
  * 		default task - `build`
  */
- 'strict mode';
+
+'strict mode';
 
 
 const chalk   = require('chalk');
@@ -21,13 +22,13 @@ const util    = require('util');
 
 const gulp    = require('gulp');
 const concat  = require('gulp-concat-util');
-const less    = require('gulp-less');
 const csso    = require('gulp-csso');
-// const rename  = require('gulp-rename');
-const uglify  = require('gulp-uglify');
-const debug   = require('gulp-debug');
-const srcmaps = require('gulp-sourcemaps');
+// const debug   = require('gulp-debug');
 const gulpif  = require('gulp-if');
+const less    = require('gulp-less');
+const srcmaps = require('gulp-sourcemaps');
+const uglify  = require('gulp-uglify');
+// const rename  = require('gulp-rename');
 // const gccr         = require('gulp-closure-compiler');
 // const stripDebug   = require('gulp-strip-debug');
 // const vinylPaths   = require('vinyl-paths');
@@ -36,7 +37,7 @@ const gulpif  = require('gulp-if');
 // const cleancss     = require('gulp-clean-css');
 
 const argv = require('minimist')(process.argv.slice(2));
-const devMode = process.env.NODE_ENV === 'development' || argv['dev-mode'];
+const devMode = process.env.NODE_ENV === 'development' || argv['dev-mode'] === true;
 
 const srcPath = {
 	styles : {
@@ -80,13 +81,13 @@ function timeStamp() {
 }
 
 function showMsg() {
-	let s = util.format(arguments);
+	var s = util.format.apply(util, arguments);
 	console.log('[%s] %s', timeStamp(), s);
 	return false;
 }
 
 function toClean(dir, fileMask) {
-	console.log('[%s] Clean this "%s\\%s"', timeStamp(), chalk.cyan(dir), chalk.yellow(fileMask) );
+	console.log('[%s] %s "%s\\%s"', timeStamp(), chalk.red('Clean this'), chalk.cyan(dir), chalk.yellow(fileMask) );
 	return del(path.join(dir, fileMask));
 }
 
@@ -168,28 +169,27 @@ gulp.task('css', /*gulp.series('css:clean'),*/ function (cb) {
 	/*var LessLesshat = require('less-plugin-lesshat'),
     lesshat = new LessLesshat();*/
 
-	showMsg('process.env.NODE_ENV = "%s"', process.env.NODE_ENV);
-	showMsg('Dev mode = "%s"', devMode);
+	showMsg('%s = "%s"', chalk.yellow('NODE_ENV'), chalk.cyan(process.env.NODE_ENV));
+	showMsg('Dev mode = %s', chalk.cyan(devMode));
 
 	toClean(destPath.css, '*')
-		.then(
-			
+		.then(			
 			// return gulp.src( srcPath.styles )
 			pump([ gulp.src( srcPath.styles.files, {cwd : srcPath.styles.dir} )
 				// , debug({title: 'Style source files'})
 				, srcmaps.init()
 				, gulpif( '*.less' ,less({plugins: [autoprefix/*, cleanCss*/]}))
-				, debug({title: 'After LESS:'})
+				// , debug({title: 'After LESS:'})
 				// , less()
 				// , autoprefixer()
 				// , gulp.dest(destPath.css)
 				// , debug({title: 'After dest1:'})
 				, concat('gfmr.css')
-				, debug({title: 'After concat'})
+				// , debug({title: 'After concat'})
 				, gulpif(!devMode, csso())
-				, debug({title: 'After csso'})
+				// , debug({title: 'After csso'})
 				, srcmaps.write('./')
-				, debug({title: 'After srcMap.write:'})
+				// , debug({title: 'After srcMap.write:'})
 				, gulp.dest(destPath.css)
 			], cb)
 		);
