@@ -65,6 +65,8 @@ Temporary Items
 # don't watch them
 src/js/
 src/css/
+src/js/*
+src/css/*
  
 
 # prevent duplication of archives and libraries 
