@@ -50,7 +50,7 @@ Temporary Items
 .idea
 
 # VS Code
-.vscode
+#.vscode
 
 # sublime files
 *.sublime-project

@@ -34,7 +34,7 @@ const gulpif  = require('gulp-if');
 // const cleancss     = require('gulp-clean-css');
 
 const argv = require('minimist')(process.argv.slice(2));
-const devMode = process.env.NODE_ENV === 'development' || argv.dev;
+const devMode = process.env.NODE_ENV === 'development' || argv['dev-mode'];
 
 const srcPath = {
 	styles : {
@@ -184,4 +184,5 @@ gulp.task('css', /*gulp.series('css:clean'),*/ function (cb) {
 });
 
 gulp.task('js:all', gulp.parallel('js:hl','js:mdi','js:init'));
+gulp.task('build', gulp.parallel('css', 'js:hl', 'js:mdi', 'js:init'));
 gulp.task('default', gulp.parallel('css'));
