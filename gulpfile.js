@@ -13,15 +13,17 @@
  'strict mode';
 
 
-const path    = require('path');
 const chalk   = require('chalk');
-const pump    = require('pump');
 const del     = require('del');
+const path    = require('path');
+const pump    = require('pump');
+const util    = require('util');
+
 const gulp    = require('gulp');
 const concat  = require('gulp-concat-util');
 const less    = require('gulp-less');
 const csso    = require('gulp-csso');
-const rename  = require('gulp-rename');
+// const rename  = require('gulp-rename');
 const uglify  = require('gulp-uglify');
 const debug   = require('gulp-debug');
 const srcmaps = require('gulp-sourcemaps');
@@ -77,8 +79,9 @@ function timeStamp() {
 	return chalk.gray((new Date()).toLocaleString().slice(11));
 }
 
-function showMsg(msg) {
-	console.log('[%s] %s', timeStamp(), msg);
+function showMsg() {
+	let s = util.format(arguments);
+	console.log('[%s] %s', timeStamp(), s);
 	return false;
 }
 
@@ -165,6 +168,9 @@ gulp.task('css', /*gulp.series('css:clean'),*/ function (cb) {
 	/*var LessLesshat = require('less-plugin-lesshat'),
     lesshat = new LessLesshat();*/
 
+	showMsg('process.env.NODE_ENV = "%s"', process.env.NODE_ENV);
+	showMsg('Dev mode = "%s"', devMode);
+
 	toClean(destPath.css, '*')
 		.then(
 			
@@ -181,7 +187,6 @@ gulp.task('css', /*gulp.series('css:clean'),*/ function (cb) {
 				, concat('gfmr.css')
 				, debug({title: 'After concat'})
 				, gulpif(!devMode, csso())
-				, gulpif (!devMode, rename())
 				, debug({title: 'After csso'})
 				, srcmaps.write('./')
 				, debug({title: 'After srcMap.write:'})
