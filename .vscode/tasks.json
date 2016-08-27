@@ -8,7 +8,7 @@
     "showOutput": "always",
     "echoCommand": true,
 	"args": [
-		"--no-color"
+		// "--no-color"
 	],
 	"tasks": [
 		{ "taskName": "css" }, 
