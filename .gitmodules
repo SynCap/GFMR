@@ -10,3 +10,6 @@
 [submodule "dev/js/mdi"]
 	path = dev/js/mdi
 	url = https://github.com/markdown-it/markdown-it.git
+[submodule "hl"]
+	path = dev/js/hl
+	url = https://github.com/isagalaev/highlight.js.git
