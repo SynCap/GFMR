@@ -22,8 +22,8 @@ const util    = require('util');
 
 const gulp    = require('gulp');
 const concat  = require('gulp-concat-util');
-const csso    = require('gulp-csso');
-// const debug   = require('gulp-debug');
+// const csso    = require('gulp-csso');
+const debug   = require('gulp-debug');
 const gulpif  = require('gulp-if');
 const less    = require('gulp-less');
 const srcmaps = require('gulp-sourcemaps');
@@ -43,9 +43,12 @@ const srcPath = {
 	styles : {
 		dir : './dev/less',
 		files : [
-			'gfmr.less',
-			'f12.css',
-			'line-numbers.css'
+			'gfmr.less'
+			// , 'f12.css'
+			// , 'far.css'
+			// , 'hl-github.css'
+			// , 'hl-night-tropicbird.css'
+			// , 'line-numbers.css'
 		]
 	},
 	hl : {
@@ -87,7 +90,7 @@ function showMsg() {
 }
 
 function toClean(dir, fileMask) {
-	console.log('[%s] %s "%s\\%s"', timeStamp(), chalk.red('Clean this'), chalk.cyan(dir), chalk.yellow(fileMask) );
+	showMsg('%s "%s\\%s"', chalk.red('Clean this'), chalk.cyan(dir), chalk.yellow(fileMask) );
 	return del(path.join(dir, fileMask));
 }
 
@@ -163,8 +166,8 @@ gulp.task('css', /*gulp.series('css:clean'),*/ function (cb) {
 	var LessAutoprefix = require('less-plugin-autoprefix');
 	var autoprefix = new LessAutoprefix({ browsers: ['chrome > 25', 'opera > 12'] });
 
-	/*var LessCleanCSS = require('less-plugin-clean-css');
-	var cleanCss = new LessCleanCSS({advanced: true});*/
+	var LessCleanCSS = require('less-plugin-clean-css');
+	var cleanCss = new LessCleanCSS({advanced: true});
 
 	/*var LessLesshat = require('less-plugin-lesshat'),
     lesshat = new LessLesshat();*/
@@ -178,16 +181,17 @@ gulp.task('css', /*gulp.series('css:clean'),*/ function (cb) {
 			pump([ gulp.src( srcPath.styles.files, {cwd : srcPath.styles.dir} )
 				// , debug({title: 'Style source files'})
 				, srcmaps.init()
-				, gulpif( '*.less' ,less({plugins: [autoprefix/*, cleanCss*/]}))
-				// , debug({title: 'After LESS:'})
+				// , gulpif( '*.less' ,less({plugins: [autoprefix, cleanCss]}))
+				, less({plugins: [autoprefix, cleanCss]})
+				, debug({title: 'After LESS:'})
 				// , less()
 				// , autoprefixer()
 				// , gulp.dest(destPath.css)
 				// , debug({title: 'After dest1:'})
-				, concat('gfmr.css')
-				// , debug({title: 'After concat'})
-				, gulpif(!devMode, csso())
+				// , gulpif(!devMode, csso())
 				// , debug({title: 'After csso'})
+				// , concat('gfmr.css')
+				// , debug({title: 'After concat'})
 				, srcmaps.write('./')
 				// , debug({title: 'After srcMap.write:'})
 				, gulp.dest(destPath.css)
