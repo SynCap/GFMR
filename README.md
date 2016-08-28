@@ -47,15 +47,15 @@ The look of full README [rendered with this extension][screenshot-8].
 
 ## TODO for v2
 
-[x] Code line numbers
-[x] Striped background for code (Zebra style)
-[-] Hot swap for makeup
-[-] Hot swap for code highlighting color schemes
-[-] Turn On/Off TOC (on fly)
-[-] Automatic rearrange big images
-[?] Smiple tab tables: find blocks of text arranged by columns and convert them to simple tables, as it was with SD2
-[-] RST style tables, with compact multiline cells
-[-] Render sciantific formulas (mathematics, chemistry, etc)
+- [x] Code line numbers
+- [x] Striped background for code (Zebra style)
+- [-] Hot swap for makeup
+- [-] Hot swap for code highlighting color schemes
+- [-] Turn On/Off TOC (on fly)
+- [-] Automatic rearrange big images
+- [?] Smiple tab tables: find blocks of text arranged by columns and convert them to simple tables, as it was with SD2
+- [-] RST style tables, with compact multiline cells
+- [-] Render sciantific formulas (mathematics, chemistry, etc)
 
 ## [License](src/LICENSE.TXT)
 
