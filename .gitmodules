@@ -1,13 +1,13 @@
-[submodule "dev/js/hl.ln"]
+[submodule "hl.ln"]
 	path = dev/js/hl.ln
 	url = https://github.com/wcoder/highlightjs-line-numbers.js.git
-[submodule "dev/js/mdi.defl"]
+[submodule "mdi.defl"]
 	path = dev/js/mdi.defl
 	url = https://github.com/markdown-it/markdown-it-deflist.git
-[submodule "dev/js/mdi.emji"]
+[submodule "mdi.emji"]
 	path = dev/js/mdi.emji
 	url = https://github.com/markdown-it/markdown-it-emoji.git
-[submodule "dev/js/mdi"]
+[submodule "mdi"]
 	path = dev/js/mdi
 	url = https://github.com/markdown-it/markdown-it.git
 [submodule "hl"]
