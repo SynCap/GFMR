@@ -50,17 +50,24 @@ Temporary Items
 .idea
 
 # VS Code
-.vscode
+#.vscode
 
-# sublime files
+# SublimeText files
 *.sublime-project
 *.sublime-workspace
 
 # unneeded files
-src/gfmr.beautified.css
-src/gfmr.bk.css
-gfmr.bk.crx
+*.bk.crx
 *.pem
+
+# now SRC/js & SRC/css - is a result dir, where
+# produced files resides
+# don't watch them
+src/js/
+src/css/
+src/js/*
+src/css/*
+ 
 
 # prevent duplication of archives and libraries 
 .ARCHIVE

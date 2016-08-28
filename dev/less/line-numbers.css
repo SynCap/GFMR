@@ -1,0 +1,24 @@
+
+.hljs-line-numbers
+{
+	-webkit-user-select: none;
+	   -moz-user-select: none;
+		-ms-user-select: none;
+			user-select: none;
+	text-align: right;
+
+	color: #555;
+	border-right: 1px dotted #444;
+
+	-webkit-touch-callout: none;
+	-khtml-user-select: none;
+}
+
+.hljs
+{
+	line-height: 1.3em;
+
+	background: linear-gradient( rgba(255,255,255, .15) 50%, rgba(0,0,0,.15) 50%);
+	background-origin: 0 .5em;
+	background-size: 100% 2.6em;
+}

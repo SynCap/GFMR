@@ -6,7 +6,7 @@
 @clrCodeBG: #222;//#F8F8FF;
 @clrCode: #fc0;//#678;
 @clrLink: #4183c4;
-
+@clrLineNumbers: #c90;
 .codeLink {
 	color: @clrCode;
 	text-decoration: underline;
@@ -95,7 +95,7 @@ code {
 	border: 1px solid fade(@clrCode, 50%);
 }
 td code, p code {
-	// white-space: nowrap;
+	white-space: nowrap;
 }
 pre {
 	margin: 1em -2.2em;
@@ -141,18 +141,26 @@ a {
 		// color: @clrLink;
 		.codeLink;
 	}
-	&[href^="http:"]:after,
-	&[href^="https:"]:after
-	{
-		// content: '\1F310'; //globe
-		content: '\29c9';
-		transform: rotate(-90deg);
-		display: inline-block;
-		font-family: sans-serif;
-		margin-left: .5em;
-		font-size: .5em;
-		vertical-align: super;
-		text-decoration: none;
+	/* 
+	&[href^="http:"], 
+	&[href^="https:"]  
+	*/
+	&.external {
+		&:after {
+			content: '\29c9';
+			transform: rotate(-90deg);
+			display: inline;
+			font-family: sans-serif;
+			margin-left: 0.2em;
+			font-size: .3em;
+			vertical-align: super;
+			text-decoration: none;
+			font-family: 'Open Sans', sans-serif;
+			color: #7799cc;
+		}
+		&:hover:after {
+			text-decoration: none;
+		}
 	}
 
 }
@@ -173,30 +181,36 @@ h1,h2,h3 {
 }
 h1 {
 
-	font-size: 210%;
+	font-size: 5em;
 	background: #79c;
-	margin: 1em -.98em;
-	// text-indent: -1em;
-	padding: .8em 1em .5em 3em;
+	margin: 1em -0.4em;
+	padding: 0.5em 0.4em .5em 2.4em;
 	color: #eee;
 	border: 1px solid #999;
 	border-width: 0 1;
 	/* text-shadow: 1px 1px 1px #777, -1px -1px 1px #777; */
 
  	&:first-child {
-		margin-top: -.95em;
-		/* padding-top: .25em; */
+		margin-top: -.4em;
 		border-top: none;
 		border-radius: 5px 5px 0 0;
 	}
+
+	a {
+		color: yellow;
+		&:after:hover {
+			text-decoration: none;
+		}
+	}
 }
 h2 {
-	font-size: 170%;
-	// margin-top: 1.5em;
-	// padding-top: .5em;
+	font-size: 3em;
 }
 h3 {
-	// margin-top: 1em;
+	font-size: 2em;
+}
+h4 {
+	font-size: 1.5em;
 }
 hr {
 	border: 1px solid @clrMain;
@@ -270,4 +284,41 @@ dd {
 	}
 }
 
-@import (inline) "hl-night-tropicbird.css";
+@import (inline) "far.css";
+// @import (inline) "hl-github.css";
+// @import (inline) "hl-night-tropicbird.css";
+// @import (inline) "f12.css";
+
+/**!
+ * Line Numbers
+ * Must be after color scheme!
+ */
+
+.hljs-line-numbers
+{
+	text-align: right;
+
+	color: @clrLineNumbers;
+	border-right: 1px dotted @clrLineNumbers;
+
+	-webkit-touch-callout: none;
+
+	// -khtml-user-select: none;
+	-webkit-user-select: none;
+	//    -moz-user-select: none;
+	// 	-ms-user-select: none;
+			user-select: none;
+}
+
+// background line stripes (zebra code)
+.hljs
+{
+	line-height: 1.3em;
+
+	background: linear-gradient( 
+			rgba(255,255,255, .15) 50%, 
+			rgba(0,0,0,.15) 50%
+		);
+	background-size: 100% 2.6em;
+	background-origin: content-box;
+}

@@ -1,0 +1,22 @@
+{
+	// See https://go.microsoft.com/fwlink/?LinkId=733558
+	// for the documentation about the tasks.json format
+	"version": "0.1.0",
+	"command": "gulp",
+	"isShellCommand": true,
+	"suppressTaskName": false,
+    "showOutput": "always",
+    "echoCommand": true,
+	"args": [
+		// "--no-color"
+	],
+	"tasks": [
+		{ "taskName": "build"     }, 
+		{ "taskName": "css"       }, 
+		{ "taskName": "css:clean" }, 
+		{ "taskName": "js:all"    }, 
+		{ "taskName": "js:init"   }, 
+		{ "taskName": "js:hl"  	  }, 
+		{ "taskName": "js:mdi"    }
+	]
+}
