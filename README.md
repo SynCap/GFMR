@@ -35,6 +35,27 @@ The look of full README [rendered with this extension][screenshot-8].
 
 [More info](src/README.md)
 
+## Legend
+
+| ver     | What's up?                                                                                                            |
+| :-----: | --------------------------------------------------------------------------------------------------------------------- |
+| 1.xx    | Past realease was based on ShowDown.js                                                                                |
+| 1.4.x.. | Based on SD2.js                                                                                                       |
+| 1.7.x.. | Code starts using syntax highlighter highlight.JS                                                                     |
+| 2.0     | Render Engine changed to Markdown - it.js, new makeup, `fresh look`, unique color scheme for code syntax highlighting |
+| 2.1     | Current release; [+] line numbers in multiline code, [+] striped background for muliline code                         |
+
+## TODO for v2
+
+- [x] Code line numbers
+- [x] Striped background for code (Zebra style)
+- [-] Hot swap for makeup
+- [-] Hot swap for code highlighting color schemes
+- [-] Turn On/Off TOC (on fly)
+- [-] Automatic rearrange big images
+- [?] Smiple tab tables: find blocks of text arranged by columns and convert them to simple tables, as it was with SD2
+- [-] RST style tables, with compact multiline cells
+- [-] Render sciantific formulas (mathematics, chemistry, etc)
 
 ## [License](src/LICENSE.TXT)
 
