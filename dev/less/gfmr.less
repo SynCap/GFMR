@@ -296,17 +296,18 @@ dd {
 
 .hljs-line-numbers
 {
-	-webkit-user-select: none;
-	   -moz-user-select: none;
-		-ms-user-select: none;
-			user-select: none;
 	text-align: right;
 
 	color: @clrLineNumbers;
 	border-right: 1px dotted @clrLineNumbers;
 
 	-webkit-touch-callout: none;
-	-khtml-user-select: none;
+
+	// -khtml-user-select: none;
+	-webkit-user-select: none;
+	//    -moz-user-select: none;
+	// 	-ms-user-select: none;
+			user-select: none;
 }
 
 // background line stripes (zebra code)
@@ -318,6 +319,6 @@ dd {
 			rgba(255,255,255, .15) 50%, 
 			rgba(0,0,0,.15) 50%
 		);
-	background-origin-y: .5em;
 	background-size: 100% 2.6em;
+	background-origin: content-box;
 }
