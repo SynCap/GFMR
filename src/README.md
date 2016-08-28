@@ -183,7 +183,6 @@ ___Cell i___ | Cell j
 
 _Text After Table 2_
 
-
 ## [License](LICENSE.TXT)
 
 

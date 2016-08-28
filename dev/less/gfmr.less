@@ -3,10 +3,14 @@
 @clrBaseBG: #F8F8F8;
 @clrBorderDark: #bbb;
 @clrBorderLite: #eee;
-@clrCodeBG: #222;//#F8F8FF;
+@clrCodeBG: #008;//#F8F8FF;
 @clrCode: #fc0;//#678;
 @clrLink: #4183c4;
 @clrLineNumbers: #c90;
+@clrHeaderBg: #79c;
+@clrHeaderFg: #eee;
+@clrHeaderLnk: @clrCode;
+
 .codeLink {
 	color: @clrCode;
 	text-decoration: underline;
@@ -68,7 +72,7 @@ tr {
 	}
 }
 input[type=text],input[type=password],input[type=image],textarea {
-	font: 99% helvetica, arial, freesans, sans-serif;
+	font: 99% 'Open Sans', arial, freesans, sans-serif;
 }
 select,option {
 	padding: 0 .25em;
@@ -77,7 +81,14 @@ optgroup {
 	margin-top: .5em;
 }
 pre,code {
-	font-family: 'Source Code Pro', Consolas, Monaco, "Courier New", "DejaVu Sans Mono", "Bitstream Vera Sans Mono", monospace;
+	font-family: 
+		'Source Code Pro',
+		Consolas,
+		Monaco,
+		"Courier New",
+		"DejaVu Sans Mono",
+		"Bitstream Vera Sans Mono",
+		monospace;
 	font-size: .9em;
 	// line-height: 1.5em;
 	a {
@@ -106,10 +117,10 @@ pre {
 	// -webkit-box-shadow: rgba(0, 0, 0, 0.1) 0 1px 2px inset;
 	// -webkit-border-radius: .3em;
 	// border-radius: .3em;
-	background-color: #000;// @clrCodeBG;
+	background-color: @clrCodeBG;
 
 	code {
-		background: transparent;
+		// background: transparent;
 		border:none;
 		border-radius: 0;
 		line-height: 1.3em;
@@ -172,21 +183,21 @@ h1,h2,h3,h4,h5,h6 {
 	font-weight: 700;
 	padding-bottom: .3em;
 	padding-left: 2em;
+	font-family: "Caviar Dreams", sans-serif;
 }
 h1,h2,h3 {
 	// border-bottom: 1px solid @clrBorderDark;
 	box-shadow: 0 1px @clrBorderLite;
 	font-weight: 400;
-	font-family: "Caviar Dreams",sans-serif;
 }
 h1 {
 
 	font-size: 5em;
-	background: #79c;
+	background: @clrHeaderBg;
 	margin: 1em -0.4em;
 	padding: 0.5em 0.4em .5em 2.4em;
-	color: #eee;
-	border: 1px solid #999;
+	color: @clrHeaderFg;
+	border: 1px solid darken(@clrHeaderFg, 20%);
 	border-width: 0 1;
 	/* text-shadow: 1px 1px 1px #777, -1px -1px 1px #777; */
 
@@ -197,7 +208,7 @@ h1 {
 	}
 
 	a {
-		color: yellow;
+		color: @clrHeaderLnk;
 		&:after:hover {
 			text-decoration: none;
 		}
@@ -315,7 +326,7 @@ dd {
 {
 	line-height: 1.3em;
 
-	background: linear-gradient( 
+	background-image: linear-gradient( 
 			rgba(255,255,255, .15) 50%, 
 			rgba(0,0,0,.15) 50%
 		);

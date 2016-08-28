@@ -55,7 +55,7 @@ const srcPath = {
 		dir : './dev/js',
 		files : [
 			'hl/build/highlight.pack.js',
-			'hlln/src/highlightjs-line-numbers.js'
+			'hl.ln/src/highlightjs-line-numbers.js'
 		]
 	},
 	mdi : {
