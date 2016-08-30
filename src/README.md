@@ -8,7 +8,7 @@ Automatically parse [markdown](http://daringfireball.net/projects/markdown/) fil
 Supports some GFM ([Github Flavored Markdown](http://github.github.com/github-flavored-markdown/) ) features.
 
 Based on [markdown-it](https://markdown-it.github.io/) and
-[highlighter.js](http://softwaremaniacs.org/soft/highlight/) by Ivan Sagalayev.
+[highlighter.js](http://softwaremaniacs.org/soft/highlight/).
 
 > By default, extension permissions lets you view `.md` and `.markdown` files with any URL, including `file://` (ie - local files), but not GitHub!
 
@@ -109,6 +109,11 @@ Engine lets use multistring list items in following manner:
   <pre><code class="PHP">  $a = 'Hello, world!';
   echo $a."\n";</code></pre>
 ```
+
+> Note, that if you see in DevTools something like this: `calss="language-javascript hljs"`
+> this is mean that code already processed with `highlighter.js`.
+> To highlighter.js works faster - is strongly recommended to specify language,
+> so code rendered as shown above, will be parsed much faster and with more fidelity.
 
 #### Actual view
 

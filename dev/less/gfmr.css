@@ -1,5 +1,5 @@
 .codeLink {
-  color: #fc0;
+  color: #eee;
   text-decoration: underline;
   text-decoration-line: dashed;
 }
@@ -53,7 +53,7 @@ input[type=text],
 input[type=password],
 input[type=image],
 textarea {
-  font: 99% helvetica, arial, freesans, sans-serif;
+  font: 99% 'Open Sans', arial, freesans, sans-serif;
 }
 select,
 option {
@@ -65,23 +65,23 @@ optgroup {
 pre,
 code {
   font-family: 'Source Code Pro', Consolas, Monaco, "Courier New", "DejaVu Sans Mono", "Bitstream Vera Sans Mono", monospace;
-  font-size: .9em;
+  font-size: 0.9em;
 }
 pre a,
 code a {
-  color: #fc0;
+  color: #eee;
   text-decoration: underline;
   text-decoration-line: dashed;
 }
 code {
   border: none;
-  background-color: #222;
-  color: #fc0;
+  background-color: #333;
+  color: #eee;
   font-size: 0.7em;
   border-radius: 0.3em;
   padding: 0 0.5em;
   white-space: pre;
-  border: 1px solid rgba(255, 204, 0, 0.5);
+  border: 1px solid #dddddd;
 }
 td code,
 p code {
@@ -89,13 +89,12 @@ p code {
 }
 pre {
   margin: 1em -2.2em;
-  padding: .3em 2em;
+  padding: 1em 2em;
   color: #444;
   overflow: auto;
-  background-color: #000;
+  background-color: #eee;
 }
 pre code {
-  background: transparent;
   border: none;
   border-radius: 0;
   line-height: 1.3em;
@@ -125,7 +124,7 @@ a:visited code,
 a pre,
 a:link pre,
 a:visited pre {
-  color: #fc0;
+  color: #eee;
   text-decoration: underline;
   text-decoration-line: dashed;
 }
@@ -156,13 +155,13 @@ h6 {
   font-weight: 700;
   padding-bottom: .3em;
   padding-left: 2em;
+  font-family: "Caviar Dreams", sans-serif;
 }
 h1,
 h2,
 h3 {
   box-shadow: 0 1px #eee;
   font-weight: 400;
-  font-family: "Caviar Dreams", sans-serif;
 }
 h1 {
   font-size: 5em;
@@ -170,7 +169,7 @@ h1 {
   margin: 1em -0.4em;
   padding: 0.5em 0.4em .5em 2.4em;
   color: #eee;
-  border: 1px solid #999;
+  border: 1px solid #bbbbbb;
   border-width: 0 1;
   /* text-shadow: 1px 1px 1px #777, -1px -1px 1px #777; */
 }
@@ -180,7 +179,7 @@ h1:first-child {
   border-radius: 5px 5px 0 0;
 }
 h1 a {
-  color: yellow;
+  color: #eee;
 }
 h1 a:after:hover {
   text-decoration: none;
@@ -267,7 +266,7 @@ dd {
 	display: block;
 	overflow-x: auto;
 	padding: 0.5em;
-	background: #000080
+	background-color: #008;
 }
 
 .hljs,
@@ -333,20 +332,19 @@ dd {
  * Must be after color scheme!
  */
 .hljs-line-numbers {
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
   text-align: right;
   color: #c90;
   border-right: 1px dotted #c90;
   -webkit-touch-callout: none;
-  -khtml-user-select: none;
+  -webkit-user-select: none;
+  user-select: none;
 }
 .hljs {
   line-height: 1.3em;
-  background: linear-gradient(rgba(255, 255, 255, 0.15) 50%, rgba(0, 0, 0, 0.15) 50%);
-  background-origin: 0 .5em;
-  background-size: 100% 2.6em;
+  background-image: linear-gradient(rgba(255, 255, 255, 0.05) 33.33%, rgba(0, 0, 0, 0.15) 33.33%, rgba(0, 0, 0, 0.15) 66.66%, rgba(0, 0, 0, 0.5) 66.66%);
+  background-size: 100% 3.9em;
+  background-origin: content-box;
+  background-color: #333;
+  padding: 1em;
 }
 /*# sourceMappingURL=gfmr.css.map */

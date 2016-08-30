@@ -183,7 +183,7 @@ gulp.task('css', /*gulp.series('css:clean'),*/ function (cb) {
 				, srcmaps.init()
 				// , gulpif( '*.less' ,less({plugins: [autoprefix, cleanCss]}))
 				, less({plugins: [autoprefix, cleanCss]})
-				, debug({title: 'After LESS:'})
+				// , debug({title: 'After LESS:'})
 				// , less()
 				// , autoprefixer()
 				// , gulp.dest(destPath.css)
@@ -193,8 +193,9 @@ gulp.task('css', /*gulp.series('css:clean'),*/ function (cb) {
 				// , concat('gfmr.css')
 				// , debug({title: 'After concat'})
 				, srcmaps.write('./')
-				// , debug({title: 'After srcMap.write:'})
+				, debug({title: 'After srcMap.write:'})
 				, gulp.dest(destPath.css)
+				, debug({title: 'After dest:'})
 			], cb)
 		);
 });
