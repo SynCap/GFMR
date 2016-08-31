@@ -3,7 +3,7 @@
  * https://github.com/SynCap/GFMR
  * 
  * TODO: 
- * [ ] the code stay bigger, refactoring is needed
+ * [ ] the code has grown, refactoring is needed
  */
 
 (function (w) {
@@ -103,7 +103,10 @@
 	 * @param {any} cb			modification function - f(object, index)
 	 */
 	function changeTo(selector, cb) {
+		// not needed when for…of is working
 		[].forEach.call( document.querySelectorAll(selector), cb);
+		//  uglifier wan't work :(
+		// for ( let obj of document.querySelectorAll(selector) ) cb(obj);
 	}
 
 	// target for external links
@@ -124,19 +127,24 @@
 	);
 
 	// checklists
-	changeTo(
+	/*changeTo(
 		'li',
 		// &#9745; - checked
 		// &#9746; - checked x
 		// &#9744; - empty
 		// uglifier don't understand es6
-		// l => { l.innerHTML.replace(/^\[([ x?v])\]/i, (m, x) => '<i class="checkmark-' + ('xX?vV'.indexOf(x)+1)?' checked':'empty' + '"></i>' ); };
+		l => { l.innerHTML.replace(/^\[([ x?v])\]/i, (m, x) => '<i class="checkmark-' + ('xX?vV'.indexOf(x)+1)?' checked':'empty' + '"></i>' ); };
+	);*/
+	changeTo(
+		'li',
 		function (l) { 
-			l.innerHTML.replace(/^\[([ x?v])\]/i, 
+			l.innerHTML = l.innerHTML.replace(/^\[([ \-?vx])\]/i, 
 				function(m, x) {
-					return '<i class="checkmark-' +
-						('xX?vV'.indexOf(x)+1)?' checked':'empty' +
-						'"></i>';
+					// ебаный углифир, напрочь не хочет работать с es6,
+					// а с долбаного гуглоклозура либо толку ноль, либо ломает вендроные скрипты
+					// бум так, по-старому, по-босяковски
+					var s = '<i class="chkm-' + ('xXvV'.indexOf(x)+1?'yes':'no') + '"></i>';
+					return s;
 				}
 			);  
 		}
@@ -144,5 +152,3 @@
 
 
 } (window));
-
-//# sourceMappingURL=init.js.map
