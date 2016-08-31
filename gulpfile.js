@@ -142,9 +142,9 @@ gulp.task('js:init', function (cb) {
 			pump([
 				gulp.src( 'init.js', { cwd: './dev/js' })
 				//, debug({minimal: false})
-				, srcmaps.init()
+				, gulpif(!devMode, srcmaps.init())
 				, gulpif(!devMode, uglify(uglifyOptions))
-				, srcmaps.write('./')
+				, gulpif(!devMode, srcmaps.write('./'))
 				, gulp.dest(destPath.js)
 			], cb)
 		);
