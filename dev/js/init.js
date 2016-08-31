@@ -3,7 +3,7 @@
  * https://github.com/SynCap/GFMR
  * 
  * TODO: 
- * [] the code stay bigger, need to be reorgonized
+ * [ ] the code has grown, refactoring is needed
  */
 
 (function (w) {
@@ -109,23 +109,33 @@
 	// target for external links
 	changeTo(
 		'a[href^="http:"],a[href^="https:"]',
-		a => { a.target = '_blank'; a.classList.add('external'); }
+		// uglifier don't understand es6
+		// a => { a.target = '_blank'; a.classList.add('external'); }
+		function (a) { a.target = '_blank'; a.classList.add('external'); }
 	);
 
 	// id values for headings, to be anchors for internal links,
 	// for example: [go to](#element_s_content)
 	changeTo(
 		'h1,h2,h3,h4,h5,h6',
-		h => { h.id = h.innerText.trim().toLowerCase().replace(/\W+/g, '-'); h.classList.add('anchored'); }
+		// uglifier don't understand es6
+		// h => { h.id = h.innerText.trim().toLowerCase().replace(/\W+/g, '-'); h.classList.add('anchored'); }
+		function (h) { h.id = h.innerText.trim().toLowerCase().replace(/\W+/g, '-'); h.classList.add('anchored'); }
 	);
 
 	// checklists
 	changeTo(
 		'li',
-		l => { 
+		// &#9745; - checked
+		// &#9746; - checked x
+		// &#9744; - empty
+		// uglifier don't understand es6
+		// l => { l.innerHTML.replace(/^\[([ x?v])\]/i, (m, x) => '<i class="checkmark-' + ('xX?vV'.indexOf(x)+1)?' checked':'empty' + '"></i>' ); };
+		function (l) { 
 			l.innerHTML.replace(/^\[([ x?v])\]/i, 
-				(m, x) => {
-					return ('xX?vV'.indexOf(x)+1)?' checked':'';
+				function(m, x) {
+					let s = '<i class="chkm-' + ('xX?vV'.indexOf(x)+1)?'yes':'no' + '"></i>';
+					return s;
 				}
 			);  
 		}
