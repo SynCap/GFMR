@@ -1,26 +1,42 @@
 {
 	"version": "0.2.0",
-	"configurations": [{
-		"name": "Запустить",
-		"type": "node",
-		"request": "launch",
-		"program": "${workspaceRoot}/node_modules/gulp/bin/gulp.js",
-		"stopOnEntry": false,
-		"args": [
-			"css",
-			"--dev-mode" 
-		],
-		"cwd": "${workspaceRoot}",
-		"preLaunchTask": null,
-		"runtimeExecutable": null,
-		"runtimeArgs": [
-			"--nolazy"
-		],
-		"env": {
-			"NODE_ENV": "development"
+	"configurations": [
+		{
+			"name": "Gulpfile.JS",
+			"type": "node",
+			"request": "launch",
+			"program": "${workspaceRoot}/node_modules/gulp/bin/gulp.js",
+			"stopOnEntry": false,
+			"args": [
+				"css",
+				"--dev-mode" 
+			],
+			"cwd": "${workspaceRoot}",
+			"preLaunchTask": null,
+			"runtimeExecutable": null,
+			"runtimeArgs": [
+				"--nolazy"
+			],
+			"env": {
+				"NODE_ENV": "development"
+			},
+			"externalConsole": false,
+			"sourceMaps": false,
+			"outDir": null
 		},
-		"externalConsole": false,
-		"sourceMaps": false,
-		"outDir": null
-	}]
+        {
+            "name": "README.md",
+            "type": "chrome",
+            "request": "launch",
+            "file": "${workspaceRoot}/README.md"
+        },
+		{
+            "name": "lab/README.md",
+            "type": "chrome",
+            "request": "launch",
+            "url": "http://lab/_links/GFMR/README.md",
+            "webRoot": "${workspaceRoot}/README.md",
+            "sourceMaps": true
+        },
+	]
 }

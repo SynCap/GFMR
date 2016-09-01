@@ -90,7 +90,7 @@ function showMsg() {
 }
 
 function toClean(dir, fileMask) {
-	showMsg('%s "%s\\%s"', chalk.red('Clean this'), chalk.cyan(dir), chalk.yellow(fileMask) );
+	showMsg('%s "%s\\%s"', chalk.yellow.bgRed(' Clean '), chalk.cyan(dir), chalk.yellow(fileMask) );
 	return del(path.join(dir, fileMask));
 }
 
@@ -142,9 +142,9 @@ gulp.task('js:init', function (cb) {
 			pump([
 				gulp.src( 'init.js', { cwd: './dev/js' })
 				//, debug({minimal: false})
-				, srcmaps.init()
+				, gulpif(!devMode, srcmaps.init())
 				, gulpif(!devMode, uglify(uglifyOptions))
-				, srcmaps.write('./')
+				, gulpif(!devMode, srcmaps.write('./'))
 				, gulp.dest(destPath.js)
 			], cb)
 		);
@@ -183,7 +183,7 @@ gulp.task('css', /*gulp.series('css:clean'),*/ function (cb) {
 				, srcmaps.init()
 				// , gulpif( '*.less' ,less({plugins: [autoprefix, cleanCss]}))
 				, less({plugins: [autoprefix, cleanCss]})
-				, debug({title: 'After LESS:'})
+				// , debug({title: 'After LESS:'})
 				// , less()
 				// , autoprefixer()
 				// , gulp.dest(destPath.css)
@@ -193,8 +193,9 @@ gulp.task('css', /*gulp.series('css:clean'),*/ function (cb) {
 				// , concat('gfmr.css')
 				// , debug({title: 'After concat'})
 				, srcmaps.write('./')
-				// , debug({title: 'After srcMap.write:'})
+				, debug({title: 'After srcMap.write:'})
 				, gulp.dest(destPath.css)
+				, debug({title: 'After dest:'})
 			], cb)
 		);
 });

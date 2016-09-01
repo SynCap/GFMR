@@ -1,9 +1,12 @@
 /**!
  * Copyright (c) 2013, 2015 Constantin Loskutov,
  * https://github.com/SynCap/GFMR
+ * 
+ * TODO: 
+ * [ ] the code has grown, refactoring is needed
  */
 
-(function(w) {
+(function (w) {
 
 	var d = w.document;
 	var chUrl = chrome.extension.getURL;
@@ -19,14 +22,14 @@
 	 * @param  {object} content Inner HTML content of the element
 	 * @return {node}          Newly created element
 	 */
-	function mkElement (tag, params, parent, content) {
+	function mkElement(tag, params, parent, content) {
 		var e = document.createElement(tag);
 		parent = parent || document.head;
-		
+
 		if (params !== 'undefined' && params != null) {
 			for (var prop in params) {
 				e[prop] = params[prop];
-			}			
+			}
 		}
 
 		if (content !== 'undefined' && content != null) {
@@ -37,69 +40,117 @@
 		return e;
 	}
 
-	
+
 	/**
 	 * link the CSS file as `link` tag
 	 *
 	 * @param      {string}  fName   path to css
 	 */
-	function injectCSS (fName) {
-		mkElement('link',{href:chUrl( 'css/' + fName + '.css' ),rel:"stylesheet"})
-		console.log("CSS injected: %s", fName);
+	function injectCSS(fName) {
+		mkElement('link', { href: chUrl('css/' + fName + '.css'), rel: 'stylesheet' });
+		console.log('CSS injected: %s', fName);
 	}
 
 	// Tab icon
-	var lnkIcon = mkElement('link',{
-		rel: "shortcut icon",
-		type: "image/x-icon",
+	// const lnkIcon =
+	mkElement('link', {
+		rel: 'shortcut icon',
+		type: 'image/x-icon',
 		href: chUrl('img/gfmr.ico')
 	});
 
 	// Inject a references to the stylesheets.
-	injectCSS("gfmr");
+	injectCSS('gfmr');
 
 	// save inital text
-	mkElement('script', {type:'text/plain',id:'mdText'}, d.head, d.body.innerText);
+	mkElement('script', { type: 'text/plain', id: 'mdText' }, d.head, d.body.innerText);
 	console.info('Initial text saved as script with id = `mdText`');
 
 	// addScript("markdown");
 	var md = window.markdownit({
-		  html:         true,       
-		  xhtmlOut:     true,       
-		  breaks:       false,      
-		  linkify:      true,       
-		  typographer:  true,
-		  quotes: '«»‘’'
+		html: true,
+		xhtmlOut: true,
+		breaks: false,
+		linkify: true,
+		typographer: true,
+		quotes: '«»‘’'
 	})
 		.use(window.markdownitDeflist)
 		.use(window.markdownitEmoji);
-	d.body.innerHTML = "<div id=\"page\">" + md.render(d.body.innerText) + "</div>";
-	console.log("Renderer `markdownit.js` fired.");
+	d.body.innerHTML = '<div id="page">' + md.render(d.body.innerText) + '</div>';
+	console.log('Renderer `markdownit.js` fired.');
 
-	// Run syntax hfighlighter for code. 
+	// Run syntax hfighlighter for code.
 	// Wether we took this not for `*.md` files from `Github`?
 	hljs.initHighlighting();
-	console.log("HL initialized.");
+	console.log('HL initialized.');
 	[].forEach.call(document.querySelectorAll('code.hljs'), function (block) {
 		hljs.lineNumbersBlock(block);
 	});
-	console.log("HL line numbers initialized.");
-	// 
+	console.log('HL line numbers initialized.');
+
+
+	// Set document title
 	var t = document.querySelector('#page h1');
 	if (t) {
-		mkElement('title', null, null, t.innerText.trim() );
+		mkElement('title', null, null, t.innerText.trim());
 	}
 
+	/**
+	 * Change objects by selector and callback function
+	 *
+	 * @param {any} selector	valid selector of objects to change to
+	 * @param {any} cb			modification function - f(object, index)
+	 */
+	function changeTo(selector, cb) {
+		// not needed when for…of is working
+		[].forEach.call( document.querySelectorAll(selector), cb);
+		//  uglifier wan't work :(
+		// for ( let obj of document.querySelectorAll(selector) ) cb(obj);
+	}
+	// uglifier don't understand es6 arrow funcion declaration
+	// var changeTo = (selector, cb) => {[].forEach.call( document.querySelectorAll(selector), cb);}
+
 	// target for external links
-	[].forEach.call(
-		document.querySelectorAll('a[href^="http:"],a[href^="https:"]'), 
-		function(a){a.target = '_blank';a.classList.add('external')}
+	changeTo(
+		'a[href^="http:"],a[href^="https:"]',
+		// uglifier don't understand es6 arrow funcion declaration
+		// a => { a.target = '_blank'; a.classList.add('external'); }
+		function (a) { a.target = '_blank'; a.classList.add('external'); }
 	);
-	// id values for headings, to be anchors for internal links, 
-	// for example: [go to](#element_s_content) 
-	[].forEach.call(
-		document.querySelectorAll('h1,h2,h3,h4,h5,h6'),
-		function(h){h.id=h.innerText.trim().toLowerCase().replace(/\W+/g,'-');h.classList.add('anchored')}
+
+	// id values for headings, to be anchors for internal links,
+	// for example: [go to](#element_s_content)
+	changeTo(
+		'h1,h2,h3,h4,h5,h6',
+		// uglifier don't understand es6 arrow funcion declaration
+		// h => { h.id = h.innerText.trim().toLowerCase().replace(/\W+/g, '-'); h.classList.add('anchored'); }
+		function (h) { h.id = h.innerText.trim().toLowerCase().replace(/\W+/g, '-'); h.classList.add('anchored'); }
 	);
-	
-}(window));
+
+	// checklists
+	/*changeTo(
+		'li',
+		// &#9745; - checked
+		// &#9746; - checked x
+		// &#9744; - empty
+		// uglifier don't understand es6
+		l => { l.innerHTML.replace(/^\[([ x?v])\]/i, (m, x) => '<i class="checkmark-' + ('xX?vV'.indexOf(x)+1)?' checked':'empty' + '"></i>' ); };
+	);*/
+			// just stirp all found textual checkmarks
+			// they must be at start of <li> element after rendering
+					// but remember, what we've erased
+	changeTo(
+		'li',
+		function (l) { 
+			l.innerHTML = l.innerHTML.replace(/^\[([ \-?vx])\]/i, 
+				function(m, x) {
+					l.classList.add('chkm-' + ('xXvV'.indexOf(x)+1?'yes':'no'));  
+					return ''; 
+				}
+			);
+		}
+	);
+
+
+} (window));
