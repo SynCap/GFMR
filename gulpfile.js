@@ -90,7 +90,7 @@ function showMsg() {
 }
 
 function toClean(dir, fileMask) {
-	showMsg('%s "%s\\%s"', chalk.red('Clean this'), chalk.cyan(dir), chalk.yellow(fileMask) );
+	showMsg('%s "%s\\%s"', chalk.yellow.bgRed(' Clean '), chalk.cyan(dir), chalk.yellow(fileMask) );
 	return del(path.join(dir, fileMask));
 }
 
