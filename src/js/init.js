@@ -102,12 +102,14 @@
 	 * @param {any} selector	valid selector of objects to change to
 	 * @param {any} cb			modification function - f(object, index)
 	 */
-	function changeTo(selector, cb) {
+	/*function changeTo(selector, cb) {
 		// not needed when for…of is working
 		[].forEach.call( document.querySelectorAll(selector), cb);
 		//  uglifier wan't work :(
 		// for ( let obj of document.querySelectorAll(selector) ) cb(obj);
-	}
+	}*/
+
+	var changeTo = (selector, cb) => {[].forEach.call( document.querySelectorAll(selector), cb);}
 
 	// target for external links
 	changeTo(
@@ -135,18 +137,18 @@
 		// uglifier don't understand es6
 		l => { l.innerHTML.replace(/^\[([ x?v])\]/i, (m, x) => '<i class="checkmark-' + ('xX?vV'.indexOf(x)+1)?' checked':'empty' + '"></i>' ); };
 	);*/
+			// just stirp all found textual checkmarks
+			// they must be at start of <li> element after rendering
+					// but remember, what we've erased
 	changeTo(
 		'li',
 		function (l) { 
 			l.innerHTML = l.innerHTML.replace(/^\[([ \-?vx])\]/i, 
 				function(m, x) {
-					// ебаный углифир, напрочь не хочет работать с es6,
-					// а с долбаного гуглоклозура либо толку ноль, либо ломает вендроные скрипты
-					// бум так, по-старому, по-босяковски
-					var s = '<i class="chkm-' + ('xXvV'.indexOf(x)+1?'yes':'no') + '"></i>';
-					return s;
+					l.classList.add('chkm-' + ('xXvV'.indexOf(x)+1?'yes':'no'));  
+					return ''; 
 				}
-			);  
+			);
 		}
 	);
 

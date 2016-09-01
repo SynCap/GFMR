@@ -108,11 +108,13 @@
 		//  uglifier wan't work :(
 		// for ( let obj of document.querySelectorAll(selector) ) cb(obj);
 	}
+	// uglifier don't understand es6 arrow funcion declaration
+	// var changeTo = (selector, cb) => {[].forEach.call( document.querySelectorAll(selector), cb);}
 
 	// target for external links
 	changeTo(
 		'a[href^="http:"],a[href^="https:"]',
-		// uglifier don't understand es6
+		// uglifier don't understand es6 arrow funcion declaration
 		// a => { a.target = '_blank'; a.classList.add('external'); }
 		function (a) { a.target = '_blank'; a.classList.add('external'); }
 	);
@@ -121,7 +123,7 @@
 	// for example: [go to](#element_s_content)
 	changeTo(
 		'h1,h2,h3,h4,h5,h6',
-		// uglifier don't understand es6
+		// uglifier don't understand es6 arrow funcion declaration
 		// h => { h.id = h.innerText.trim().toLowerCase().replace(/\W+/g, '-'); h.classList.add('anchored'); }
 		function (h) { h.id = h.innerText.trim().toLowerCase().replace(/\W+/g, '-'); h.classList.add('anchored'); }
 	);
@@ -135,18 +137,18 @@
 		// uglifier don't understand es6
 		l => { l.innerHTML.replace(/^\[([ x?v])\]/i, (m, x) => '<i class="checkmark-' + ('xX?vV'.indexOf(x)+1)?' checked':'empty' + '"></i>' ); };
 	);*/
+			// just stirp all found textual checkmarks
+			// they must be at start of <li> element after rendering
+					// but remember, what we've erased
 	changeTo(
 		'li',
 		function (l) { 
 			l.innerHTML = l.innerHTML.replace(/^\[([ \-?vx])\]/i, 
 				function(m, x) {
-					// углифир, напрочь не хочет работать с es6,
-					// а с гуглоклозура либо толку ноль, либо ломает вендроные скрипты
-					// бум так, по-старому, по-босяковски
-					var s = '<i class="chkm-' + ('xXvV'.indexOf(x)+1?'yes':'no') + '"></i>';
-					return s;
+					l.classList.add('chkm-' + ('xXvV'.indexOf(x)+1?'yes':'no'));  
+					return ''; 
 				}
-			);  
+			);
 		}
 	);
 

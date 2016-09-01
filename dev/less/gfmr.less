@@ -11,6 +11,8 @@
 @clrHeaderBg:    #79c;
 @clrHeaderFg:    #eee;
 @clrHeaderLnk:   @clrCode;
+@clrChkmYes:     @clrLink;
+@clrChkmNo:      @clrLink;
 
 .codeLink {
 	color: @clrCode;
@@ -239,6 +241,60 @@ ul, ol {
 
 	li {
 		margin-left: 1em;
+		&[class^="chkm"] {
+			list-style-type: none;
+			&:before{
+				content: ' ';
+				display: inline-block;
+				width: 1em;
+				font-style: normal;
+				height: 1em;
+				color: @clrChkmYes;
+				margin-right: .3em;
+				border-radius: 0.3em;
+				border: 2px solid;
+				padding: 0.2em 0.1em 0;
+				font-size: .7em;
+				line-height: 100%;
+				background-color: @clrChkmYes;
+				text-align: center;
+				font-weight: 700;
+	/* font-size: .7em; */;;
+			}
+		}
+		&.chkm-yes {
+			&:before {
+				content: '\2714';
+				color: white;
+				border-color: @clrChkmYes;
+			}
+		}
+		&.chkm-no {
+			&:before {
+			}
+		}
+	
+		/* &[class^="chkm"]:before {
+			content: ' ';
+			display: inline-block;
+			width: 1em;
+			border: 2px solid @clrLink;
+			font-style: normal;
+		} */
+		// checked	\2611
+		// checked x: \2612
+		// empty 		\2610
+		// v - \2714
+		// x - \2718
+		// X - \274c
+		// Xinv - \274e
+		/* &.chkm-yes:before {
+			content: '\9989'; 
+		}
+		&.chkm-no:before {
+			content: '\9744'; 
+		} */
+	
 		p {
 			margin: .2em 0;
 		}
@@ -302,6 +358,8 @@ dd {
 		font-size: 1.2em;
 	}
 }
+
+
 
 @import (inline) "far.css";
 // @import (inline) "hl-github.css";
