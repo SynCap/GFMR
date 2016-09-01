@@ -25,17 +25,17 @@
 			"outDir": null
 		},
         {
-            "name": "README.MD",
+            "name": "README.md",
             "type": "chrome",
             "request": "launch",
-            "file": "${workspaceRoot}/README.MD"
+            "file": "${workspaceRoot}/README.md"
         },
 		{
-            "name": "lab/README.MD",
+            "name": "lab/README.md",
             "type": "chrome",
             "request": "launch",
-            "url": "http://lab/_links/README.MD",
-            "webRoot": "${workspaceRoot}/README.MD",
+            "url": "http://lab/_links/GFMR/README.md",
+            "webRoot": "${workspaceRoot}/README.md",
             "sourceMaps": true
         },
 	]
