@@ -1,0 +1,6 @@
+<<<<<<< develop
+=======
+[submodule "hl"]
+	path = dev/js/hl
+	url = https://github.com/isagalaev/highlight.js.git
+>>>>>>> Removed submodule hlln
