@@ -1,6 +1,3 @@
-[submodule "mdi.defl"]
-	path = dev/js/mdi.defl
-	url = https://github.com/markdown-it/markdown-it-deflist.git
 [submodule "mdi.emji"]
 	path = dev/js/mdi.emji
 	url = https://github.com/markdown-it/markdown-it-emoji.git
