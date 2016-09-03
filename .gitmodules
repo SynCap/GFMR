@@ -1,15 +1,15 @@
-[submodule "hl.ln"]
-	path = dev/js/hl.ln
-	url = https://github.com/wcoder/highlightjs-line-numbers.js.git
+[submodule "mdi.core"]
+	path = dev/js/mdi.core
+	url = https://github.com/markdown-it/markdown-it.git
 [submodule "mdi.defl"]
 	path = dev/js/mdi.defl
 	url = https://github.com/markdown-it/markdown-it-deflist.git
 [submodule "mdi.emji"]
 	path = dev/js/mdi.emji
 	url = https://github.com/markdown-it/markdown-it-emoji.git
-[submodule "mdi"]
-	path = dev/js/mdi
-	url = https://github.com/markdown-it/markdown-it.git
+[submodule "hlln"]
+	path = dev/js/hlln
+	url = https://github.com/wcoder/highlightjs-line-numbers.js.git
 [submodule "hl"]
 	path = dev/js/hl
 	url = https://github.com/isagalaev/highlight.js.git

@@ -8,6 +8,8 @@
 
 (function (w) {
 
+'use strict';
+
 	var d = w.document;
 	var chUrl = chrome.extension.getURL;
 	// var chUrl = function (path) {return path} // for non Chrome environment debuging purposes only!
@@ -131,11 +133,7 @@
 	// checklists
 	/*changeTo(
 		'li',
-		// &#9745; - checked
-		// &#9746; - checked x
-		// &#9744; - empty
-		// uglifier don't understand es6
-		l => { l.innerHTML.replace(/^\[([ x?v])\]/i, (m, x) => '<i class="checkmark-' + ('xX?vV'.indexOf(x)+1)?' checked':'empty' + '"></i>' ); };
+		l => { l.innerHTML.replace(/^\[([ x?v])\]/i, (m, x) => '<i class="checkmark-' + ('xX?vV'.indexOf(x)+1)?' checked':'empty' + '"></i>' ); }
 	);*/
 			// just stirp all found textual checkmarks
 			// they must be at start of <li> element after rendering
