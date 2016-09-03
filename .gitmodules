@@ -1,6 +1,3 @@
-[submodule "mdi.emji"]
-	path = dev/js/mdi.emji
-	url = https://github.com/markdown-it/markdown-it-emoji.git
 [submodule "hlln"]
 	path = dev/js/hlln
 	url = https://github.com/wcoder/highlightjs-line-numbers.js.git
