@@ -8,7 +8,7 @@ Automatically parse [markdown](http://daringfireball.net/projects/markdown/) fil
 Supports some GFM ([Github Flavored Markdown](http://github.github.com/github-flavored-markdown/) ) features.
 
 Based on [markdown-it](https://markdown-it.github.io/) and
-[highlighter.js](http://softwaremaniacs.org/soft/highlight/) by Ivan Sagalayev.
+[highlighter.js](http://softwaremaniacs.org/soft/highlight/).
 
 > By default, extension permissions lets you view `.md` and `.markdown` files with any URL, including `file://` (ie - local files), but not GitHub!
 
@@ -24,6 +24,7 @@ The look of full README [rendered with this extension][screenshot-8].
 - Because of nature of rendering (Javascript regexps) not recommended to view large `.md` files and/or files with complex rules
 - Some differenses in manner of rendering some blocks, such as tables
 
+### [Sample](src/README.MD)
 
 ## Distinctions of initial specifications
 
@@ -32,6 +33,7 @@ The look of full README [rendered with this extension][screenshot-8].
 - Renders Github style code blocks
 - Renders tables
 - Auto convert the hyper links in plain text, ie: www.example.com, http://example.com
+- Converts `[ ]`, `[-]`, `[x]`, `[v]` and `[?]` in list items to checkmark list (see TODO section below), where `x`,`X`, `v`, `V` and `?` treated as checked marks, else as unchecked
 
 [More info](src/README.md)
 
