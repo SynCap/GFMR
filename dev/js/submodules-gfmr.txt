@@ -18,10 +18,10 @@
 
 
 
-git submodule add https://github.com/isagalaev/highlight.js.git hl
-git submodule add https://github.com/wcoder/highlightjs-line-numbers.js.git hl.ln
-git submodule add https://github.com/markdown-it/markdown-it.git mdi
-git submodule add https://github.com/markdown-it/markdown-it-deflist.git mdi.defl
-git submodule add https://github.com/markdown-it/markdown-it-emoji.git mdi.emji
+git submodule add -f https://github.com/isagalaev/highlight.js.git hl
+git submodule add -f https://github.com/wcoder/highlightjs-line-numbers.js.git hl.ln
+git submodule add -f https://github.com/markdown-it/markdown-it.git mdi
+git submodule add -f https://github.com/markdown-it/markdown-it-deflist.git mdi.defl
+git submodule add -f https://github.com/markdown-it/markdown-it-emoji.git mdi.emji
 git submodule update
 git commit
