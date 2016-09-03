@@ -133,7 +133,7 @@
 	// checklists
 	/*changeTo(
 		'li',
-		l => { l.innerHTML.replace(/^\[([ x?v])\]/i, (m, x) => '<i class="checkmark-' + ('xX?vV'.indexOf(x)+1)?' checked':'empty' + '"></i>' ); }
+		l => { l.innerHTML.replace(/^\[([ x?v])\]/i, (m, x) => '<i class="checkmark-' + ('xX?vV'.indexOf(x)+1)?' checked':'empty' + '"></i>' ); };
 	);*/
 			// just stirp all found textual checkmarks
 			// they must be at start of <li> element after rendering
