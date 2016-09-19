@@ -389,18 +389,20 @@ dd {
 			user-select: none;
 }
 
+.hljs {
+	line-height: 1.3em;
+	background-size: 100% 3.9em;
+	background-origin: content-box;
+	background-color: @clrCodeBG;
+	padding: 1em;	
+}
+
 // background line stripes (zebra code)
 .zebra .hljs
 {
-	line-height: 1.3em;
-
 	background-image: linear-gradient(
 		rgba(255, 255, 255, 0.05) 33.33%, 
 		rgba(0, 0, 0, 0.15) 33.33%, 
 		rgba(0, 0, 0, 0.15) 66.66%, 
 		rgba(0, 0, 0, 0.5) 66.66%);
-	background-size: 100% 3.9em;
-	background-origin: content-box;
-	background-color: @clrCodeBG;
-	padding: 1em;
 }

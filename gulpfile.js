@@ -173,7 +173,7 @@ gulp.task('css', /*gulp.series('css:clean'),*/ function (cb) {
     lesshat = new LessLesshat();*/
 
 	showMsg('%s = "%s"', chalk.yellow('NODE_ENV'), chalk.cyan(process.env.NODE_ENV));
-	showMsg('Dev mode = %s', chalk.cyan(devMode));
+	showMsg('Dev Mode = %s', chalk.cyan(devMode));
 
 	toClean(destPath.css, '*')
 		.then(			

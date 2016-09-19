@@ -133,12 +133,6 @@
 	// Wether we took this not for `*.md` files from `Github`?
 	hljs.initHighlighting();
 	console.log('HL initialized.');
-	[].forEach.call(document.querySelectorAll('code.hljs'), function (block) {
-		// hljs.lineNumbersBlock(block);
-		addBlockLineNumbers(block);
-	});
-	console.log('HL line numbers initialized.');
-
 
 	// Set document title
 	var t = document.querySelector('#page h1');
@@ -160,6 +154,9 @@
 	}
 	// uglifier don't understand es6 arrow funcion declaration
 	// var changeTo = (selector, cb) => {[].forEach.call( document.querySelectorAll(selector), cb);}
+
+	changeTo('code.hljs', addBlockLineNumbers(block) );
+	console.log('HL line numbers initialized.');
 
 	// target for external links
 	changeTo(
