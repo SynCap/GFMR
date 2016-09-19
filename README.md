@@ -2,6 +2,8 @@
 
 Copyright ©2013,2015,2016 Constantin Loskutov, [www.syncap.ru ![][logo]](http://www.syncap.ru/)
 
+@version: 2.1.3
+
 ## Description
 
 Automatically parse [markdown](http://daringfireball.net/projects/markdown/) files (_.md_, _.markdown_, _.text_) into HTML.
@@ -55,7 +57,7 @@ The look of full README [rendered with this extension][screenshot-8].
 - [-] Hot swap for code highlighting color schemes
 - [-] Turn On/Off TOC (on fly)
 - [-] Automatic rearrange big images
-- [?] Smiple tab tables: find blocks of text arranged by columns and convert them to simple tables, as it was with SD2
+- [?] Simple tab tables: find blocks of text arranged by columns and convert them to simple tables, as it was with SD2
 - [-] RST style tables, with compact multiline cells
 - [-] Render sciantific formulas (mathematics, chemistry, etc)
 

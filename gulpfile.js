@@ -55,7 +55,7 @@ const srcPath = {
 		dir : './dev/js',
 		files : [
 			'hl/build/highlight.pack.js',
-			'hl.ln/src/highlightjs-line-numbers.js'
+			// 'hl.ln/src/highlightjs-line-numbers.js'
 		]
 	},
 	mdi : {
@@ -172,9 +172,6 @@ gulp.task('css', /*gulp.series('css:clean'),*/ function (cb) {
 	/*var LessLesshat = require('less-plugin-lesshat'),
     lesshat = new LessLesshat();*/
 
-	showMsg('%s = "%s"', chalk.yellow('NODE_ENV'), chalk.cyan(process.env.NODE_ENV));
-	showMsg('Dev mode = %s', chalk.cyan(devMode));
-
 	toClean(destPath.css, '*')
 		.then(			
 			// return gulp.src( srcPath.styles )
@@ -193,9 +190,9 @@ gulp.task('css', /*gulp.series('css:clean'),*/ function (cb) {
 				// , concat('gfmr.css')
 				// , debug({title: 'After concat'})
 				, srcmaps.write('./')
-				, debug({title: 'After srcMap.write:'})
+				// , debug({title: 'After srcMap.write:'})
 				, gulp.dest(destPath.css)
-				, debug({title: 'After dest:'})
+				// , debug({title: 'After dest:'})
 			], cb)
 		);
 });
@@ -203,3 +200,11 @@ gulp.task('css', /*gulp.series('css:clean'),*/ function (cb) {
 gulp.task('js:all', gulp.parallel('js:hl','js:mdi','js:init'));
 gulp.task('build', gulp.parallel('css', 'js:hl', 'js:mdi', 'js:init'));
 gulp.task('default', gulp.parallel('css'));
+
+gulp.task('vigil', function (done) {
+	gulp.watch(srcPath.styles.files, {cwd: srcPath.styles.dir}, gulp.parallel('css') );
+	gulp.watch( 'init.js', { cwd: './dev/js' }, gulp.parallel('js:init') );
+});
+
+showMsg('%s = "%s"', chalk.yellow('NODE_ENV'), chalk.cyan(process.env.NODE_ENV));
+showMsg('Dev Mode = %s', chalk.cyan(devMode));
