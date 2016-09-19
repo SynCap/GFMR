@@ -55,7 +55,7 @@ The look of full README [rendered with this extension][screenshot-8].
 - [-] Hot swap for code highlighting color schemes
 - [-] Turn On/Off TOC (on fly)
 - [-] Automatic rearrange big images
-- [?] Smiple tab tables: find blocks of text arranged by columns and convert them to simple tables, as it was with SD2
+- [?] Simple tab tables: find blocks of text arranged by columns and convert them to simple tables, as it was with SD2
 - [-] RST style tables, with compact multiline cells
 - [-] Render sciantific formulas (mathematics, chemistry, etc)
 
