@@ -1,9 +1,6 @@
 [submodule "dev/js/hl"]
 	path = dev/js/hl
 	url = https://github.com/isagalaev/highlight.js.git
-[submodule "dev/js/hl.ln"]
-	path = dev/js/hl.ln
-	url = https://github.com/wcoder/highlightjs-line-numbers.js.git
 [submodule "dev/js/mdi"]
 	path = dev/js/mdi
 	url = https://github.com/markdown-it/markdown-it.git
