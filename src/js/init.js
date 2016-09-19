@@ -90,13 +90,27 @@
 			linesPanel.textContent = l;
 
 			parent.insertBefore(linesPanel, element);
-		}
-
-		if (lines > 3) {
+			
 			parent.classList.add('zebra');
 		}
+
+		/*if (lines > 3) {
+			parent.classList.add('zebra');
+		}*/
 	}
 
+	/**
+	 * Change objects by selector and callback function
+	 *
+	 * @param {any} selector	valid selector of objects to change to
+	 * @param {any} cb			modification function - f(object, index)
+	 */
+	function changeTo(selector, cb) {
+		// not needed when for…of is working
+		[].forEach.call( document.querySelectorAll(selector), cb);
+		//  uglifier wan't work :(
+		// for ( let obj of document.querySelectorAll(selector) ) cb(obj);
+	}
 
 	// =========================================================
 
@@ -140,22 +154,10 @@
 		mkElement('title', null, null, t.innerText.trim());
 	}
 
-	/**
-	 * Change objects by selector and callback function
-	 *
-	 * @param {any} selector	valid selector of objects to change to
-	 * @param {any} cb			modification function - f(object, index)
-	 */
-	function changeTo(selector, cb) {
-		// not needed when for…of is working
-		[].forEach.call( document.querySelectorAll(selector), cb);
-		//  uglifier wan't work :(
-		// for ( let obj of document.querySelectorAll(selector) ) cb(obj);
-	}
 	// uglifier don't understand es6 arrow funcion declaration
 	// var changeTo = (selector, cb) => {[].forEach.call( document.querySelectorAll(selector), cb);}
 
-	changeTo('code.hljs', addBlockLineNumbers(block) );
+	changeTo('code.hljs', addBlockLineNumbers );
 	console.log('HL line numbers initialized.');
 
 	// target for external links
