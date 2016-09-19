@@ -2,6 +2,8 @@
 
 Copyright ©2013,2015,2016 Constantin Loskutov, [www.syncap.ru ![][logo]](http://www.syncap.ru/)
 
+@version: 2.1.3
+
 ## Description
 
 Automatically parse [markdown](http://daringfireball.net/projects/markdown/) files (_.md_, _.markdown_, _.text_) into HTML.
