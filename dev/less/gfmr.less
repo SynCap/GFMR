@@ -363,10 +363,10 @@ dd {
 
 
 
-@import (inline) "f12.css";
+// @import (inline) "far.css";
 // @import (inline) "hl-github.css";
 // @import (inline) "hl-night-tropicbird.css";
-// @import (inline) "f12.css";
+@import (inline) "f12.css";
 
 /**!
  * Line Numbers
@@ -379,6 +379,8 @@ dd {
 
 	color: @clrLineNumbers;
 	border-right: 1px dotted @clrLineNumbers;
+	// border-right: 1px dotted;
+	// opacity: 0.5;
 
 	-webkit-touch-callout: none;
 
@@ -393,7 +395,7 @@ dd {
 	line-height: 1.3em;
 	background-size: 100% 3.9em;
 	background-origin: content-box;
-	background-color: @clrCodeBG;
+	// background-color: @clrCodeBG;
 	padding: 1em;	
 }
 
@@ -401,8 +403,8 @@ dd {
 .zebra .hljs
 {
 	background-image: linear-gradient(
-		rgba(255, 255, 255, 0.05) 33.33%, 
-		rgba(0, 0, 0, 0.15) 33.33%, 
-		rgba(0, 0, 0, 0.15) 66.66%, 
-		rgba(0, 0, 0, 0.5) 66.66%);
+		rgba(255, 255, 255, 0.15) 33.33%, 
+		rgba(0, 0, 0, 0.05) 33.33%, 
+		rgba(0, 0, 0, 0.05) 66.66%, 
+		rgba(0, 0, 0, 0.15) 66.66%);
 }
