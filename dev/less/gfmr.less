@@ -189,11 +189,12 @@ a {
 h1,h2,h3,h4,h5,h6 {
 	border: 0;
 	margin: 1.5em 0 .5em;
-	text-indent: -2em;
+	// text-indent: -2em;
 	font-weight: 700;
 	padding-bottom: .3em;
-	padding-left: 2em;
+	// padding-left: 2em;
 	font-family: "Caviar Dreams", sans-serif;
+	line-height: .9em;
 }
 h1,h2,h3 {
 	// border-bottom: 1px solid @clrBorderDark;
@@ -205,7 +206,7 @@ h1 {
 	font-size: 5em;
 	background: @clrHeaderBg;
 	margin: 1em -0.4em;
-	padding: 0.5em 0.4em .5em 2.4em;
+	padding: 0.5em 0.4em .5em 0.4em;
 	color: @clrHeaderFg;
 	border: 1px solid darken(@clrHeaderFg, 20%);
 	border-width: 0 1;
@@ -362,7 +363,7 @@ dd {
 
 
 
-@import (inline) "far.css";
+@import (inline) "f12.css";
 // @import (inline) "hl-github.css";
 // @import (inline) "hl-night-tropicbird.css";
 // @import (inline) "f12.css";
@@ -388,18 +389,20 @@ dd {
 			user-select: none;
 }
 
-// background line stripes (zebra code)
-.hljs
-{
+.hljs {
 	line-height: 1.3em;
+	background-size: 100% 3.9em;
+	background-origin: content-box;
+	background-color: @clrCodeBG;
+	padding: 1em;	
+}
 
+// background line stripes (zebra code)
+.zebra .hljs
+{
 	background-image: linear-gradient(
 		rgba(255, 255, 255, 0.05) 33.33%, 
 		rgba(0, 0, 0, 0.15) 33.33%, 
 		rgba(0, 0, 0, 0.15) 66.66%, 
 		rgba(0, 0, 0, 0.5) 66.66%);
-	background-size: 100% 3.9em;
-	background-origin: content-box;
-	background-color: @clrCodeBG;
-	padding: 1em;
 }
