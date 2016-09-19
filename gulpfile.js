@@ -55,7 +55,7 @@ const srcPath = {
 		dir : './dev/js',
 		files : [
 			'hl/build/highlight.pack.js',
-			'hl.ln/src/highlightjs-line-numbers.js'
+			// 'hl.ln/src/highlightjs-line-numbers.js'
 		]
 	},
 	mdi : {
@@ -193,9 +193,9 @@ gulp.task('css', /*gulp.series('css:clean'),*/ function (cb) {
 				// , concat('gfmr.css')
 				// , debug({title: 'After concat'})
 				, srcmaps.write('./')
-				, debug({title: 'After srcMap.write:'})
+				// , debug({title: 'After srcMap.write:'})
 				, gulp.dest(destPath.css)
-				, debug({title: 'After dest:'})
+				// , debug({title: 'After dest:'})
 			], cb)
 		);
 });
