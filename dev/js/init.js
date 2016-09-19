@@ -24,9 +24,10 @@
 	 * @param  {object} content Inner HTML content of the element
 	 * @return {node}          Newly created element
 	 */
-	function mkElement(tag, params, parent, content) {
+	function mkElement(tag, params, parent, content, append) {
 		var e = document.createElement(tag);
 		parent = parent || document.head;
+		append = typeof append === 'undefined' ? true : append;
 
 		if (params !== 'undefined' && params != null) {
 			for (var prop in params) {
@@ -38,7 +39,9 @@
 			e.innerHTML = content;
 		}
 
-		parent.appendChild(e);
+		if (append)
+			parent.appendChild(e);
+
 		return e;
 	}
 
@@ -52,6 +55,50 @@
 		mkElement('link', { href: chUrl('css/' + fName + '.css'), rel: 'stylesheet' });
 		console.log('CSS injected: %s', fName);
 	}
+
+	// =========================================================
+	
+	function getBlockLineCount(text) {
+		if (text.length === 0) return 0;
+
+		var regExp = /\r\n|\r|\n/g;
+		var lines = text.match(regExp);
+		lines = lines ? lines.length : 0;
+
+		if (!text[text.length - 1].match(regExp)) {
+			lines += 1;
+		}
+
+		return lines;
+	}
+
+	function addBlockLineNumbers (element) {
+		if (typeof element !== 'object') return;
+
+		var parent = element.parentNode;
+		var lines = getBlockLineCount(element.textContent);
+
+		if (lines > 1) {
+			var l = '';
+			for (var i = 0; i < lines; i++) {
+				l += (i + 1) + '\n';
+			}
+
+			var linesPanel = document.createElement('code');
+			linesPanel.className = 'hljs hljs-line-numbers';
+			linesPanel.style.float = 'left';
+			linesPanel.textContent = l;
+
+			parent.insertBefore(linesPanel, element);
+		}
+
+		if (lines > 3) {
+			parent.classList.add('zebra');
+		}
+	}
+
+
+	// =========================================================
 
 	// Tab icon
 	// const lnkIcon =
@@ -87,7 +134,8 @@
 	hljs.initHighlighting();
 	console.log('HL initialized.');
 	[].forEach.call(document.querySelectorAll('code.hljs'), function (block) {
-		hljs.lineNumbersBlock(block);
+		// hljs.lineNumbersBlock(block);
+		addBlockLineNumbers(block);
 	});
 	console.log('HL line numbers initialized.');
 
