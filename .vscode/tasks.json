@@ -18,7 +18,7 @@
 			"suppressTaskName": true,
 			"args": [
 				"css",
-				"--prod-mode"
+				"--mode-prod"
 			]   
 		}, 
 		{ "taskName": "js:init"   }, 
@@ -27,7 +27,7 @@
 			"taskName": "js init production",
 			"args": [
 				"js:init",
-				"--prod-mode"
+				"--mode-prod"
 			]   
 		}, 
 		{ "taskName": "css:clean" }, 

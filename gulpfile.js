@@ -37,7 +37,7 @@ const uglify  = require('gulp-uglify');
 // const cleancss     = require('gulp-clean-css');
 
 const argv = require('minimist')(process.argv.slice(2));
-const devMode = process.env.NODE_ENV === 'development' || argv['prod-mode'] !== true;
+const devMode = process.env.NODE_ENV === 'development' || argv['mode-dev'] === true || argv['mode-prod'] !== true;
 
 const srcPath = {
 	styles : {
