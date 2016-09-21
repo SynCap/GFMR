@@ -13,9 +13,25 @@
 	"tasks": [
 		{ "taskName": "build"     }, 
 		{ "taskName": "css"       }, 
+		{ 
+			"taskName": "css production",
+			"suppressTaskName": true,
+			"args": [
+				"css",
+				"--prod-mode"
+			]   
+		}, 
+		{ "taskName": "js:init"   }, 
+		{
+			"suppressTaskName": true,
+			"taskName": "js init production",
+			"args": [
+				"js:init",
+				"--prod-mode"
+			]   
+		}, 
 		{ "taskName": "css:clean" }, 
 		{ "taskName": "js:all"    }, 
-		{ "taskName": "js:init"   }, 
 		{ "taskName": "js:hl"  	  }, 
 		{ "taskName": "js:mdi"    }
 	]

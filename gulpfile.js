@@ -23,7 +23,7 @@ const util    = require('util');
 const gulp    = require('gulp');
 const concat  = require('gulp-concat-util');
 // const csso    = require('gulp-csso');
-const debug   = require('gulp-debug');
+// const debug   = require('gulp-debug');
 const gulpif  = require('gulp-if');
 const less    = require('gulp-less');
 const srcmaps = require('gulp-sourcemaps');
@@ -37,7 +37,7 @@ const uglify  = require('gulp-uglify');
 // const cleancss     = require('gulp-clean-css');
 
 const argv = require('minimist')(process.argv.slice(2));
-const devMode = process.env.NODE_ENV === 'development' || argv['dev-mode'] === true;
+const devMode = process.env.NODE_ENV === 'development' || argv['prod-mode'] !== true;
 
 const srcPath = {
 	styles : {
@@ -198,12 +198,13 @@ gulp.task('css', /*gulp.series('css:clean'),*/ function (cb) {
 });
 
 gulp.task('js:all', gulp.parallel('js:hl','js:mdi','js:init'));
-gulp.task('build', gulp.parallel('css', 'js:hl', 'js:mdi', 'js:init'));
-gulp.task('default', gulp.parallel('css'));
+gulp.task('build', gulp.parallel('css', 'js:all'));
+gulp.task('default', gulp.parallel('css', 'js:init'));
 
 gulp.task('vigil', function (done) {
 	gulp.watch(srcPath.styles.files, {cwd: srcPath.styles.dir}, gulp.parallel('css') );
 	gulp.watch( 'init.js', { cwd: './dev/js' }, gulp.parallel('js:init') );
+	done;
 });
 
 showMsg('%s = "%s"', chalk.yellow('NODE_ENV'), chalk.cyan(process.env.NODE_ENV));
