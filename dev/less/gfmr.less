@@ -273,6 +273,7 @@ ul, ol {
 		}
 		&.chkm-no {
 			&:before {
+				color: white;
 			}
 		}
 	
@@ -361,7 +362,31 @@ dd {
 	}
 }
 
+.mainmenu {
+	position: fixed;
+	width: 1rem;
+	// height: 4rem;
+	top: 1rem;
+	left: 1rem;
+	padding: .5rem;
+	background-color: #fff;
+	color: @clrLink;
+	border-radius: 50%;
+	z-index: 2;
+	box-shadow: 0 0 .5rem rgba(0, 0, 0, .5);
 
+	li {
+		display: inline-block;
+		width: 1rem;
+		height: 1rem;
+	} 
+	.btn-menu-toc {
+
+	} 
+	.btn-menu-props {
+
+	}
+}
 
 // @import (inline) "far.css";
 // @import (inline) "hl-github.css";

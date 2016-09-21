@@ -31,7 +31,10 @@
 
 		if (params !== 'undefined' && params != null) {
 			for (var prop in params) {
-				e[prop] = params[prop];
+				if (prop === 'class')
+					e.classList.add(params[prop]);
+				else 
+					e[prop] = params[prop];
 			}
 		}
 
@@ -197,5 +200,8 @@
 		}
 	);
 
+	var menu = mkElement('ul', {'id':'mainMenu', 'class' : 'mainmenu'}, document.body);
+	var miToc = mkElement('li', {'id':'btnShowToc', 'class':'btn-menu-toc'}, menu, ' ');
+	var miTune = mkElement('li', {'id':'btnShowProps', 'class':'btn-menu-props'}, menu, ' ');
 
 } (window));
