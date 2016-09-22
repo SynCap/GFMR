@@ -23,7 +23,7 @@ const util    = require('util');
 const gulp    = require('gulp');
 const concat  = require('gulp-concat-util');
 // const csso    = require('gulp-csso');
-// const debug   = require('gulp-debug');
+const debug   = require('gulp-debug');
 const gulpif  = require('gulp-if');
 const less    = require('gulp-less');
 const srcmaps = require('gulp-sourcemaps');
@@ -179,7 +179,11 @@ gulp.task('css', /*gulp.series('css:clean'),*/ function (cb) {
 				// , debug({title: 'Style source files'})
 				, srcmaps.init()
 				// , gulpif( '*.less' ,less({plugins: [autoprefix, cleanCss]}))
-				, less({plugins: [autoprefix, cleanCss]})
+				, gulpif(devMode,
+					less({plugins: [autoprefix]}),
+					less({plugins: [autoprefix, cleanCss]})
+					)
+				// , less({plugins: [autoprefix, cleanCss]})
 				// , debug({title: 'After LESS:'})
 				// , less()
 				// , autoprefixer()
@@ -192,7 +196,7 @@ gulp.task('css', /*gulp.series('css:clean'),*/ function (cb) {
 				, srcmaps.write('./')
 				// , debug({title: 'After srcMap.write:'})
 				, gulp.dest(destPath.css)
-				// , debug({title: 'After dest:'})
+				, debug({title: 'After save:'})
 			], cb)
 		);
 });
