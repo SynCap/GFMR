@@ -12,7 +12,7 @@
          "file://*/*.MD", "file://*/*.md*", "*://*/*.markdown*", "file://*/*.text"
       ]
    } ],
-   "web_accessible_resources": [ "css/gfmr.css", "css/*.css", "img/*.png", "img/*.ico" ],
+   "web_accessible_resources": [ "css/gfmr.css", "css/*.css", "fonts/*.*", "img/*.png", "img/*.ico" ],
    "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'",
    "description": "Converts and previews markdown files (.md, .markdown) as HTML right inside Chrome.",
    "icons": {

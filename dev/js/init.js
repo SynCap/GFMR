@@ -1,5 +1,6 @@
 /**!
- * Copyright (c) 2013, 2015 Constantin Loskutov,
+ * GFM render chrome extension, v2.1.4, Sep 22 2016
+ * Copyright (c) 2013, 2015, 2016 Constantin Loskutov,
  * https://github.com/SynCap/GFMR
  * 
  * TODO: 
@@ -31,7 +32,10 @@
 
 		if (params !== 'undefined' && params != null) {
 			for (var prop in params) {
-				e[prop] = params[prop];
+				if (prop === 'class')
+					e.className = params[prop];
+				else 
+					e[prop] = params[prop];
 			}
 		}
 
@@ -197,5 +201,26 @@
 		}
 	);
 
+	var menu = mkElement('ul', {'id':'mainMenu', 'class' : 'mainmenu'}, document.body);
+	var miToc = mkElement('li', {'id':'btnShowToc', 'class':'icn-toc', 'title':'Table of\nContents'}, menu, ' ');
+	var miTune = mkElement('li', {'id':'btnShowProps', 'class':'icn-tune-v', 'title': 'Tune settings'}, menu, ' ');
+
+	var ovrToc = mkElement('div', {'id':'ovrToc', 'class': 'overlay hidden'}, document.body);
+	var lstToc = mkElement('ul', {'id': 'lstToc', 'class': 'toc-list'}, ovrToc);
+
+	changeTo('h1,h2,h3,h4,h5,h6', function(h){
+		var liToc = mkElement('li',{'class': 'toc-item-' + h.tagName.toLowerCase()}, lstToc);
+		mkElement('a',{'href':'#'  +h.id, 'class': 'toc-link'}, liToc, h.innerHTML);
+	});
+
+	changeTo('.overlay', function(ovr){
+		ovr.addEventListener('click',function(e){
+			ovrToc.classList.add('hidden');
+		});
+	});
+
+	miToc.addEventListener('click', function(){
+		ovrToc.classList.remove('hidden');
+	});
 
 } (window));

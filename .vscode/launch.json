@@ -2,14 +2,13 @@
 	"version": "0.2.0",
 	"configurations": [
 		{
-			"name": "Запустить",
+			"name": "Gulp file",
 			"type": "node",
 			"request": "launch",
 			"program": "${workspaceRoot}/node_modules/gulp/bin/gulp.js",
 			"stopOnEntry": false,
 			"args": [
-				"css",
-				"--dev-mode" 
+				"css" 
 			],
 			"cwd": "${workspaceRoot}",
 			"preLaunchTask": null,
