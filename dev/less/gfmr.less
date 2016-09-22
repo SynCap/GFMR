@@ -14,6 +14,8 @@
 @clrChkmYes:     @clrLink;
 @clrChkmNo:      @clrLink;
 
+@import "font_icons.less";
+
 .codeLink {
 	color: @clrCode;
 	text-decoration: underline;
@@ -253,7 +255,7 @@ ul, ol {
 				height: 1em;
 				color: @clrChkmYes;
 				margin-right: .3em;
-				border-radius: 0.3em;
+				border-radius: 50%;// 0.3em;
 				border: 2px solid;
 				padding: 0.2em 0.1em 0;
 				font-size: .7em;
@@ -364,27 +366,37 @@ dd {
 
 .mainmenu {
 	position: fixed;
-	width: 1rem;
+	width: 2rem;
 	// height: 4rem;
 	top: 1rem;
 	left: 1rem;
-	padding: .5rem;
+	// padding: 1rem;
 	background-color: #fff;
-	color: @clrLink;
-	border-radius: 50%;
+	border-radius: 1.5rem;
 	z-index: 2;
 	box-shadow: 0 0 .5rem rgba(0, 0, 0, .5);
+	list-style-type: none;
 
 	li {
 		display: inline-block;
 		width: 1rem;
 		height: 1rem;
+		padding: .5rem;
+		border-radius: 50%;
+		margin:0;
+		font-size: 1rem;
+		color: @clrBorderDark;
+		border: 1px solid transparent;
+		&:hover{
+			// background-color: @clrHeaderBg;
+			// color: @clrHeaderFg;
+			color: @clrLink;
+			border-color: @clrLink;
+		}
 	} 
 	.btn-menu-toc {
-
 	} 
 	.btn-menu-props {
-
 	}
 }
 

@@ -194,7 +194,7 @@ gulp.task('css', /*gulp.series('css:clean'),*/ function (cb) {
 				// , debug({title: 'After csso'})
 				// , concat('gfmr.css')
 				// , debug({title: 'After concat'})
-				, gulpif(devMode, srcmaps.write('./', {includeContent:false, sourceRoot:'../../dev/less'}) )
+				, gulpif(devMode, srcmaps.write('./', {includeContent:true, sourceRoot:'../../dev/less'}) )
 				// , debug({title: 'After srcMap.write:'})
 				, gulp.dest(destPath.css)
 				, debug({title: 'After save:'})
