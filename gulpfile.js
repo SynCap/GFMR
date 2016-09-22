@@ -37,7 +37,7 @@ const uglify  = require('gulp-uglify');
 // const cleancss     = require('gulp-clean-css');
 
 const argv = require('minimist')(process.argv.slice(2));
-const devMode = process.env.NODE_ENV === 'development' || argv['dev-mode'] === true;
+const devMode = process.env.NODE_ENV === 'development' || argv['mode-dev'] === true || argv['mode-prod'] !== true;
 
 const srcPath = {
 	styles : {
@@ -177,9 +177,14 @@ gulp.task('css', /*gulp.series('css:clean'),*/ function (cb) {
 			// return gulp.src( srcPath.styles )
 			pump([ gulp.src( srcPath.styles.files, {cwd : srcPath.styles.dir} )
 				// , debug({title: 'Style source files'})
-				, srcmaps.init()
+				, gulpif(devMode, srcmaps.init() )
+				// , debug({title: 'After srcmaps init'})
 				// , gulpif( '*.less' ,less({plugins: [autoprefix, cleanCss]}))
-				, less({plugins: [autoprefix, cleanCss]})
+				, gulpif(devMode,
+					less({plugins: [autoprefix]}),
+					less({plugins: [autoprefix, cleanCss]})
+					)
+				// , less({plugins: [autoprefix, cleanCss]})
 				// , debug({title: 'After LESS:'})
 				// , less()
 				// , autoprefixer()
@@ -189,21 +194,23 @@ gulp.task('css', /*gulp.series('css:clean'),*/ function (cb) {
 				// , debug({title: 'After csso'})
 				// , concat('gfmr.css')
 				// , debug({title: 'After concat'})
-				, srcmaps.write('./')
+				, gulpif(devMode, srcmaps.write('./', {includeContent:true, sourceRoot:'../../dev/less'}) )
 				// , debug({title: 'After srcMap.write:'})
 				, gulp.dest(destPath.css)
-				// , debug({title: 'After dest:'})
+				, debug({title: 'After save:'})
 			], cb)
 		);
 });
 
 gulp.task('js:all', gulp.parallel('js:hl','js:mdi','js:init'));
-gulp.task('build', gulp.parallel('css', 'js:hl', 'js:mdi', 'js:init'));
-gulp.task('default', gulp.parallel('css'));
+gulp.task('build', gulp.parallel('css', 'js:init'));
+gulp.task('build:all', gulp.parallel('css', 'js:all'));
+gulp.task('default', gulp.parallel('build'));
 
 gulp.task('vigil', function (done) {
 	gulp.watch(srcPath.styles.files, {cwd: srcPath.styles.dir}, gulp.parallel('css') );
 	gulp.watch( 'init.js', { cwd: './dev/js' }, gulp.parallel('js:init') );
+	done;
 });
 
 showMsg('%s = "%s"', chalk.yellow('NODE_ENV'), chalk.cyan(process.env.NODE_ENV));

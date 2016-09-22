@@ -2,6 +2,7 @@
 @clrMain:        #ddd;
 @clrBaseBG:      #F8F8F8;
 @clrBorderDark:  #bbb;
+@clrShadowDark:  #777;
 @clrBorderLite:  #eee;
 @clrLink:        #4183c4;
 @clrLineNumbers: #c90;
@@ -13,6 +14,9 @@
 @clrHeaderLnk:   @clrCode;
 @clrChkmYes:     @clrLink;
 @clrChkmNo:      @clrLink;
+@pageWidth:      55em;
+
+@import "font_icons.less";
 
 .codeLink {
 	color: @clrCode;
@@ -31,7 +35,7 @@ body {
 	line-height: 1.4em;
 	background-color: @clrBaseBG;
 	padding: 0.7em;
-	max-width: 55em;
+	max-width: @pageWidth;
 	margin:  2em auto;
 }
 p {
@@ -253,7 +257,7 @@ ul, ol {
 				height: 1em;
 				color: @clrChkmYes;
 				margin-right: .3em;
-				border-radius: 0.3em;
+				border-radius: 50%;// 0.3em;
 				border: 2px solid;
 				padding: 0.2em 0.1em 0;
 				font-size: .7em;
@@ -273,6 +277,7 @@ ul, ol {
 		}
 		&.chkm-no {
 			&:before {
+				color: white;
 			}
 		}
 	
@@ -361,6 +366,94 @@ dd {
 	}
 }
 
+.mainmenu {
+	position: fixed;
+	width: 2rem;
+	// height: 4rem;
+	top: 1rem;
+	left: 1rem;
+	// padding: 1rem;
+	background-color: #fff;
+	border-radius: 1.5rem;
+	z-index: 2;
+	box-shadow: 0 0 .5rem rgba(0, 0, 0, .5);
+	list-style-type: none;
+
+	li {
+		display: inline-block;
+		width: 1rem;
+		height: 1rem;
+		padding: .5rem;
+		border-radius: 50%;
+		margin:0;
+		font-size: 1rem;
+		color: @clrBorderDark;
+		border: 0.7px solid transparent;
+		line-height: 1rem;
+		cursor: pointer;
+		&:hover{
+			background-color: @clrLink;
+			color: @clrBaseBG;
+			// color: @clrLink;
+			border-color: @clrBaseBG;
+			transform: scale(1.5);
+			transition: all .4s;
+			box-shadow: 0 0 .3rem @clrShadowDark;
+		}
+	} 
+}
+
+.hidden {
+	display: none;
+	opacity: 0;
+	transition: all .4s;
+}
+
+@clrOvr: #fff;
+@clrOvrBg: rgba(0, 0, 0, 0.7);
+@clrOvrHv: #fe0;
+
+.overlay {
+	width: 100%;
+	height: 100%;
+	overflow: auto;
+	position: fixed;
+	color: @clrOvr;
+	background-color: @clrOvrBg;
+	z-index: 3;
+	opacity: 1;
+	top: 0;
+	left: 0;
+}
+
+.toc-list {
+	width: @pageWidth/2;
+	margin: 2rem auto;
+	li {
+		list-style-type: none;
+
+	}
+	a {
+		color: @clrOvr;
+		display: block;
+		padding: .1rem 1rem;
+		&:hover {
+			text-decoration: none;
+			background-color: #000;
+			color: @clrOvrHv;
+		}
+	}
+	.toc-item (@counter) when (@counter > 0) {
+		.toc-item((@counter - 1));
+		.toc-item-h@{counter} {
+			padding-left: 1rem*(@counter - 1);
+			font-size: 2em - .2 * @counter;
+			margin-top: @counter * .1em;
+			line-height: 1em;
+		}
+	}
+	.toc-item(6);
+}
 
 
 // @import (inline) "far.css";
