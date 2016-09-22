@@ -2,6 +2,7 @@
 @clrMain:        #ddd;
 @clrBaseBG:      #F8F8F8;
 @clrBorderDark:  #bbb;
+@clrShadowDark:  #777;
 @clrBorderLite:  #eee;
 @clrLink:        #4183c4;
 @clrLineNumbers: #c90;
@@ -386,12 +387,17 @@ dd {
 		margin:0;
 		font-size: 1rem;
 		color: @clrBorderDark;
-		border: 1px solid transparent;
+		border: 0.7px solid transparent;
+		line-height: 1rem;
+		cursor: pointer;
 		&:hover{
-			// background-color: @clrHeaderBg;
-			// color: @clrHeaderFg;
-			color: @clrLink;
-			border-color: @clrLink;
+			background-color: @clrLink;
+			color: @clrBaseBG;
+			// color: @clrLink;
+			border-color: @clrBaseBG;
+			transform: scale(1.5);
+			transition: all .4s;
+			box-shadow: 0 0 .3rem @clrShadowDark;
 		}
 	} 
 	.btn-menu-toc {
