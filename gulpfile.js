@@ -177,7 +177,8 @@ gulp.task('css', /*gulp.series('css:clean'),*/ function (cb) {
 			// return gulp.src( srcPath.styles )
 			pump([ gulp.src( srcPath.styles.files, {cwd : srcPath.styles.dir} )
 				// , debug({title: 'Style source files'})
-				, srcmaps.init()
+				, gulpif(devMode, srcmaps.init() )
+				// , debug({title: 'After srcmaps init'})
 				// , gulpif( '*.less' ,less({plugins: [autoprefix, cleanCss]}))
 				, gulpif(devMode,
 					less({plugins: [autoprefix]}),
@@ -193,7 +194,7 @@ gulp.task('css', /*gulp.series('css:clean'),*/ function (cb) {
 				// , debug({title: 'After csso'})
 				// , concat('gfmr.css')
 				// , debug({title: 'After concat'})
-				, srcmaps.write('./')
+				, gulpif(devMode, srcmaps.write('./', {includeContent:false, sourceRoot:'../../dev/less'}) )
 				// , debug({title: 'After srcMap.write:'})
 				, gulp.dest(destPath.css)
 				, debug({title: 'After save:'})
