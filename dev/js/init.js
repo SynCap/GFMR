@@ -1,5 +1,6 @@
 /**!
- * Copyright (c) 2013, 2015 Constantin Loskutov,
+ * GFM render chrome extension, v2.1.4, Sep 22 2016
+ * Copyright (c) 2013, 2015, 2016 Constantin Loskutov,
  * https://github.com/SynCap/GFMR
  * 
  * TODO: 
