@@ -205,7 +205,7 @@ gulp.task('css', /*gulp.series('css:clean'),*/ function (cb) {
 gulp.task('js:all', gulp.parallel('js:hl','js:mdi','js:init'));
 gulp.task('build', gulp.parallel('css', 'js:init'));
 gulp.task('build:all', gulp.parallel('css', 'js:all'));
-gulp.task('default', gulp.parallel('build'));
+gulp.task('default', gulp.series('build'));
 
 gulp.task('vigil', function (done) {
 	gulp.watch(srcPath.styles.files, {cwd: srcPath.styles.dir}, gulp.parallel('css') );

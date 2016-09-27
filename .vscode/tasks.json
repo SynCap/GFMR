@@ -12,6 +12,13 @@
 	],
 	"tasks": [
 		{ "taskName": "build"     }, 
+		{
+			"suppressTaskName": true,
+			"taskName": "test",
+			"args": [
+				"css"
+			]   
+		}, 
 		{ "taskName": "css"       }, 
 		{ 
 			"taskName": "css production",
