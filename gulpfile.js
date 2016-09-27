@@ -28,6 +28,7 @@ const gulpif  = require('gulp-if');
 const less    = require('gulp-less');
 const srcmaps = require('gulp-sourcemaps');
 const uglify  = require('gulp-uglify');
+const notify  = require('gulp-notify');
 const newer   = require('gulp-newer'); // gulp-changed
 // const rename  = require('gulp-rename');
 // const remember     = require('gulp-remember');
@@ -99,6 +100,20 @@ function toClean(dir, fileMask) {
 	showMsg('%s "%s\\%s"', chalk.yellow.bgRed(' Clean '), chalk.cyan(dir), chalk.yellow(fileMask) );
 	return del(path.join(dir, fileMask));
 }
+
+function notifyError() {
+    
+	const args = Array.prototype.slice.call(arguments);
+    
+	notify.onError({
+        title: 'Compile Error',
+        message: '<%= error.message %>',
+        // sound: true можно даже со звуком!
+    }).apply(this, args);
+
+    // Keep gulp from hanging on this task
+    this.emit('end');
+};
 
 /**	
  * Highlight.Js files, concat & uglify
@@ -187,8 +202,8 @@ gulp.task('css', /*gulp.series('css:clean'),*/ function (cb) {
 				// , debug({title: 'After srcmaps init'})
 				// , gulpif( '*.less' ,less({plugins: [autoprefix, cleanCss]}))
 				, gulpif(devMode,
-					less({plugins: [autoprefix]}),
-					less({plugins: [autoprefix, cleanCss]})
+						less({plugins: [autoprefix]}). on('error', notifyError ),
+						less({plugins: [autoprefix, cleanCss]}). on('error', notifyError )
 					)
 				// , less({plugins: [autoprefix, cleanCss]})
 				// , debug({title: 'After LESS:'})
