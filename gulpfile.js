@@ -28,7 +28,9 @@ const gulpif  = require('gulp-if');
 const less    = require('gulp-less');
 const srcmaps = require('gulp-sourcemaps');
 const uglify  = require('gulp-uglify');
+const newer   = require('gulp-newer'); // gulp-changed
 // const rename  = require('gulp-rename');
+// const remember     = require('gulp-remember');
 // const gccr         = require('gulp-closure-compiler');
 // const stripDebug   = require('gulp-strip-debug');
 // const vinylPaths   = require('vinyl-paths');
@@ -50,6 +52,9 @@ const srcPath = {
 			// , 'hl-night-tropicbird.css'
 			// , 'line-numbers.css'
 		]
+	},
+	fonts: {
+		dir : 'GR/gfmrFont/fonts'
 	},
 	hl : {
 		dir : './dev/js',
@@ -75,7 +80,8 @@ const uglifyOptions = {preserveComments: 'license'};
 
 var destPath = {
 	js : path.join( /*__dirname,*/'src','js' ),
-	css : path.join( /*__dirname,*/ 'src', 'css' )
+	css : path.join( /*__dirname,*/ 'src', 'css' ),
+	fonts : path.join( /*__dirname,*/ 'src', 'fonts' ),
 };
 
 function timeStamp() {
@@ -208,13 +214,15 @@ gulp.task('build:all', gulp.parallel('css', 'js:all'));
 gulp.task('default', gulp.series('build'));
 
 gulp.task('fonts', function(done) {
-	toClean('fonts','*')
-	.then(
-		pump([
-			gulp.src('GR/gfmrFont/fonts/**', {since: gulp.lastRun('fonts')}) 
-			, gulp.dest('fonts')
-		], done)
-	);
+	// toClean(destPath.fonts,'*')
+	// .then(
+	// );
+	pump([
+		gulp.src(srcPath.fonts + '/**', {since: gulp.lastRun('fonts')})
+		, newer(destPath.fonts)
+		, debug({title: 'Fonts'})
+		, gulp.dest(destPath.fonts)
+	], done);
 });
 
 gulp.task('vigil:watch', function () {
