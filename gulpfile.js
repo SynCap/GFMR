@@ -28,7 +28,10 @@ const gulpif  = require('gulp-if');
 const less    = require('gulp-less');
 const srcmaps = require('gulp-sourcemaps');
 const uglify  = require('gulp-uglify');
+const notify  = require('gulp-notify');
+const newer   = require('gulp-newer'); // gulp-changed
 // const rename  = require('gulp-rename');
+// const remember     = require('gulp-remember');
 // const gccr         = require('gulp-closure-compiler');
 // const stripDebug   = require('gulp-strip-debug');
 // const vinylPaths   = require('vinyl-paths');
@@ -50,6 +53,9 @@ const srcPath = {
 			// , 'hl-night-tropicbird.css'
 			// , 'line-numbers.css'
 		]
+	},
+	fonts: {
+		dir : 'GR/gfmrFont/fonts'
 	},
 	hl : {
 		dir : './dev/js',
@@ -75,7 +81,8 @@ const uglifyOptions = {preserveComments: 'license'};
 
 var destPath = {
 	js : path.join( /*__dirname,*/'src','js' ),
-	css : path.join( /*__dirname,*/ 'src', 'css' )
+	css : path.join( /*__dirname,*/ 'src', 'css' ),
+	fonts : path.join( /*__dirname,*/ 'src', 'fonts' ),
 };
 
 function timeStamp() {
@@ -93,6 +100,20 @@ function toClean(dir, fileMask) {
 	showMsg('%s "%s\\%s"', chalk.yellow.bgRed(' Clean '), chalk.cyan(dir), chalk.yellow(fileMask) );
 	return del(path.join(dir, fileMask));
 }
+
+function notifyError() {
+    
+	const args = Array.prototype.slice.call(arguments);
+    
+	notify.onError({
+        title: 'Compile Error',
+        message: '<%= error.message %>',
+        // sound: true можно даже со звуком!
+    }).apply(this, args);
+
+    // Keep gulp from hanging on this task
+    this.emit('end');
+};
 
 /**	
  * Highlight.Js files, concat & uglify
@@ -181,8 +202,8 @@ gulp.task('css', /*gulp.series('css:clean'),*/ function (cb) {
 				// , debug({title: 'After srcmaps init'})
 				// , gulpif( '*.less' ,less({plugins: [autoprefix, cleanCss]}))
 				, gulpif(devMode,
-					less({plugins: [autoprefix]}),
-					less({plugins: [autoprefix, cleanCss]})
+						less({plugins: [autoprefix]}). on('error', notifyError ),
+						less({plugins: [autoprefix, cleanCss]}). on('error', notifyError )
 					)
 				// , less({plugins: [autoprefix, cleanCss]})
 				// , debug({title: 'After LESS:'})
@@ -207,11 +228,25 @@ gulp.task('build', gulp.parallel('css', 'js:init'));
 gulp.task('build:all', gulp.parallel('css', 'js:all'));
 gulp.task('default', gulp.series('build'));
 
-gulp.task('vigil', function (done) {
-	gulp.watch(srcPath.styles.files, {cwd: srcPath.styles.dir}, gulp.parallel('css') );
-	gulp.watch( 'init.js', { cwd: './dev/js' }, gulp.parallel('js:init') );
-	done;
+gulp.task('fonts', function(done) {
+	// toClean(destPath.fonts,'*')
+	// .then(
+	// );
+	pump([
+		gulp.src(srcPath.fonts + '/**', {since: gulp.lastRun('fonts')})
+		, newer(destPath.fonts)
+		, debug({title: 'Fonts'})
+		, gulp.dest(destPath.fonts)
+	], done);
 });
+
+gulp.task('vigil:watch', function () {
+	gulp.watch(srcPath.styles.files, {cwd: srcPath.styles.dir}, gulp.series('css') );
+	gulp.watch( 'init.js', { cwd: './dev/js' }, gulp.series('js:init') );
+	// done();
+});
+
+gulp.task('vigil', gulp.series('build', 'vigil:watch'));
 
 showMsg('%s = "%s"', chalk.yellow('NODE_ENV'), chalk.cyan(process.env.NODE_ENV));
 showMsg('Dev Mode = %s', chalk.cyan(devMode));
