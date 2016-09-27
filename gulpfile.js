@@ -207,11 +207,23 @@ gulp.task('build', gulp.parallel('css', 'js:init'));
 gulp.task('build:all', gulp.parallel('css', 'js:all'));
 gulp.task('default', gulp.series('build'));
 
-gulp.task('vigil', function (done) {
-	gulp.watch(srcPath.styles.files, {cwd: srcPath.styles.dir}, gulp.parallel('css') );
-	gulp.watch( 'init.js', { cwd: './dev/js' }, gulp.parallel('js:init') );
-	done;
+gulp.task('fonts', function(done) {
+	toClean('fonts','*')
+	.then(
+		pump([
+			gulp.src('GR/gfmrFont/fonts/**', {since: gulp.lastRun('fonts')}) 
+			, gulp.dest('fonts')
+		], done)
+	);
 });
+
+gulp.task('vigil:watch', function () {
+	gulp.watch(srcPath.styles.files, {cwd: srcPath.styles.dir}, gulp.series('css') );
+	gulp.watch( 'init.js', { cwd: './dev/js' }, gulp.series('js:init') );
+	// done();
+});
+
+gulp.task('vigil', gulp.series('build', 'vigil:watch'));
 
 showMsg('%s = "%s"', chalk.yellow('NODE_ENV'), chalk.cyan(process.env.NODE_ENV));
 showMsg('Dev Mode = %s', chalk.cyan(devMode));
