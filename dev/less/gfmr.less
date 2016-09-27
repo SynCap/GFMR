@@ -431,6 +431,11 @@ dd {
 	width: @pageWidth/2;
 	margin: 2rem auto;
 	align-self: center;
+	background-color: @clrOvrBg;
+	padding: 1rem;
+	border-radius: 1rem;
+	border: 1px solid;
+	box-shadow: 0 0 2rem @clrOvrBg;
 	li {
 		list-style-type: none;
 
@@ -439,10 +444,12 @@ dd {
 		color: @clrOvr;
 		display: block;
 		padding: .1rem 1rem;
-		&:hover {
+		border: 1px solid transparent;
+		&:hover, &:active {
 			text-decoration: none;
-			background-color: @clrLink;
+			// background-color: @clrLink;
 			color: @clrOvrHv;
+			border-color: @clrOvrHv;
 		}
 	}
 	.toc-item (@counter) when (@counter > 0) {
