@@ -178,6 +178,7 @@
 		'h1,h2,h3,h4,h5,h6',
 		// uglifier don't understand es6 arrow funcion declaration
 		// h => { h.id = h.innerText.trim().toLowerCase().replace(/\W+/g, '-'); h.classList.add('anchored'); }
+		// TODO: if content is in non-latin it must be salted or translited
 		function (h) { h.id = h.innerText.trim().toLowerCase().replace(/\W+/g, '-'); h.classList.add('anchored'); }
 	);
 
@@ -186,9 +187,9 @@
 		'li',
 		l => { l.innerHTML.replace(/^\[([ x?v])\]/i, (m, x) => '<i class="checkmark-' + ('xX?vV'.indexOf(x)+1)?' checked':'empty' + '"></i>' ); };
 	);*/
-			// just stirp all found textual checkmarks
-			// they must be at start of <li> element after rendering
-					// but remember, what we've erased
+	// just stirp all found textual checkmarks
+	// they must be at start of <li> element after rendering
+	// but remember, what we've erased
 	changeTo(
 		'li',
 		function (l) { 
@@ -207,20 +208,29 @@
 
 	var ovrToc = mkElement('div', {'id':'ovrToc', 'class': 'overlay hidden'}, document.body);
 	var lstToc = mkElement('ul', {'id': 'lstToc', 'class': 'toc-list'}, ovrToc);
+	var btnTocClose = mkElement('div', {'class':'btn-close'}, ovrToc, '&#10060;'); // &#10060; 9760
 
 	changeTo('h1,h2,h3,h4,h5,h6', function(h){
 		var liToc = mkElement('li',{'class': 'toc-item-' + h.tagName.toLowerCase()}, lstToc);
-		mkElement('a',{'href':'#'  +h.id, 'class': 'toc-link'}, liToc, h.innerHTML);
+		mkElement('a',{'href':'#'  +h.id, 'class': 'toc-link'}, liToc, h.innerHTML).
+			addEventListener('click', function(e){
+				e.stopPropagation();
+			});
+
 	});
 
 	changeTo('.overlay', function(ovr){
-		ovr.addEventListener('click',function(e){
+		ovr.addEventListener('click',function(){
 			ovrToc.classList.add('hidden');
 		});
 	});
 
 	miToc.addEventListener('click', function(){
 		ovrToc.classList.remove('hidden');
+	});
+
+	btnTocClose.addEventListener('click', function(){
+		ovrToc.classList.add('hidden');
 	});
 
 } (window));
