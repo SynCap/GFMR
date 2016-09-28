@@ -447,7 +447,13 @@ dd {
 	padding: 1rem;
 	border-radius: 1rem;
 	// border: 1px solid;
+	border: 2px solid rgba(0,0,0,0.7);
 	box-shadow: 0 0 2rem @clrOvrBg;
+
+	.toc-icon {
+		opacity: 0.3;
+	}
+
 	li {
 		list-style-type: none;
 		margin: auto;
@@ -474,7 +480,7 @@ dd {
 		.toc-item((@counter - 1));
 		.toc-item-h@{counter} {
 			padding-left: 2rem*(@counter - 1);
-			padding-top: @counter * .1em;
+			// padding-top: @counter * .1em;
 			font-size: 2em - .2 * @counter;
 			line-height: 1em;
 		}

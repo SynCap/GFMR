@@ -103,6 +103,9 @@
 		}*/
 	}
 
+	// uglifier don't understand es6 arrow funcion declaration
+	// var changeTo = (selector, cb) => {[].forEach.call( document.querySelectorAll(selector), cb);}
+
 	/**
 	 * Change objects by selector and callback function
 	 *
@@ -158,9 +161,6 @@
 		mkElement('title', null, null, t.innerText.trim());
 	}
 
-	// uglifier don't understand es6 arrow funcion declaration
-	// var changeTo = (selector, cb) => {[].forEach.call( document.querySelectorAll(selector), cb);}
-
 	changeTo('code.hljs', addBlockLineNumbers );
 	console.log('HL line numbers initialized.');
 
@@ -215,6 +215,9 @@
 
 	var ovrToc = mkElement('div', {'id':'ovrToc', 'class': 'overlay hidden'}, document.body);
 	var lstToc = mkElement('ul', {'id': 'lstToc', 'class': 'toc-list'}, ovrToc);
+
+	mkElement('img', { class: 'toc-icon', src: chUrl('img/gfmr.ico') }, lstToc);
+
 	var btnTocClose = mkElement('div', {'class':'btn-close'}, ovrToc, '&#10060;'); // &#10060; 9760
 
 	changeTo('h1,h2,h3,h4,h5,h6', function(h){
