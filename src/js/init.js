@@ -174,12 +174,19 @@
 
 	// id values for headings, to be anchors for internal links,
 	// for example: [go to](#element_s_content)
+	var usedIDs = [];
 	changeTo(
 		'h1,h2,h3,h4,h5,h6',
-		// uglifier don't understand es6 arrow funcion declaration
-		// h => { h.id = h.innerText.trim().toLowerCase().replace(/\W+/g, '-'); h.classList.add('anchored'); }
-		// TODO: if content is in non-latin it must be salted or translited
-		function (h) { h.id = h.innerText.trim().toLowerCase().replace(/\W+/g, '-'); h.classList.add('anchored'); }
+		function (h) { 
+			var newId = h.innerText.trim().toLowerCase().replace(/\W+/g, '-');
+			if (newId === '-' || newId == '') newId = '_hid-';
+			for (var i=1;usedIDs.indexOf(newId+'-'+i) > -1;i++) {} 
+			newId += '-' + i;
+			h.id = newId;
+			usedIDs.push(newId);
+			usedIDs.sort(); 
+			h.classList.add('anchored'); 
+		}
 	);
 
 	// checklists
@@ -212,7 +219,7 @@
 
 	changeTo('h1,h2,h3,h4,h5,h6', function(h){
 		var liToc = mkElement('li',{'class': 'toc-item-' + h.tagName.toLowerCase()}, lstToc);
-		mkElement('a',{'href':'#'  +h.id, 'class': 'toc-link'}, liToc, h.innerHTML).
+		mkElement('a',{'href':'#'  +h.id, 'class': 'toc-link'}, liToc, h.innerText). // h.innerHTML).
 			addEventListener('click', function(e){
 				e.stopPropagation();
 			});
