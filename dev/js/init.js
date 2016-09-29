@@ -7,12 +7,13 @@
  * [ ] the code has grown, refactoring is needed
  */
 
-(function (w) {
-
 'use strict';
 
+(function (w) {
+
+
 	var d = w.document;
-	var chUrl = chrome.extension.getURL;
+	var chUrl = chrome.extension.getURL; // eslint-disable-line no-undef
 	// var chUrl = function (path) {return path} // for non Chrome environment debuging purposes only!
 
 	/**
@@ -43,12 +44,26 @@
 			e.innerHTML = content;
 		}
 
-		if (append)
+		if (append || !parent.firstChild)
 			parent.appendChild(e);
 
 		return e;
 	}
 
+	/**
+	 * Create element attribute in some hard cases		
+	 * 
+	 * @param {any} node  	Owner element node
+	 * @param {any} name	Name of parameter
+	 * @param {any} value	Value of parameter
+	 * @returns				Created element itself
+	 */
+	/*function mkAttr(node, name, value) {
+		var a = document.createAttribute(name);
+		a.value = value;
+		node.setAttributeNode(a);
+		return a;
+	}*/
 
 	/**
 	 * link the CSS file as `link` tag
@@ -152,7 +167,7 @@
 
 	// Run syntax hfighlighter for code.
 	// Wether we took this not for `*.md` files from `Github`?
-	hljs.initHighlighting();
+	hljs.initHighlighting();  // eslint-disable-line no-undef
 	console.log('HL initialized.');
 
 	// Set document title
@@ -180,7 +195,7 @@
 		function (h) { 
 			var newId = h.innerText.trim().toLowerCase().replace(/\W+/g, '-');
 			if (newId === '-' || newId == '') newId = '_hid-';
-			for (var i=1;usedIDs.indexOf(newId+'-'+i) > -1;i++) {} 
+			for (var i=1;usedIDs.indexOf(newId+'-'+i) > -1;i++) {}  // eslint-disable-line no-empty
 			newId += '-' + i;
 			h.id = newId;
 			usedIDs.push(newId);
@@ -211,7 +226,7 @@
 
 	var menu = mkElement('ul', {'id':'mainMenu', 'class' : 'mainmenu'}, document.body);
 	var miToc = mkElement('li', {'id':'btnShowToc', 'class':'icn-toc', 'title':'Table of\nContents'}, menu, ' ');
-	var miTune = mkElement('li', {'id':'btnShowProps', 'class':'icn-tune-v', 'title': 'Tune settings'}, menu, ' ');
+	var miTune = mkElement('li', {'id':'btnShowProps', 'class':'icn-tune-v', 'title': 'Tune settings'}, menu, ' ');  // eslint-disable-line no-unused-vars
 
 	var ovrToc = mkElement('div', {'id':'ovrToc', 'class': 'overlay hidden'}, document.body);
 	var lstToc = mkElement('ul', {'id': 'lstToc', 'class': 'toc-list'}, ovrToc);
@@ -221,12 +236,19 @@
 	var btnTocClose = mkElement('div', {'class':'btn-close'}, ovrToc, '&#10060;'); // &#10060; 9760
 
 	changeTo('h1,h2,h3,h4,h5,h6', function(h){
+		var hText = h.innerText.match(/^([\d\.]+)?\s*(.*)$/);
 		var liToc = mkElement('li',{'class': 'toc-item-' + h.tagName.toLowerCase()}, lstToc);
-		mkElement('a',{'href':'#'  +h.id, 'class': 'toc-link'}, liToc, h.innerText). // h.innerHTML).
-			addEventListener('click', function(e){
-				e.stopPropagation();
-			});
-
+		var aToc = mkElement('a',{'href':'#'  +h.id, 'class': 'toc-link', 'data-before': hText[1]}, liToc, hText[2]);
+		aToc.addEventListener('click', function(e){
+			e.stopPropagation();
+		});
+		if (hText[1]) { 
+			// aToc.setAttribute('data-before', hText[1]);
+			// var numToc  = mkElement('b', {}, aToc, hText[1]);
+			var numToc = document.createElement('b');
+			numToc.innerText = hText[1];
+			liToc.insertBefore( numToc, liToc.firstChild ); 
+		} 
 	});
 
 	changeTo('.overlay', function(ovr){

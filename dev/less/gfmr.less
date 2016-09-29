@@ -457,6 +457,15 @@ dd {
 	li {
 		list-style-type: none;
 		margin: auto;
+
+		b:first-child {
+			// content: attr(data-before);
+			display: inline-block;
+			min-width: 3ch;
+			margin-right: .5ch;
+			opacity: .5;
+			text-align: right; 
+		}
 	}
 	a {
 		color: @clrOvr;
