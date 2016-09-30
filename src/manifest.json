@@ -23,5 +23,5 @@
    "name": "Github Flavored Markdown Renderer",
    "permissions": [ "tabs", "\u003Call_urls\u003E" ],
    "manifest_version": 2,
-   "version": "0.2.1"
+   "version": "2.1.5"
 }
