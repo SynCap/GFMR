@@ -369,9 +369,9 @@ dd {
 	position: fixed;
 	width: 2rem;
 	// height: 4rem;
-	top: 1rem;
-	left: 1rem;
-	// padding: 1rem;
+	top: 5rem;
+	left: 1ch;
+	padding: 0.5rem;
 	background-color: #fff;
 	border-radius: 1.5rem;
 	z-index: 2;
@@ -390,6 +390,7 @@ dd {
 		border: 0.7px solid transparent;
 		line-height: 1rem;
 		cursor: pointer;
+		position: relative;
 		&:hover{
 			background-color: @clrLink;
 			color: @clrBaseBG;
@@ -398,13 +399,34 @@ dd {
 			transform: scale(1.5);
 			transition: all .4s;
 			box-shadow: 0 0 .3rem @clrShadowDark;
+			&:after {
+				opacity: 1; /* Показываем tooltip */
+				visibility: visible;
+			}
 		}
-	} 
+		&:after {
+			content: attr(data-tooltip);
+			background: rgba(0, 0, 0, 0.8);
+			border-radius: .25rem;
+			box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.5);
+			color: #FFF;
+			/* margin-top: -24px; */
+			padding: 3px 7px;
+			position: absolute;
+			left: calc(100% + 1em);
+			top: 0;
+			opacity: 0;
+			visibility: hidden;
+			transition: all 0.4s ease-in-out;
+			font-size: .5em;
+		}
+	}
 }
 
 @clrOvr: #fff;
 @clrOvrBg: rgba(0, 0, 0, 0.7);
 @clrOvrHv: #fe0;
+		
 
 .overlay {
 	width: 100%;
@@ -435,21 +457,29 @@ dd {
 			color: @clrOvrHv; // red;
 		}
 	}
+
+	.ovr-cont {
+		// width: @pageWidth * .75;
+		// max-width: @pageWidth;
+		max-width: 100vw;
+		margin: 2rem auto;
+		align-self: center;
+		background-color: @clrOvrBg;
+		padding: 1rem;
+		border-radius: 1rem;
+		// border: 1px solid;
+		border: 2px solid rgba(0,0,0,0.7);
+		box-shadow: 0 0 2rem @clrOvrBg;
+	}
+}
+
+.prop-sheet {
+	.row {
+
+	}
 }
 
 .toc-list {
-	// width: @pageWidth * .75;
-	// max-width: @pageWidth;
-	max-width: 100vw;
-	margin: 2rem auto;
-	align-self: center;
-	background-color: @clrOvrBg;
-	padding: 1rem;
-	border-radius: 1rem;
-	// border: 1px solid;
-	border: 2px solid rgba(0,0,0,0.7);
-	box-shadow: 0 0 2rem @clrOvrBg;
-
 	.toc-icon {
 		opacity: 0.3;
 	}
@@ -461,8 +491,8 @@ dd {
 		b:first-child {
 			// content: attr(data-before);
 			display: inline-block;
-			min-width: 3ch;
-			margin-right: .5ch;
+			min-width: 2.5ch;
+			// margin-right: .5ch;
 			opacity: .5;
 			text-align: right; 
 		}
@@ -470,7 +500,7 @@ dd {
 	a {
 		color: @clrOvr;
 		display: inline-block;
-		padding: 0.2rem 1rem;
+		padding: 0.2rem .5rem;
 		border: 1px solid transparent;
 		border-radius: 0.3rem;
 

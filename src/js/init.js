@@ -2,8 +2,8 @@
  * GFM render chrome extension, v2.1.4, Sep 22 2016
  * Copyright (c) 2013, 2015, 2016 Constantin Loskutov,
  * https://github.com/SynCap/GFMR
- * 
- * TODO: 
+ *
+ * TODO:
  * [ ] the code has grown, refactoring is needed
  */
 
@@ -19,6 +19,7 @@
 	/**
 	 * Create HTML elements shortcut. Default parent of newly created elements
 	 * is a `document.head`.
+	 * 
 	 * @param  {string} tag    Tag name, as used in `document.createElement`
 	 * @param  {object} params Attributes to be set to element
 	 * @param  {string} parent Parent element for new element. <HEAD> is default
@@ -32,27 +33,37 @@
 		append = typeof append === 'undefined' ? true : append;
 
 		if (params !== 'undefined' && params != null) {
-			for (var prop in params) {
-				if (prop === 'class')
+			for (var prop in params)
+				switch (prop) {
+				case 'class':
 					e.className = params[prop];
-				else 
-					e[prop] = params[prop];
-			}
+					break;
+				case 'prepend':
+					var prepend = params[prop];
+					break;
+				default:
+					if (params[prop])
+						e.setAttribute(prop, params[prop]); 
+				}
 		}
 
 		if (content !== 'undefined' && content != null) {
 			e.innerHTML = content;
 		}
 
-		if (append || !parent.firstChild)
-			parent.appendChild(e);
+		if (parent !== 'undefined')
+			if (prepend || append === 'prepend') {
+				parent.insertBefore( e, parent.firstChild || null );			
+			}
+			else if (append)
+				parent.appendChild(e);
 
 		return e;
 	}
 
 	/**
 	 * Create element attribute in some hard cases		
-	 * 
+	 *
 	 * @param {any} node  	Owner element node
 	 * @param {any} name	Name of parameter
 	 * @param {any} value	Value of parameter
@@ -192,15 +203,15 @@
 	var usedIDs = [];
 	changeTo(
 		'h1,h2,h3,h4,h5,h6',
-		function (h) { 
+		function (h) {
 			var newId = h.innerText.trim().toLowerCase().replace(/\W+/g, '-');
 			if (newId === '-' || newId == '') newId = '_hid-';
 			for (var i=1;usedIDs.indexOf(newId+'-'+i) > -1;i++) {}  // eslint-disable-line no-empty
 			newId += '-' + i;
 			h.id = newId;
 			usedIDs.push(newId);
-			usedIDs.sort(); 
-			h.classList.add('anchored'); 
+			usedIDs.sort();
+			h.classList.add('anchored');
 		}
 	);
 
@@ -214,46 +225,49 @@
 	// but remember, what we've erased
 	changeTo(
 		'li',
-		function (l) { 
-			l.innerHTML = l.innerHTML.replace(/^\[([ \-?vx])\]/i, 
+		function (l) {
+			l.innerHTML = l.innerHTML.replace(/^\[([ \-?vx])\]/i,
 				function(m, x) {
-					l.classList.add('chkm-' + ('xXvV'.indexOf(x)+1?'yes':'no'));  
-					return ''; 
+					l.classList.add('chkm-' + ('xXvV'.indexOf(x)+1?'yes':'no'));
+					return '';
 				}
 			);
 		}
 	);
 
+	var btnCloseHtml = '<span class="btn-close">&#10060;</span>';
+
 	var menu = mkElement('ul', {'id':'mainMenu', 'class' : 'mainmenu'}, document.body);
-	var miToc = mkElement('li', {'id':'btnShowToc', 'class':'icn-toc', 'title':'Table of\nContents'}, menu, ' ');
-	var miTune = mkElement('li', {'id':'btnShowProps', 'class':'icn-tune-v', 'title': 'Tune settings'}, menu, ' ');  // eslint-disable-line no-unused-vars
+	var miToc = mkElement('li', {'id':'btnShowToc', 'class':'icn-toc', 'data-tooltip':'Table of\nContents'}, menu, ' ');
+	var miTune = mkElement('li', {'id':'btnShowProps', 'class':'icn-tune-v', 'data-tooltip': 'Tune settings'}, menu, ' ');
 
-	var ovrToc = mkElement('div', {'id':'ovrToc', 'class': 'overlay hidden'}, document.body);
-	var lstToc = mkElement('ul', {'id': 'lstToc', 'class': 'toc-list'}, ovrToc);
-
+	var ovrToc = mkElement('div', {'id':'ovrToc', 'class': 'overlay hidden'}, document.body, btnCloseHtml);
+	var lstToc = mkElement('ul', {'id': 'lstToc', 'class': 'ovr-cont toc-list'}, ovrToc);
 	mkElement('img', { class: 'toc-icon', src: chUrl('img/gfmr.ico') }, lstToc);
 
-	var btnTocClose = mkElement('div', {'class':'btn-close'}, ovrToc, '&#10060;'); // &#10060; 9760
+	var ovrProp = mkElement('div', {'id':'ovrProp', 'class': 'overlay hidden'}, document.body,
+		btnCloseHtml +
+		`
+		<div class="ovr-cont prop-sheet">
+			<div class="row">
+				
+			</div>
+		</div>`
+	);
 
 	changeTo('h1,h2,h3,h4,h5,h6', function(h){
 		var hText = h.innerText.match(/^([\d\.]+)?\s*(.*)$/);
 		var liToc = mkElement('li',{'class': 'toc-item-' + h.tagName.toLowerCase()}, lstToc);
-		var aToc = mkElement('a',{'href':'#'  +h.id, 'class': 'toc-link', 'data-before': hText[1]}, liToc, hText[2]);
-		aToc.addEventListener('click', function(e){
-			e.stopPropagation();
-		});
-		if (hText[1]) { 
-			// aToc.setAttribute('data-before', hText[1]);
-			// var numToc  = mkElement('b', {}, aToc, hText[1]);
-			var numToc = document.createElement('b');
-			numToc.innerText = hText[1];
-			liToc.insertBefore( numToc, liToc.firstChild ); 
-		} 
+		mkElement('a',{'href':'#'  +h.id, 'class': 'toc-link', 'data-before': hText[1]}, liToc, hText[2]).
+			addEventListener('click', function(e){ e.stopPropagation(); });
+		if (hText[1])
+			mkElement('b', {}, liToc, hText[1], 'prepend');
 	});
 
+	// close any overlay on area click
 	changeTo('.overlay', function(ovr){
-		ovr.addEventListener('click',function(){
-			ovrToc.classList.add('hidden');
+		ovr.addEventListener('click',function(e){
+			e.target.classList.add('hidden');
 		});
 	});
 
@@ -261,8 +275,12 @@
 		ovrToc.classList.remove('hidden');
 	});
 
-	btnTocClose.addEventListener('click', function(){
-		ovrToc.classList.add('hidden');
+	miTune.addEventListener('click', function(){
+		ovrProp.classList.remove('hidden');
 	});
+
+	/*btnTocClose.addEventListener('click', function(){
+		ovrToc.classList.add('hidden');
+	});*/
 
 } (window));
