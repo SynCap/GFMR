@@ -236,6 +236,62 @@
 	);
 
 	var btnCloseHtml = '<span class="btn-close">&#10060;</span>';
+	var htmlSettingsPanel = `
+<div class="ovr-cont prop-sheet">
+	<h2>Settings</h2>
+	<div class="row">
+		<h3>Main theme</h3>
+		<div class="selector">
+			<input type="radio" id="theme_1" name="theme-main" value="Gzhel">
+			<label class="btn" for="theme_1">
+				<img src="" alt="">
+				<p>Gzhel</p>
+			</label>
+		</div>
+	</div>
+	<div class="row">
+		<h3>Code highlighter theme</h3>
+		<div class="selector">
+			<input type="radio" id="theme_2" name="theme-code" value="f12" checked>
+			<label class="btn" for="theme_2">
+				<img src="" alt="">
+				<p>Night tropic bird</p>
+			</label>
+		</div>
+		<div class="selector">
+			<input type="radio" id="theme_3" name="theme-code" value="github">
+			<label class="btn" for="theme_3">
+				<img src="" alt="">
+				<p>GitHub</p>
+			</label>
+		</div>
+	</div>
+	<div class="row">
+		<h3>Code stripes theme</h3>
+		<div class="selector">
+			<input type="radio" id="theme_4" name="theme-stripes" value="none">
+			<label class="btn" for="theme_4">
+				<img src="" alt="">
+				<p>None</p>
+			</label>
+		</div>
+		<div class="selector">
+			<input type="radio" id="theme_5" name="theme-stripes" value="dark" checked>
+			<label class="btn" for="theme_5">
+				<img src="" alt="">
+				<p>Dark</p>
+			</label>
+		</div>
+		<div class="selector">
+			<input type="radio" id="theme_6" name="theme-stripes" value="ligth">
+			<label class="btn" for="theme_6">
+				<img src="" alt="">
+				<p>Light</p>
+			</label>
+		</div>
+	</div>
+</div>
+`;
 
 	var menu = mkElement('ul', {'id':'mainMenu', 'class' : 'mainmenu'}, document.body);
 	var miToc = mkElement('li', {'id':'btnShowToc', 'class':'icn-toc', 'data-tooltip':'Table of\nContents'}, menu, ' ');
@@ -244,16 +300,6 @@
 	var ovrToc = mkElement('div', {'id':'ovrToc', 'class': 'overlay hidden'}, document.body, btnCloseHtml);
 	var lstToc = mkElement('ul', {'id': 'lstToc', 'class': 'ovr-cont toc-list'}, ovrToc);
 	mkElement('img', { class: 'toc-icon', src: chUrl('img/gfmr.ico') }, lstToc);
-
-	var ovrProp = mkElement('div', {'id':'ovrProp', 'class': 'overlay hidden'}, document.body,
-		btnCloseHtml +
-		`
-		<div class="ovr-cont prop-sheet">
-			<div class="row">
-				
-			</div>
-		</div>`
-	);
 
 	changeTo('h1,h2,h3,h4,h5,h6', function(h){
 		var hText = h.innerText.match(/^([\d\.]+)?\s*(.*)$/);
@@ -264,10 +310,16 @@
 			mkElement('b', {}, liToc, hText[1], 'prepend');
 	});
 
+	var ovrProp = mkElement('div', {'id':'ovrProp', 'class': 'overlay hidden'}, document.body, btnCloseHtml + htmlSettingsPanel );
+
+	// Event handlers
+	// ##############################################################################################
+
 	// close any overlay on area click
 	changeTo('.overlay', function(ovr){
 		ovr.addEventListener('click',function(e){
-			e.target.classList.add('hidden');
+			if (e.target.classList.contains('overlay') || e.target.classList.contains('btn-close'))
+				changeTo('.overlay', function (o) {o.classList.add('hidden');});
 		});
 	});
 
@@ -278,9 +330,5 @@
 	miTune.addEventListener('click', function(){
 		ovrProp.classList.remove('hidden');
 	});
-
-	/*btnTocClose.addEventListener('click', function(){
-		ovrToc.classList.add('hidden');
-	});*/
 
 } (window));
