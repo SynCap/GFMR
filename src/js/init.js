@@ -2,22 +2,24 @@
  * GFM render chrome extension, v2.1.4, Sep 22 2016
  * Copyright (c) 2013, 2015, 2016 Constantin Loskutov,
  * https://github.com/SynCap/GFMR
- * 
- * TODO: 
+ *
+ * TODO:
  * [ ] the code has grown, refactoring is needed
  */
 
-(function (w) {
-
 'use strict';
 
+(function (w) {
+
+
 	var d = w.document;
-	var chUrl = chrome.extension.getURL;
+	var chUrl = chrome.extension.getURL; // eslint-disable-line no-undef
 	// var chUrl = function (path) {return path} // for non Chrome environment debuging purposes only!
 
 	/**
 	 * Create HTML elements shortcut. Default parent of newly created elements
 	 * is a `document.head`.
+	 * 
 	 * @param  {string} tag    Tag name, as used in `document.createElement`
 	 * @param  {object} params Attributes to be set to element
 	 * @param  {string} parent Parent element for new element. <HEAD> is default
@@ -31,24 +33,48 @@
 		append = typeof append === 'undefined' ? true : append;
 
 		if (params !== 'undefined' && params != null) {
-			for (var prop in params) {
-				if (prop === 'class')
+			for (var prop in params)
+				switch (prop) {
+				case 'class':
 					e.className = params[prop];
-				else 
-					e[prop] = params[prop];
-			}
+					break;
+				case 'prepend':
+					var prepend = params[prop];
+					break;
+				default:
+					if (params[prop])
+						e.setAttribute(prop, params[prop]); 
+				}
 		}
 
 		if (content !== 'undefined' && content != null) {
 			e.innerHTML = content;
 		}
 
-		if (append)
-			parent.appendChild(e);
+		if (parent !== 'undefined')
+			if (prepend || append === 'prepend') {
+				parent.insertBefore( e, parent.firstChild || null );			
+			}
+			else if (append)
+				parent.appendChild(e);
 
 		return e;
 	}
 
+	/**
+	 * Create element attribute in some hard cases		
+	 *
+	 * @param {any} node  	Owner element node
+	 * @param {any} name	Name of parameter
+	 * @param {any} value	Value of parameter
+	 * @returns				Created element itself
+	 */
+	/*function mkAttr(node, name, value) {
+		var a = document.createAttribute(name);
+		a.value = value;
+		node.setAttributeNode(a);
+		return a;
+	}*/
 
 	/**
 	 * link the CSS file as `link` tag
@@ -103,6 +129,9 @@
 		}*/
 	}
 
+	// uglifier don't understand es6 arrow funcion declaration
+	// var changeTo = (selector, cb) => {[].forEach.call( document.querySelectorAll(selector), cb);}
+
 	/**
 	 * Change objects by selector and callback function
 	 *
@@ -149,7 +178,7 @@
 
 	// Run syntax hfighlighter for code.
 	// Wether we took this not for `*.md` files from `Github`?
-	hljs.initHighlighting();
+	hljs.initHighlighting();  // eslint-disable-line no-undef
 	console.log('HL initialized.');
 
 	// Set document title
@@ -157,9 +186,6 @@
 	if (t) {
 		mkElement('title', null, null, t.innerText.trim());
 	}
-
-	// uglifier don't understand es6 arrow funcion declaration
-	// var changeTo = (selector, cb) => {[].forEach.call( document.querySelectorAll(selector), cb);}
 
 	changeTo('code.hljs', addBlockLineNumbers );
 	console.log('HL line numbers initialized.');
@@ -177,15 +203,15 @@
 	var usedIDs = [];
 	changeTo(
 		'h1,h2,h3,h4,h5,h6',
-		function (h) { 
+		function (h) {
 			var newId = h.innerText.trim().toLowerCase().replace(/\W+/g, '-');
 			if (newId === '-' || newId == '') newId = '_hid-';
-			for (var i=1;usedIDs.indexOf(newId+'-'+i) > -1;i++) {} 
+			for (var i=1;usedIDs.indexOf(newId+'-'+i) > -1;i++) {}  // eslint-disable-line no-empty
 			newId += '-' + i;
 			h.id = newId;
 			usedIDs.push(newId);
-			usedIDs.sort(); 
-			h.classList.add('anchored'); 
+			usedIDs.sort();
+			h.classList.add('anchored');
 		}
 	);
 
@@ -199,45 +225,141 @@
 	// but remember, what we've erased
 	changeTo(
 		'li',
-		function (l) { 
-			l.innerHTML = l.innerHTML.replace(/^\[([ \-?vx])\]/i, 
+		function (l) {
+			l.innerHTML = l.innerHTML.replace(/^\[([ \-?vx])\]/i,
 				function(m, x) {
-					l.classList.add('chkm-' + ('xXvV'.indexOf(x)+1?'yes':'no'));  
-					return ''; 
+					l.classList.add('chkm-' + ('xXvV'.indexOf(x)+1?'yes':'no'));
+					return '';
 				}
 			);
 		}
 	);
 
-	var menu = mkElement('ul', {'id':'mainMenu', 'class' : 'mainmenu'}, document.body);
-	var miToc = mkElement('li', {'id':'btnShowToc', 'class':'icn-toc', 'title':'Table of\nContents'}, menu, ' ');
-	var miTune = mkElement('li', {'id':'btnShowProps', 'class':'icn-tune-v', 'title': 'Tune settings'}, menu, ' ');
+	var btnCloseHtml = '<span class="btn-close">&#10060;</span>';
+	var htmlSettingsPanel = `
+<div class="ovr-cont prop-sheet">
+	<h2>Settings</h2>
+	<div class="row">
+		<h3>Main theme</h3>
+		<div class="selector">
+			<input type="radio" id="theme_1" name="theme-main" value="gzhel" checked>
+			<label class="btn" for="theme_1">
+				<img src="" alt="">
+				<p>Gzhel (Гжель)</p>
+			</label>
+		</div>
+		<div class="selector">
+			<input type="radio" id="theme_1" name="theme-main" value="classic">
+			<label class="btn" for="theme_1">
+				<img src="" alt="">
+				<p>Classic</p>
+			</label>
+		</div>
+		<div class="selector">
+			<input type="radio" id="theme_1" name="theme-main" value="github">
+			<label class="btn" for="theme_1">
+				<img src="" alt="">
+				<p>GitHub</p>
+			</label>
+		</div>
+	</div>
+	<div class="row">
+		<h3>Code highlighter theme</h3>
+		<div class="selector">
+			<input type="radio" id="theme_2" name="theme-code" value="f12" checked>
+			<label class="btn" for="theme_2">
+				<img src="" alt="">
+				<p>Night tropic bird</p>
+			</label>
+		</div>
+		<div class="selector">
+			<input type="radio" id="theme_2" name="theme-code" value="far" checked>
+			<label class="btn" for="theme_2">
+				<img src="" alt="">
+				<p>FAR</p>
+			</label>
+		</div>
+		<div class="selector">
+			<input type="radio" id="theme_3" name="theme-code" value="github">
+			<label class="btn" for="theme_3">
+				<img src="" alt="">
+				<p>GitHub</p>
+			</label>
+		</div>
+	</div>
+	<div class="row">
+		<h3>Code stripes theme</h3>
+		<div class="selector">
+			<input type="radio" id="theme_4" name="theme-stripes" value="none">
+			<label class="btn" for="theme_4">
+				<img src="" alt="">
+				<p>None</p>
+			</label>
+		</div>
+		<div class="selector">
+			<input type="radio" id="theme_5" name="theme-stripes" value="dark" checked>
+			<label class="btn" for="theme_5">
+				<img src="" alt="">
+				<p>Dark</p>
+			</label>
+		</div>
+		<div class="selector">
+			<input type="radio" id="theme_6" name="theme-stripes" value="ligth">
+			<label class="btn" for="theme_6">
+				<img src="" alt="">
+				<p>Light</p>
+			</label>
+		</div>
+	</div>
+</div>
+`;
 
-	var ovrToc = mkElement('div', {'id':'ovrToc', 'class': 'overlay hidden'}, document.body);
-	var lstToc = mkElement('ul', {'id': 'lstToc', 'class': 'toc-list'}, ovrToc);
-	var btnTocClose = mkElement('div', {'class':'btn-close'}, ovrToc, '&#10060;'); // &#10060; 9760
+	// Main menu
+	var menu = mkElement('ul', {'id':'mainMenu', 'class' : 'mainmenu'}, document.body);
+	var miToc = mkElement('li', {'id':'btnShowToc', 'class':'icn-toc', 'data-tooltip':'Contents'}, menu, ' ');
+	var miTune = mkElement('li', {'id':'btnShowProps', 'class':'icn-tune-v', 'data-tooltip': 'Settings'}, menu, ' ');
+
+	var ovrToc = mkElement('div', {'id':'ovrToc', 'class': 'overlay hidden'}, document.body, btnCloseHtml);
+	var lstToc = mkElement('ul', {'id': 'lstToc', 'class': 'ovr-cont toc-list'}, ovrToc);
+	mkElement('img', { class: 'toc-icon', src: chUrl('img/gfmr.ico') }, lstToc);
 
 	changeTo('h1,h2,h3,h4,h5,h6', function(h){
+		var hText = h.innerText.match(/^([\d\.]+)?\s*(.*)$/);
 		var liToc = mkElement('li',{'class': 'toc-item-' + h.tagName.toLowerCase()}, lstToc);
-		mkElement('a',{'href':'#'  +h.id, 'class': 'toc-link'}, liToc, h.innerText). // h.innerHTML).
-			addEventListener('click', function(e){
-				e.stopPropagation();
-			});
-
+		mkElement('a',{'href':'#'  +h.id, 'class': 'toc-link', 'data-before': hText[1]}, liToc, hText[2]).
+			addEventListener('click', function(e){ e.stopPropagation(); });
+		if (hText[1])
+			mkElement('b', {}, liToc, hText[1], 'prepend');
 	});
 
+	var ovrProp = mkElement('div', {'id':'ovrProp', 'class': 'overlay hidden'}, document.body, btnCloseHtml + htmlSettingsPanel );
+
+	// Event handlers
+	// ##############################################################################################
+
+	// close any overlay on area click
 	changeTo('.overlay', function(ovr){
-		ovr.addEventListener('click',function(){
-			ovrToc.classList.add('hidden');
+		ovr.addEventListener('click',function(e){
+			if (e.target.classList.contains('overlay') || e.target.classList.contains('btn-close'))
+				changeTo('.overlay', function (o) {o.classList.add('hidden');});
 		});
 	});
 
+	// Main menu buttons click handlers (show corresponding control panel)
 	miToc.addEventListener('click', function(){
 		ovrToc.classList.remove('hidden');
 	});
 
-	btnTocClose.addEventListener('click', function(){
-		ovrToc.classList.add('hidden');
+	miTune.addEventListener('click', function(){
+		ovrProp.classList.remove('hidden');
+	});
+
+	// properties sheet handlers
+	changeTo('.prop-sheet input', function(i){
+		i.addEventListener('change', function(e) {
+			var ii = e.target;
+			// if (ii.getAttribute('value') > '')
+		});
 	});
 
 } (window));

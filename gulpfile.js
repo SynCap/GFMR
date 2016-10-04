@@ -106,14 +106,14 @@ function notifyError() {
 	const args = Array.prototype.slice.call(arguments);
     
 	notify.onError({
-        title: 'Compile Error',
-        message: '<%= error.message %>',
-        // sound: true можно даже со звуком!
-    }).apply(this, args);
+		title: 'Compile Error',
+		message: '<%= error.message %>',
+		// sound: true можно даже со звуком!
+	}).apply(this, args);
 
     // Keep gulp from hanging on this task
-    this.emit('end');
-};
+	this.emit('end');
+}
 
 /**	
  * Highlight.Js files, concat & uglify
