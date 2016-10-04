@@ -242,10 +242,24 @@
 	<div class="row">
 		<h3>Main theme</h3>
 		<div class="selector">
-			<input type="radio" id="theme_1" name="theme-main" value="Gzhel">
+			<input type="radio" id="theme_1" name="theme-main" value="gzhel" checked>
 			<label class="btn" for="theme_1">
 				<img src="" alt="">
-				<p>Gzhel</p>
+				<p>Gzhel (Гжель)</p>
+			</label>
+		</div>
+		<div class="selector">
+			<input type="radio" id="theme_1" name="theme-main" value="classic">
+			<label class="btn" for="theme_1">
+				<img src="" alt="">
+				<p>Classic</p>
+			</label>
+		</div>
+		<div class="selector">
+			<input type="radio" id="theme_1" name="theme-main" value="github">
+			<label class="btn" for="theme_1">
+				<img src="" alt="">
+				<p>GitHub</p>
 			</label>
 		</div>
 	</div>
@@ -256,6 +270,13 @@
 			<label class="btn" for="theme_2">
 				<img src="" alt="">
 				<p>Night tropic bird</p>
+			</label>
+		</div>
+		<div class="selector">
+			<input type="radio" id="theme_2" name="theme-code" value="far" checked>
+			<label class="btn" for="theme_2">
+				<img src="" alt="">
+				<p>FAR</p>
 			</label>
 		</div>
 		<div class="selector">
@@ -293,9 +314,10 @@
 </div>
 `;
 
+	// Main menu
 	var menu = mkElement('ul', {'id':'mainMenu', 'class' : 'mainmenu'}, document.body);
-	var miToc = mkElement('li', {'id':'btnShowToc', 'class':'icn-toc', 'data-tooltip':'Table of\nContents'}, menu, ' ');
-	var miTune = mkElement('li', {'id':'btnShowProps', 'class':'icn-tune-v', 'data-tooltip': 'Tune settings'}, menu, ' ');
+	var miToc = mkElement('li', {'id':'btnShowToc', 'class':'icn-toc', 'data-tooltip':'Contents'}, menu, ' ');
+	var miTune = mkElement('li', {'id':'btnShowProps', 'class':'icn-tune-v', 'data-tooltip': 'Settings'}, menu, ' ');
 
 	var ovrToc = mkElement('div', {'id':'ovrToc', 'class': 'overlay hidden'}, document.body, btnCloseHtml);
 	var lstToc = mkElement('ul', {'id': 'lstToc', 'class': 'ovr-cont toc-list'}, ovrToc);
@@ -323,12 +345,21 @@
 		});
 	});
 
+	// Main menu buttons click handlers (show corresponding control panel)
 	miToc.addEventListener('click', function(){
 		ovrToc.classList.remove('hidden');
 	});
 
 	miTune.addEventListener('click', function(){
 		ovrProp.classList.remove('hidden');
+	});
+
+	// properties sheet handlers
+	changeTo('.prop-sheet input', function(i){
+		i.addEventListener('change', function(e) {
+			var ii = e.target;
+			// if (ii.getAttribute('value') > '')
+		});
 	});
 
 } (window));

@@ -206,7 +206,7 @@ h1,h2,h3 {
 	font-weight: 400;
 }
 h1 {
-	font-size: 3em;
+	font-size: 3.2em;
 	background: @clrHeaderBg;
 	margin: 1em -0.7em;
 	padding: 0.5em 0.7em;
@@ -230,13 +230,13 @@ h1 {
 	}
 }
 h2 {
-	font-size: 3em;
+	font-size: 2.4em;
 }
 h3 {
-	font-size: 2em;
+	font-size: 1.8em;
 }
 h4 {
-	font-size: 1.5em;
+	font-size: 1.4em;
 }
 hr {
 	border: 1px solid @clrMain;
@@ -413,8 +413,8 @@ dd {
 			/* margin-top: -24px; */
 			padding: 3px 7px;
 			position: absolute;
-			left: calc(100% + 1em);
-			top: 0;
+			left: calc(100% + 1rem);
+			top: .5em;
 			opacity: 0;
 			visibility: hidden;
 			transition: all 0.4s ease-in-out;
@@ -564,6 +564,30 @@ dd {
 			// margin-right: .5ch;
 			opacity: .5;
 			text-align: right; 
+		}
+		&:before {
+			content: '\279c';
+			display: inline-block;
+			width: 1em;
+			height: 1em;
+			margin-right: .2em;
+			background-color: rgba(255, 255, 255, 0.1);
+			color: transparent;
+			border-radius: 25%;
+			transition: all 0.6s;
+			font-size: .5em;
+			padding: .3em;
+			line-height: 100%;
+			vertical-align: 0.3em;
+			text-align: center;
+			text-indent: -3em;
+			transform: rotate(-360deg);
+		}
+		&:hover:before {
+			text-indent: 0em;
+			color: fade(@clrOvrBg,50%);
+			background-color: fade(@clrOvr, 50%);
+			transform: rotate(0deg);
 		}
 	}
 	a {
